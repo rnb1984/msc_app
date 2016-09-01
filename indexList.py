@@ -45,4 +45,6 @@ class IndexList:
     def size(self):
         return len(self.index_list)
         
+    def __unicode__(self):
+	    return self.index_list
         

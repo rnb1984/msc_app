@@ -7,28 +7,49 @@ class PizzaMatrix:
         
     def set_size(self, bredth, depth):
         # Creates a n amount of pizzas by m amount of toppings matrix
-        self.Depth = depth
-        self.Bredth = bredth
+        self.Depth = depth # pizza amount
+        self.Bredth = bredth # amount of toppings
         self.Matrix = [[0 for x in range(bredth)]for y in range(depth)]
     
-    def has_pizza(self, pizza_indx):
+    def has_pizza(self, pizza_index):
         # checks if the the size of matrix has will contain the index number of existing pizza
-        if (pizza_indx > self.Depth): return False
+        if (pizza_index > self.Depth): return False
         else: return True
     
-    def has_ing(self, pizza_indx, ingrd_indx):
+    def has_ing(self, pizza_index, ingrd_indx):
         # see's if ingredients in pizza index is set to 1
-        if self.Matrix[pizza_indx][ingrd_indx] == 1: return True
+        if self.Matrix[pizza_index][ingrd_indx] == 1: return True
         else: return False
     
-    def add_ing(self, pizza_indx, ingrd_indx):
+    def add_ing(self, pizza_index, ingrd_indx):
         # Takes in pizza index number and ingredients index number sets ingredient to 1
-        self.Matrix[pizza_indx][ingrd_indx] = 1
+        self.Matrix[pizza_index][ingrd_indx] = 1
     
-    def get_num_ing(self, pizza_indx):
+    def get_num_ing(self, pizza_index):
         # Passing a pizzas index number will return the amount of ingredients it has
         count = 0
         for i in range(self.Bredth):
-            if self.Matrix[pizza_indx][i] == 1:
+
+            if self.Matrix[pizza_index][i] == 1:
                 count = count + 1
         return count
+        
+    def get_ingr(self, pizza_index):
+        # given a pizza index return string of ingrdients seperated by commas
+        ingrdients = ""
+        if self.contains_pizza(pizza_index):
+            
+            for i in range(self.Bredth):
+                ingrdients = int(self.Matrix[pizza_index][i]) + ','
+                
+        return ingrdients
+
+    def contains_pizza(self, pizza_index):
+        # check pizza is in list
+        if pizza_index > self.Depth:
+            return False
+        else:
+            return True
+            
+    def __unicode__(self):
+	    return self.Matrix

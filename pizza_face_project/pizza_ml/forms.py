@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from pizza_face_project.models import UserProfile
+from pizza_ml.models import UserProfile
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
