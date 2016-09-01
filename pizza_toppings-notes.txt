@@ -1,0 +1,21 @@
+Toppings
+Removed
+These were all removed because they were either used in a standard pizza base or as a desciption of another ingredients, i.e pasta sauce.
+Yeast,6
+Flour,16
+butter,5
+Fat,1
+Zest,1
+pasta,4
+
+Kept in
+These were kept in as could still be deciders in pizza choice
+Flatbread
+bread
+Focaccia
+
+
+Pizzas
+These pizzas were removed after further analysis shows they were not pizzas.
+Speedy microwave pizza toastie,http://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--47510_12.jpg?itok=A-iLXky7,"['Bread', 'Tomato', 'Pasta', 'Mozzarella', 'Ham', 'tomato']",/recipes/11688/speedy-microwave-pizza-toastie
+Pizza pasta salad,http://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/pasta_1.jpg?itok=YHYg0NS_,"['Tomato', 'Plum', 'Tomato', 'Mozzarella', 'olives', 'Basil', 'pasta', 'olive oil', 'pesto', 'salami']",/recipes/pizza-pasta-salad

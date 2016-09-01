@@ -13,18 +13,17 @@ import django
 django.setup()
 from django.core.validators import validate_email
 
-from bba.models import Band, UserProfile, LikedBand, Gig, Venue, GigAttendance
+from pizza_ml.models import Pizza, User, Ingredients
 
 from django.contrib.auth.models import User
 
-API_KEY = "jwzmbEyCAIwD7HCy"
 
 def populate():
-
-    #added population script 
+    #added population script
+    
 
 
 # Start execution here!
 if __name__ == '__main__':
-    print "Starting bandbuds model test script..."
+    print "Starting pizza face model test script..."
     populate()
