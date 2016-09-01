@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('/pizza_face_site')
-
 import os
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pizza_face_project.settings')
 
 import django
