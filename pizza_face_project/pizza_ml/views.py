@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 
 """
 !! TO DO !!
@@ -23,36 +25,38 @@ from django.shortcuts import render
 
 # DEFINE FUNCTION !!!
 def index(request):
-	variable = welcome
-	context_dict = { 'name' : variable }
+    variable = 'welcome'
+    context_dict = { 'name' : variable }
     return render(request, 'templates/index.html', context_dict)
 
 # DEFINE FUNCTION !!!
 def details(request):
-	form = FormFunction()
+    #form = FormFunction()
+    variable = 'welcome'
+    context_dict = { 'name' : variable }
     return render(request, 'templates/details.html', context_dict)
 
 
 # DEFINE FUNCTION !!!
 def pizza_choice(request, date_param):
-	# Example jason from BB
-	data = {
-        'calendar' : create_calendar(year, month, day, with_buds),
-        'month_string' : str(year) + '-' + str(month).zfill(2),
-        'day_string' : str(day),
-        'prev_hidden' : is_today,
+    # Example jason from BB
+    data = {
+        'calendar' : 'example',
+        'month_string' : 'example',
+        'day_string' : 'example',
+        'prev_hidden' : 'example',
     }
     return JsonResponse(data)
 
 
 # DEFINE FUNCTION !!!
 def predict_pizza(request, date_param):
-	# Example jason from BB
-	data = {
-        'calendar' : create_calendar(year, month, day, with_buds),
-        'month_string' : str(year) + '-' + str(month).zfill(2),
-        'day_string' : str(day),
-        'prev_hidden' : is_today,
+    # Example jason from BB
+    data = {
+        'calendar' : 'example',
+        'month_string' : 'example',
+        'day_string' : 'example',
+        'prev_hidden' : 'example',
     }
     return JsonResponse(data)
 
