@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 
@@ -25,9 +26,11 @@ from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 
 # DEFINE FUNCTION !!!
 def index(request):
-    variable = 'welcome'
-    context_dict = { 'name' : variable }
-    return render(request, 'templates/index.html', context_dict)
+    pizzas = Pizza.objects.all().order_by('index')
+    ingredients = Ingredient.objects.all().order_by('index')
+    # get_object_or_404(klass, *args, **kwargs)
+    context_dict = { 'pizzas' : pizzas, 'ingredients':ingredients }
+    return render(request, 'pizza_ml/index.html', context_dict)
 
 # DEFINE FUNCTION !!!
 def details(request):

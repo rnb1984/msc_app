@@ -55,9 +55,10 @@ WSGI_APPLICATION = 'pizza_face_project.wsgi.application'
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 
-TEMPLATES_DIRS = (
+TEMPLATE_DIRS = (
     TEMPLATE_PATH,
     )
+    
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
