@@ -72,12 +72,13 @@ class Pizza(models.Model):
 class Ingredient(models.Model):
 	"""
 	Ingredient
-	- Stores name of ingredients and index of ingredients on pizza matrix
+	- Stores name of ingredient and index of ingredients on pizza matrix with the amount with total counted in pizzas
 	"""
 	
 	name = models.CharField(max_length=128)
 	index = models.IntegerField(default=0)
-	slug = models.SlugField() # for post requests
+	amount = models.IntegerField(default=0)
+	slug = models.SlugField()
 	
 	def save(self, *args, **kwargs):
 	    self.slug = slugify(self.name)

@@ -33,7 +33,8 @@ def populate():
               pass
           else:
               ingrdIndex.add_item(ingr[0])
-              added_in = add_ingredients(ingr[0], ingrdIndex.get_index(ingr[0]))
+              index_of_ingrd = ingrdIndex.get_index(ingr[0]) # stops plurals being added
+              add_ingredients(ingrdIndex.get_item(index_of_ingrd), index_of_ingrd )
 
   # create pizza matrix
   pizzas.set_size(ingrdIndex.size(), Num_of_Pizzas)
@@ -55,7 +56,17 @@ def populate():
          for ingr in pizza_ingr:
           # add ingredients to pizza matrix
           if ingrdIndex.contains_item(ingr):
-           pizzas.add_ing(pizza_in,ingrdIndex.get_index(ingr))
+            index_of_ingrd = ingrdIndex.get_index(ingr)
+            pizzas.add_ing(pizza_in,index_of_ingrd)
+            """
+            !! TO DO !!
+            Add one to ingredients amount
+            i = Ingredient.objects.get(index_of_ingrd)
+            if i.name ==  ingrdIndex.get_item(index_of_ingrd) + s:
+              i.name = ingrdIndex.get_item(index_of_ingrd)
+              i.save()
+            i.amount = i.amount + 1
+            """
           
         added_pizza = add_pizza(pizza[0], pizza[1],pizza_in)
 

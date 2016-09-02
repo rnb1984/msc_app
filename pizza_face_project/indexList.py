@@ -18,31 +18,34 @@ class IndexList:
     
     def contains_item(self, new_item):
         # Check if the item already exists
+        new_item = self.un_plural(new_item.lower())
         if not self.index_list:
             return False
-        i = 0
         for item in self.index_list:
             if (item.lower() == new_item.lower()):
                 return True
-            i = i+1
         return False
     
     def add_item(self, item):
+        # pass item name, check plural, add to list
         item = self.un_plural(item.lower())
         if self.contains_item(item.lower()) == False:
             self.index_list.append(item.lower())
         
     def get_item(self,num):
+        # pass index num to get name of item
         if num < self.size():
             return self.index_list[num]
         else:
-            return 0
+            return 'none'
     
     def get_index(self, item):
+        # pass item name and return index num
         item = self.un_plural(item.lower())
         return self.index_list.index(item.lower())
         
     def size(self):
+        # return the size of index list
         return len(self.index_list)
         
     def __unicode__(self):
