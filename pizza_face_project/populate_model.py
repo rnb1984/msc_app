@@ -34,7 +34,17 @@ def populate():
           else:
               ingrdIndex.add_item(ingr[0])
               index_of_ingrd = ingrdIndex.get_index(ingr[0]) # stops plurals being added
-              add_ingredients(ingrdIndex.get_item(index_of_ingrd), index_of_ingrd )
+              
+              # check that ingredents plural version doesn't exist
+              try:
+                i = Ingredient.objects.get(index = index_of_ingrd)
+                if i.name ==  ingrdIndex.get_item(index_of_ingrd) + 's':
+                  i.name = ingrdIndex.get_item(index_of_ingrd)
+                else:
+                  add_ingredients(ingrdIndex.get_item(index_of_ingrd), index_of_ingrd )
+              except Exception:
+                add_ingredients(ingrdIndex.get_item(index_of_ingrd), index_of_ingrd )
+                
 
   # create pizza matrix
   pizzas.set_size(ingrdIndex.size(), Num_of_Pizzas)
@@ -58,15 +68,15 @@ def populate():
           if ingrdIndex.contains_item(ingr):
             index_of_ingrd = ingrdIndex.get_index(ingr)
             pizzas.add_ing(pizza_in,index_of_ingrd)
-            """
-            !! TO DO !!
-            Add one to ingredients amount
-            i = Ingredient.objects.get(index_of_ingrd)
-            if i.name ==  ingrdIndex.get_item(index_of_ingrd) + s:
-              i.name = ingrdIndex.get_item(index_of_ingrd)
-              i.save()
-            i.amount = i.amount + 1
-            """
+            
+            # count ingredients 
+            print ingr, 'looking for this', 'index_of_ingrd: ', index_of_ingrd, 
+            i = Ingredient.objects.get(index = index_of_ingrd)
+            print ingr, ': before i.amount: ', i.amount, 'i.name', i.name
+            num = i.amount
+            i.amount = num + 1
+            i.save()
+            print 'i.amount: ', i.amount, 'i.name', i.name
           
         added_pizza = add_pizza(pizza[0], pizza[1],pizza_in)
 
