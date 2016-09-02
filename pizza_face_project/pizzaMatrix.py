@@ -40,8 +40,9 @@ class PizzaMatrix:
         if self.contains_pizza(pizza_index):
             
             for i in range(self.Bredth):
-                ingrdients = int(self.Matrix[pizza_index][i]) + ','
-                
+                ingrdients = ingrdients + ',' + str(self.Matrix[pizza_index][i])
+        
+        print 'pizza_index: ', pizza_index, 'ingrdients are', ingrdients
         return ingrdients
 
     def contains_pizza(self, pizza_index):

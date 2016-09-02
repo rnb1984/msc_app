@@ -45,7 +45,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-# DEFINE MODEL !!!
+
 class Pizza(models.Model):
 	"""
 	Pizza
@@ -67,24 +67,27 @@ class Pizza(models.Model):
 	def __unicode__(self):
 	    return self.name
 
-# DEFINE MODEL !!!
-class Ingredients(models.Model):
+
+
+class Ingredient(models.Model):
 	"""
-	Ingredients
+	Ingredient
 	- Stores name of ingredients and index of ingredients on pizza matrix
 	"""
-	name = models.CharField(max_length=128) # maybe bigger!!
+	
+	name = models.CharField(max_length=128)
 	index = models.IntegerField(default=0)
-
+	slug = models.SlugField() # for post requests
+	
 	def save(self, *args, **kwargs):
-         self.slug = slugify(self.name)
-         super(Ingredients, self).save(*args, **kwargs)
+	    self.slug = slugify(self.name)
+	    super(Ingredient, self).save(*args, **kwargs)
 
 	def __unicode__(self):
 	    return self.name
 
 
-# DEFINE MODEL !!!	
+
 class UserPreferance(models.Model):
 	"""
 	UserPreferance
