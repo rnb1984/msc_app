@@ -8,7 +8,16 @@
         <title>Pizza Face</title>
     </head>
     <body>
-    	<div>{% block body_block %}{% endblock %}</div>
-    </body>
-    <footer></footer>
+      {% verbatim %}
+      <div ng-app="pizzaApp" ng-controller="pizzaController">
+          Something should be here...
+          
+          <ul>
+            <li ng-repeat="x in testing">
+              {{ x.name }} ??
+            </li>
+          </ul>
+          
+      </div>
+      {% endverbatim %}
 </html>

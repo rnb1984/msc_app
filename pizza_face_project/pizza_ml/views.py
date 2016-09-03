@@ -7,7 +7,7 @@ from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 #from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from pizza_ml.serializers import PizzaSerializer, IngredientSerializer
 
 
@@ -82,6 +82,7 @@ class PizzaList(APIView):
     def get(self, request):
         pizza = Pizza.objects.all().order_by('index')
         serializer = PizzaSerializer(pizza, many=True)
+        permission_classes = [permissions.AllowAny]
         return Response(serializer.data)
         
     def post(self):
@@ -92,6 +93,7 @@ class IngredientList(APIView):
     def get(self, request):
         ingrd = Ingredient.objects.all().order_by('amount')
         serializer = IngredientSerializer(ingrd, many=True)
+        permission_classes = [permissions.AllowAny]
         return Response(serializer.data)
         
     def post(self):

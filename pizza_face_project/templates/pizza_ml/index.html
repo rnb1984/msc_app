@@ -16,16 +16,23 @@ Hello World
 </div>
 
 <div class="col-xs-10">
-    <!--Pizzas-->
-    {% if pizzas %}
-    {% for pizza in pizzas %}
-    <h4>{{ pizza.name }}</h4>
-    <img style="width:100px;" src='{{ pizza.pic }}'/>
-    <p>{{ pizza.index }}</p>
-    {% endfor %}
-    {% endif %}
+{% verbatim %}
+    <div ng-app="pizzaApp" ng-controller="pizzaController">
+    Something should be here...
+    
+        <ul>
+          <li ng-repeat="pizza in pizzas">
+            <h4>{{ pizza.name }}</h4>
+            <img style="width:100px;" src='{{ pizza.pic }}'/>
+            <p>{{ pizza.index }}</p>
+          </li>
+        </ul>
+    
+    </div>
+{% endverbatim %}
 </div>
 
-<iframe src="https://pizza-face-site-robertburry.c9users.io/ingredients/?format=json"></iframe>
+
+
 
 {% endblock %}

@@ -6,10 +6,14 @@ Serializers help create api's for the models
 """
 
 class PizzaSerializer(serializers.ModelSerializer):
+    #url = serializers.HyperlinkedIdentityField('name',
+    #    view_name='pizza',
+     #   lookup_field='index'
+    #)
+    
     class Meta:
         model = Pizza
-        #fields = ('name', 'index')
-        fields = "__all__"
+        fields = ('name', 'index', 'pic', 'ingredients', 'slug')
 
 
 class IngredientSerializer(serializers.ModelSerializer):
