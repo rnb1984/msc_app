@@ -3,23 +3,29 @@
 
 {% block body_block %}
 Hello World
-<!--Ingredients-->
-{% if ingredients %}
-<ol>
-{% for ingredient in ingredients %}
-<li><h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5></li>
-{% endfor %}
-{% endif %}
-</ol>
 
-<!--Pizzas-->
-{% if pizzas %}
-{% for pizza in pizzas %}
-<h4>{{ pizza.name }}</h4>
-<img src='{{ pizza.pic }}'/>
-<p>{{ pizza.index }}</p>
-{% endfor %}
-{% endif %}
+<div class="col-xs-2">
+    <!--Ingredients-->
+    {% if ingredients %}
+    <ol>
+    {% for ingredient in ingredients %}
+    <li><h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5></li>
+    {% endfor %}
+    {% endif %}
+    </ol>
+</div>
 
+<div class="col-xs-10">
+    <!--Pizzas-->
+    {% if pizzas %}
+    {% for pizza in pizzas %}
+    <h4>{{ pizza.name }}</h4>
+    <img style="width:100px;" src='{{ pizza.pic }}'/>
+    <p>{{ pizza.index }}</p>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<iframe src="https://pizza-face-site-robertburry.c9users.io/ingredients/?format=json"></iframe>
 
 {% endblock %}

@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pizza_ml.apps.PizzaMlConfig',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,3 +107,4 @@ PASSWORD_HASHERS = (
 'django.contrib.auth.hashers.PBKDF2PasswordHasher',
 'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
+

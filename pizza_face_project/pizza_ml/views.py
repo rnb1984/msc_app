@@ -1,7 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
+
+# For the RESTFUL API
+#from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from pizza_ml.serializers import PizzaSerializer, IngredientSerializer
+
 
 """
 !! TO DO !!
@@ -63,3 +71,28 @@ def predict_pizza(request, date_param):
     }
     return JsonResponse(data)
 
+# API view
+# pizzas/
+#class PizzaList(viewsets.ModelViewSet):
+    #queryset = Pizza.objects.all().order_by('index')
+    #serializer_class = PizzaSerializer
+    
+class PizzaList(APIView):
+    
+    def get(self, request):
+        pizza = Pizza.objects.all().order_by('index')
+        serializer = PizzaSerializer(pizza, many=True)
+        return Response(serializer.data)
+        
+    def post(self):
+        pass
+    
+class IngredientList(APIView):
+    
+    def get(self, request):
+        ingrd = Ingredient.objects.all().order_by('amount')
+        serializer = IngredientSerializer(ingrd, many=True)
+        return Response(serializer.data)
+        
+    def post(self):
+        pass
