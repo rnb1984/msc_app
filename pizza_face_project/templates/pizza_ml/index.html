@@ -1,0 +1,25 @@
+<!--Template-->
+{% extends 'pizza_ml/base.html' %}
+
+{% block body_block %}
+Hello World
+<!--Ingredients-->
+{% if ingredients %}
+<ol>
+{% for ingredient in ingredients %}
+<li><h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5></li>
+{% endfor %}
+{% endif %}
+</ol>
+
+<!--Pizzas-->
+{% if pizzas %}
+{% for pizza in pizzas %}
+<h4>{{ pizza.name }}</h4>
+<img src='{{ pizza.pic }}'/>
+<p>{{ pizza.index }}</p>
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}
