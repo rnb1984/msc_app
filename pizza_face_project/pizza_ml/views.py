@@ -4,11 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 
 # For the RESTFUL API
-#from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, generics, permissions
-from pizza_ml.serializers import PizzaSerializer, IngredientSerializer
+from rest_framework import generics
+from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer
 
 
 """
@@ -77,24 +74,19 @@ def predict_pizza(request, date_param):
     #queryset = Pizza.objects.all().order_by('index')
     #serializer_class = PizzaSerializer
     
-class PizzaList(APIView):
+class PizzaList(generics.ListCreateAPIView):
     
-    def get(self, request):
-        pizza = Pizza.objects.all().order_by('index')
-        serializer = PizzaSerializer(pizza, many=True)
-        permission_classes = [permissions.AllowAny]
-        return Response(serializer.data)
-        
-    def post(self):
-        pass
+    queryset = Pizza.objects.all().order_by('name')
+    serializer_class = PizzaSerializer
+
+
+class IngredientList(generics.ListCreateAPIView):
     
-class IngredientList(APIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+
+   
+class UserPreferanceView(generics.RetrieveUpdateAPIView):
     
-    def get(self, request):
-        ingrd = Ingredient.objects.all().order_by('amount')
-        serializer = IngredientSerializer(ingrd, many=True)
-        permission_classes = [permissions.AllowAny]
-        return Response(serializer.data)
-        
-    def post(self):
-        pass
+    queryset = UserPreferance.objects.all()
+    serializer_class = UserProfileSerializer

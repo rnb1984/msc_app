@@ -4,7 +4,7 @@
 {% block body_block %}
 Hello World
 
-<div class="col-xs-2">
+<div class="col-xs-3">
     <!--Ingredients-->
     {% if ingredients %}
     <ol>
@@ -15,10 +15,35 @@ Hello World
     </ol>
 </div>
 
-<div class="col-xs-10">
+
 {% verbatim %}
-    <div ng-app="pizzaApp" ng-controller="pizzaController">
-    Something should be here...
+<div ng-app="pizzaApp" ng-controller="pizzaController">
+    
+
+    <div class="col-xs-3">
+    ingredients should be here...
+    
+        <ul>
+          <li ng-repeat="ingredient in ingredients">
+            <h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5>
+            </li>
+        </ul>
+    
+    </div>
+    
+    <div class="col-xs-3">
+    ingredients should be here...
+    
+        <ul>
+          <li ng-repeat="ingredient in ingredients">
+            <h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5>
+            </li>
+        </ul>
+    
+    </div>
+    
+    <div class="col-xs-3">
+   pizzas should be here...
     
         <ul>
           <li ng-repeat="pizza in pizzas">
@@ -29,10 +54,9 @@ Hello World
         </ul>
     
     </div>
-{% endverbatim %}
+    
 </div>
 
-
-
+{% endverbatim %}
 
 {% endblock %}

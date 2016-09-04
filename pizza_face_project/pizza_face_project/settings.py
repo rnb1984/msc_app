@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
 
 CORS_ORIGIN_ALLOW_ALL = True # allows permissions cross site api
 
+
 ROOT_URLCONF = 'pizza_face_project.urls'
 
 WSGI_APPLICATION = 'pizza_face_project.wsgi.application'
