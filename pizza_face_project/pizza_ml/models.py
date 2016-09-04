@@ -30,19 +30,21 @@ class UserProfile(models.Model):
 	to be used in post evaluation.
 	"""
     
-    user = models.OneToOneField(User)
+    # user = models.OneToOneField(User)
     dob = models.DateField(default=date.today())
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
     allergies = models.IntegerField(default=0)
     diet = models.IntegerField(default=0)
-    slug = models.SlugField()
+    #slug = models.SlugField()
 
-    def save(self, *args, **kwargs):
-         self.slug = slugify(self.user)
-         super(UserProfile, self).save(*args, **kwargs)
+    #def save(self, *args, **kwargs):
+         #self.slug = slugify(self.allergies)
+         #super(UserProfile, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.user.username
+        #return self.user.username
+        dob = str(self.dob)
+        return dob
 
 
 
@@ -105,4 +107,5 @@ class UserPreferance(models.Model):
 	correct = models.BooleanField(default=False)
 	
 	def __unicode__(self):
-	    return self.predict
+		predict = str(self.predict)
+		return predict

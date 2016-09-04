@@ -69,11 +69,7 @@ def predict_pizza(request, date_param):
     return JsonResponse(data)
 
 # API view
-# pizzas/
-#class PizzaList(viewsets.ModelViewSet):
-    #queryset = Pizza.objects.all().order_by('index')
-    #serializer_class = PizzaSerializer
-    
+
 class PizzaList(generics.ListCreateAPIView):
     
     queryset = Pizza.objects.all().order_by('name')
@@ -86,7 +82,8 @@ class IngredientList(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
 
    
-class UserPreferanceView(generics.RetrieveUpdateAPIView):
+class UserProfileView(generics.ListCreateAPIView):
+#class UserProfileView(generics.RetrieveUpdateAPIView):
     
-    queryset = UserPreferance.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer

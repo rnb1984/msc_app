@@ -23,8 +23,8 @@ urlpatterns = patterns('',
     url(r'^pizzas/(?P<pk>[0-9]+)/$', views.PizzaList.as_view()),
     url(r'^ingredients/', views.IngredientList.as_view()),
     url(r'^ingredients/(?P<pk>[0-9]+)/$', views.IngredientList.as_view()),
-    url(r'^userdetails/', views.UserPreferanceView.as_view()),
-    url(r'^userdetails/(?P<pk>[0-9]+)/$', views.UserPreferanceView.as_view()),
+    url(r'^userdetails/', views.UserProfileView.as_view()),
+    url(r'^userdetails/(?P<pk>[0-9]+)/$', views.UserProfileView.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

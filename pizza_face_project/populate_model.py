@@ -11,7 +11,7 @@ import urllib
 import urllib2
 from datetime import date
 
-from pizza_ml.models import Pizza, Ingredient
+from pizza_ml.models import Pizza, Ingredient, UserProfile
 
 # classes to set up matrix and index items
 from indexList import IndexList
@@ -25,6 +25,11 @@ ingrdIndex = IndexList()
 pizzas = PizzaMatrix()
 
 def populate():
+  # create test user
+  profile_a = add_userprof('M', 3, 5)
+  profile_b = add_userprof('F', 8, 9)
+  profile_c = add_userprof('F', 1, 1)
+  
   # populate database with pizzas and set up matrix
   with open('pizza_toppings.csv', 'rb') as csvfile:
       ingr_file = csv.reader(csvfile, delimiter=',')
@@ -91,6 +96,11 @@ def add_ingredients(ingr_name, ingr_index):  # saves ingredients to database
   i, created = Ingredient.objects.get_or_create(name=ingr_name.lower(),index=ingr_index)
   i.save()
   return i
+  
+def add_userprof(g, a, di):
+  u, created = UserProfile.objects.get_or_create(gender=g, allergies=a, diet=di)
+  u.save()
+  return u
 
 # Start execution here!
 if __name__ == '__main__':
