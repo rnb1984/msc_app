@@ -1,9 +1,12 @@
 from rest_framework import serializers
-from pizza_ml.models import Pizza, Ingredient, UserProfile
+from pizza_ml.models import Pizza, Ingredient, UserProfile, UserPreferance
 
 """
-Serializers help create api's for the models
+Serializers
+Create api's for the models in a similiar way forms are used
 """
+
+
 
 class PizzaSerializer(serializers.ModelSerializer):
 
@@ -24,3 +27,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         #fields = ('dob','gender','allergies','diet')
         fields = "__all__"
+
+# !! Define Serializers !!
+class UserPreferanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('pairs')

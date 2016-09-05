@@ -5,7 +5,7 @@ from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile
 
 # For the RESTFUL API
 from rest_framework import generics
-from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer
+from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer, UserPreferanceSerializer
 
 
 """
@@ -82,8 +82,17 @@ class IngredientList(generics.ListCreateAPIView):
     serializer_class = IngredientSerializer
 
    
-class UserProfileView(generics.ListCreateAPIView):
-#class UserProfileView(generics.RetrieveUpdateAPIView):
-    
+class UserProfileList(generics.ListCreateAPIView):
+
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    
+class UserProfileDetails(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+class UserPreferanceView(generics.RetrieveUpdateAPIView):
+    
+    queryset = UserProfile.objects.all()
+    serializer_class = UserPreferanceSerializer

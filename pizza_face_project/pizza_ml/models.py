@@ -8,8 +8,6 @@ from django.template.defaultfilters import slugify
 from datetime import date
 
 """
-!!! TO DO !!!
-# Write all models
 - Pizza
 - Ingredients
 - UserProfile
@@ -35,11 +33,11 @@ class UserProfile(models.Model):
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
     allergies = models.IntegerField(default=0)
     diet = models.IntegerField(default=0)
-    #slug = models.SlugField()
+    slug = models.SlugField()
 
-    #def save(self, *args, **kwargs):
-         #self.slug = slugify(self.allergies)
-         #super(UserProfile, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+         self.slug = slugify(self.allergies)
+         super(UserProfile, self).save(*args, **kwargs)
 
     def __unicode__(self):
         #return self.user.username

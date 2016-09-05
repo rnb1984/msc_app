@@ -34,6 +34,8 @@ Hello World
         <ul>
           <li ng-repeat="user in userpro">
             <h5><small>id:{{ user.id }}</small>gender:{{ user.gender }}, with allergies {{ user.allergies }}, diet {{ user.diet }} and dob {{ user.dob }}</h5>
+            <button style='width:50px; background-color:#4477ff;' ng-click='the($index)'>This</button>
+            <button style='width:50px; background-color:#22ff55;' ng-click='that($index)'>That</button>
             </li>
         </ul>
         
