@@ -28,6 +28,8 @@ urlpatterns = patterns('',
     url(r'^ingredients/(?P<pk>[0-9]+)/$', views.IngredientList.as_view()),
     url(r'^userdetails/$', views.UserProfileList.as_view()),
     url(r'^userdetails/(?P<pk>[0-9]+)/$', views.UserProfileDetails.as_view()),
+    url(r'^pairs/', views.PairPrefLists.as_view()),
+    url(r'^pair/(?P<pk>[0-9]+)/$', views.PairPrefDetails.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

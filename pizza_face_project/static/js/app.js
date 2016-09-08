@@ -1,69 +1,66 @@
 
-var pizzaApp = angular.module('pizzaApp',[]);
+var pairApp = angular.module('pairApp',[])
+    .config(['$httpProvider', function($httpProvider) {
+        console.log('got here')
+        // set CSRF for Django
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    }]);
 
 
 // Controller for pizzas
-pizzaApp.controller('pizzaController', function ($scope, $http ) {
-    var  requp = {
-         method: 'POST',
-         url: '/userdetails/',
-         headers: {
-          'Content-Type': undefined
-         },
-         data: { allergies: 3, diet:5 }
-    }
-  
-    $scope.new_userpro= '';
-    $scope.userpro=[];
-    var pizzadata = $http.get("/pizzas/"),
-    ingredientdata = $http.get("/ingredients/"),
-    userprodata = $http.get("/userdetails/");
-    //userprodata = $http(requp);
+pairApp.controller('pairsController', function ($scope, $http ) {
+
+    // urls
+    var pairdata = $http.post("/test/"),
+    compsize = 0;
     
-    pizzadata.then(function (response) {
-      $scope.pizzas = response.data;
-      });
-    
-    ingredientdata.then(function (response) {
-      $scope.ingredients = response.data;
-      });
+    pairdata.then(function (response) {
+      $scope.rightside = response.data.rights;
+      $scope.indexs = response.data.pairindex;
+      $scope.leftside = response.data.lefts; // todo
+      compsize = response.data.pairindex.length;
       
-    userprodata.then(function (response) {
-      $scope.userpro = response.data;
-      console.log(response.data);
-     });
-     
-     $scope.add = function(event){
-         $http.post("/userdetails/",{dob: '1998-08-08' , gender:'M',  allergies:$scope.new_userpro,  diet: $scope.new_userpro, slug: $scope.new_userpro }).success(function(data){ 
-           $scope.new_userpro = '';
-           console.log('data');
-           console.log(data);
-            $scope.userpro.push(data);
-           console.log('userpro is');
-           console.log($scope.userpro);
-         });
-     };
-     
-     // todo
-     $scope.that = function(item){
+      
+      console.log(response.data)
+      });
+    
+     // left likes
+     $scope.prefLeft = function(item){
+         // set pair oject values
+         $scope.indexs[item]['value'] = 1;
+         var pk= $scope.indexs[item]['id'];
          
-         $scope.userpro[item]['allergies'] = 300;
-         var data = {id:$scope.userpro[item]['id'], dob: $scope.userpro[item]['dob'] , gender: $scope.userpro[item]['gender'],  allergies: $scope.userpro[item]['allergies'],  diet: $scope.userpro[item]['diet'], slug: $scope.userpro[item]['slug'] };
-         var pk = $scope.userpro[item]['id'];
-         $http.put("/userdetails/"+pk+"/",data).success(function(data){ 
-           console.log(item);
+       // angular.forEach($scope.new_index, function(i){
+        //           console.log(i.id, pk, i.index, $scope.indexs[item]['index']);
+        //           if (i.index === $scope.indexs[item]['index']){
+        //               console.log( '---in',i);
+         //              pk = i.id;
+          //             $scope.indexs[item]['index'] = i.index;
+        //               new_date = i.date;
+          //             new_slug = i.slug; } });
+        
+         var data = {id: pk, index: $scope.indexs[item]['index'], value: $scope.indexs[item]['value'] };
+         console.log(data, pk)
+         $http.put("/pair/"+pk+"/",data).success(function(data){
+             $scope.new_index = data;
+           console.log(data);
          });
      };
      
-     // todo
-     $scope.the = function(item){
+     // right likes
+     $scope.prefRight = function(item){
          console.log(item);
          
-         $scope.userpro[item]['allergies'] = 0;
-         var data = {id:$scope.userpro[item]['id'], dob: $scope.userpro[item]['dob'] , gender: $scope.userpro[item]['gender'],  allergies: $scope.userpro[item]['allergies'],  diet: $scope.userpro[item]['diet'], slug: $scope.userpro[item]['slug'] };
-         var pk = $scope.userpro[item]['id'];
-         $http.put("/userdetails/"+pk+"/",data).success(function(data){ 
-           console.log(item);
+         // set pair oject values
+         $scope.indexs[item]['value'] = -1;
+         var pk= $scope.indexs[item]['id'];
+         
+         var data = {id: pk, index: $scope.indexs[item]['index'], value: $scope.indexs[item]['value'] };
+         console.log(data, pk)
+         $http.put("/pair/"+pk+"/",data).success(function(data){
+             $scope.new_index = data;
+           console.log(data);
          });
      };
      

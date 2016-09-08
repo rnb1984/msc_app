@@ -88,11 +88,35 @@ class Ingredient(models.Model):
 	    return self.name
 
 
+class PairPreferance(models.Model):
+	"""
+	UserPreferance
+	- Stores pair of pizza index, with 0 or 1 rating, used in comparsisons
+	"""
+	# Need a one2many link with user preferance
+
+	# Index of pair
+	index = models.IntegerField(default=0)
+	# Value of pair
+	value = models.IntegerField(default=0)
+	# Date of pair made
+	date = models.DateField(default=date.today())
+	
+	slug = models.SlugField()
+	
+	def save(self, *args, **kwargs):
+	    self.slug = slugify(self.index)
+	    super(PairPreferance, self).save(*args, **kwargs)
+	
+	def __unicode__(self):
+		index = str(self.index)
+		return index
+
 
 class UserPreferance(models.Model):
 	"""
 	UserPreferance
-	- Stores pizza pair index, with 0 or 1 rating, used in comparsisons
+	- Stores fk to pizza pair index, with 0 or 1 rating, used in comparsisons
 	- Stores latest prediction as pizza index integer
 	- Stores boolean for if prediction was true or false
 	"""

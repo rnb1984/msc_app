@@ -8,37 +8,62 @@
         <title>Pizza Face</title>
     </head>
     <body>
-      <div class="col-xs-3">
+      {% csrf_token %}
+      {% verbatim %}
+      <div ng-app="pairApp" ng-controller="pairsController">
+
+          <div class="col-xs-3">
           <!--Pizza left-->
-          {% if left %}
           <ol>
-          {% for pizza in left %}
-            <h4>{{ pizza.name }}</h4>
-            <img style="width:100px;" src='{{ pizza.pic }}'/>
-            <li><small>index:{{ pizza.index }}</small></li>
-          {% endfor %}
+              <li ng-repeat="left in leftside">
+            <h4>{{ left.name }}</h4>
+            <img style="width:100px;" src='{{ left.pic }}'/>
+            <button style='width:50px; background-color:#4477ff;' ng-click='prefLeft($index)'>This</button>
+            <small>index:{{ left.index }}</small>
+            <ul>
+                <li ng-repeat="ingredient in left.ingredients">{{ ingredient }}</li>
+            </ul>
+            </li>
           </ol>
-          {% endif %}
       </div>
       
+      <div class="col-xs-2">
+          <!--Pizza left-->
+          <ol>
+            <li ng-repeat="index in indexs"><small>pair index:{{ index.index }}, value: {{ index.value }} </small>
+                
+            </li>
+          </ol>
+      </div>
       
       <div class="col-xs-3">
           <!--Pizza right-->
-          {% if right %}
           <ol>
-          {% for pizza in right %}
-            <h4>{{ pizza.name }}</h4>
-            <img style="width:100px;" src='{{ pizza.pic }}'/>
-            <li><small>index:{{ pizza.index }}</small></li>
-          {% endfor %}
+              <li ng-repeat="right in rightside">
+            <h4>{{ right.name }}</h4>
+            <img style="width:100px;" src='{{ right.pic }}'/>
+            <button style='width:50px; background-color:#22ff55;' ng-click='prefRight($index)'>That</button>
+            <small>index:{{ right.index }}</small>
+            <ul>
+                <li ng-repeat="ingredient in right.ingredients">{{ ingredient }}</li>
+            </ul>
+            </li>
           </ol>
-          {% endif %}
       </div>
       
+         <div class="col-xs-2">
+              <button style='width:50px; background-color:#dd6611;' ng-click='pairs()'>pairs</button>
+              {{ new_index }}
+        </div>
+              
+      </div>
       
-      {% verbatim %}
+       {% endverbatim %}
+      
+      {% if welcome %}
       <div>
-          Testing serverside
+          {{ welcome  }}
       </div>
-      {% endverbatim %}
+      {% endif %}
+      
 </html>

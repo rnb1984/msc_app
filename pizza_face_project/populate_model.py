@@ -93,12 +93,12 @@ def add_pizza(pizza_name, pizza_image, pizza_index): # populate database with pi
   return p
 
 def add_ingredients(ingr_name, ingr_index):  # saves ingredients to database
-  i, created = Ingredient.objects.get_or_create(name=ingr_name.lower(),index=ingr_index)
+  i = Ingredient.objects.get_or_create(name=ingr_name.lower(),index=ingr_index)[0]
   i.save()
   return i
   
 def add_userprof(g, a, di):
-  u, created = UserProfile.objects.get_or_create(gender=g, allergies=a, diet=di)
+  u = UserProfile.objects.get_or_create(gender=g, allergies=a, diet=di)[0]
   u.save()
   return u
 
