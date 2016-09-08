@@ -38,16 +38,8 @@ def index(request):
     context_dict = { 'pizzas' : pizzas, 'ingredients':ingredients }
     return render(request, 'pizza_ml/index.html', context_dict)
 
-# DEFINE FUNCTION !!!
-def details(request):
-    #form = FormFunction()
-    variable = 'welcome'
-    context_dict = { 'name' : variable }
-    return render(request, 'templates/details.html', context_dict)
-
-
-# DEFINE FUNCTION !!!
 def pizza_choice(request):
+    # Creates pairs and sends as a JSON
     
     if request.method == 'GET':
         context_dict = { 'welcome' : 'hello world' }
@@ -82,38 +74,37 @@ def pizza_choice(request):
             value = {
                 'id': pair_db.id,
                 'index':index ,
-                'value': 0,
-                'date': pair_db.date,
-                'slug': pair_db.slug
+                'value': 0
             }
             pizzas_index.append(value)
 
          context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
          return JsonResponse(context_dict)
-         #return render(request, 'pizza_ml/index_test.html', context_dict)
 
 
-# DEFINE FUNCTION !!!
-def predict_pizza(request, date_param):
-    # Example jason from BB
-    data = {
-        'calendar' : 'example',
-        'month_string' : 'example',
-        'day_string' : 'example',
-        'prev_hidden' : 'example',
-    }
-    return JsonResponse(data)
+def predict_pizza(request):
+    # send back holding page for prediction and calculate ml
+    if request.method == 'GET':
+        pairs = PairPreferance.objects.all()
+        # pass all the pairs to ml
+        # prediction to be calculated 
+        context_dict = { 'welcome' : 'Ready for your predictiond', 'pairs': pairs }
+        return render(request, 'pizza_ml/test_predict.html', context_dict)
+    elif request.method == 'POST':
+        # on post 
+        context_dict= {'prediction': 'prediction_pizza', 'guess': 'yes or no' }
+        return JsonResponse(context_dict)
     
 
-# Helpers
+# Helpers functions
 def get_ingredients(string):
+    # parses the vector string from Pizza and returns all ingredients names
     ingredients=[]
     list_of_ingd = string.split(',')
     list_of_ingd.pop(0)
-    #print 'func in with list_of_ingd: ', list_of_ingd, 'string', string
+    
     for i in range(0,len(list_of_ingd)):
         list_of_ingd[i] = int(list_of_ingd[i])
-        #print 'list_of_ingd[i]: ', list_of_ingd[i], 'i: ', i, 'len(list_of_ingd): ', len(list_of_ingd)
         if list_of_ingd[i] == 1:
             try:
                 ingd = Ingredient.objects.get(index=i)
@@ -123,6 +114,7 @@ def get_ingredients(string):
     return ingredients
 
 def get_pizza_dict(new_index):
+    # Reutrns a dictionary of Pizzasto be past as JSON 
     try:
         pizza = Pizza.objects.get(index = new_index)
     except Pizza.DoesNotExist:
@@ -136,11 +128,13 @@ def get_pizza_dict(new_index):
     }
     return pizza
     
-def add_pair(pair_index): # populate database with pairs
+def add_pair(pair_index):
+  # populate database with pairs
   p = PairPreferance.objects.get_or_create(index=pair_index)[0]
   p.save()
   print 'p', p, 'id', p.id
   return p
+
 
 # API view
 class PizzaList(generics.ListCreateAPIView):

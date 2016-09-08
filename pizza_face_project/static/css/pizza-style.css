@@ -1,0 +1,177 @@
+/***************************
+    1. base
+    2. graphics
+    3. introductions
+    4. details
+    5. pizza choice
+    6. predictions
+    7. pizza
+    
+***************************/
+
+@font-face {
+   font-family: Open Sans;
+   src: url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+}
+
+h1,h2,h3,h4,h5,h6, p{
+    font-weight: lighter !important;
+    font-family:'Open Sans',Arial,sans-serif !important;
+    color: #236AD9;
+    
+}
+
+.deep-blue{
+    background-color: #236AD9;
+}
+
+.blue{
+    background-color: #A7C3F0;
+}
+
+.light-blue{
+    background-color: #EDF3FC;
+}
+
+
+.next{
+    float:right;
+}
+
+
+
+/***************************
+    graphics
+***************************/
+
+#like {
+    width: 35px;
+    height: 35px;
+    background: url(/pizza_face/static/graphics/sypf-btn.gif) 0 0;
+}
+
+#vs {
+    width: 50px;
+    height: 35px;
+    background: url(/pizza_face/static/graphics/sypf-btn.gif) -35px 0;
+}
+
+#yes {
+    width: 35px;
+    height: 35px;
+    background: url(/pizza_face/static/graphics/sypf-btn.gif) 0 -36px;
+}
+
+#no {
+    width: 35px;
+    height: 35px;
+    background: url(/pizza_face/static/graphics/sypf-btn.gif) -35px -36px;
+}
+
+#like, #yes, #no{
+    float: left;
+    margin-left: 5px;
+}
+
+/***************************
+    introductions
+***************************/
+.meal-info, .hili, .intro{
+    display: block;
+    padding: 5px 20px;
+}
+
+.logo{
+    display: block;
+    margin: 30px auto;
+}
+
+.meal-btns, .meal-info, .intro{
+    background-color: #fff;
+}
+
+
+/***************************
+    details
+***************************/
+
+/***************************
+    pizza choice
+***************************/
+
+.pizzas{
+    padding: 10px;
+}
+.pizzas-cont{
+    position:static;
+    float:left;
+}
+
+.vers{
+    display:block;
+    position:absolute;
+    top:30%;
+    left:46%;
+}
+
+/***************************
+    predictions 
+***************************/
+
+.pred-cont{
+    display:block;
+    margin: 0 auto;
+    position:relative;
+    min-height: 300px;
+    overflow: auto;
+    padding: 0 0 !important;
+}
+
+.pred-cont h2{
+    color: #fff;
+    text-align: center;
+    
+}
+
+/***************************
+    pizza 
+***************************/
+.meal-cont{
+    float: left;
+    width:100%;
+}
+
+.meal-image {
+    width:100%;
+    height:200px;
+    overflow: hidden;
+}
+
+.meal-image img{
+    display:block;
+    width: 100%;
+    margin: auto;
+}
+
+.meal-info{
+    width:100%;
+}
+
+
+.meal-btns{
+    float:right;
+    display:block;
+    margin: 1px auto;
+}
+
+@media only screen and  (max-width: 768px) {
+    .meal-image {
+        height:150px;
+    }
+}
+
+@media only screen and  (max-width: 480px) {
+    .meal-image {
+        height:100px;
+    }
+}

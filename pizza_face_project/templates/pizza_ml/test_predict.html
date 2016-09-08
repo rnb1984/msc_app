@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href ='/static/css/bootstrap.min.css' rel='stylesheet' />
+        <link href ='/static/css/pizza-style.css' rel='stylesheet' />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="/static/js/app.js"></script>
+        <title>Pizza Face</title>
+    </head>
+    <body>
+        <div class="col-xs-3">
+          <!--Pairs-->
+          {% if pairs %}
+          <ol>
+          {% for pair in pairs %}
+            <li><h4>{{ pair.index }}</h4><small>value:{{ pair.value }}</small></li>
+          {% endfor %}
+          </ol>
+          {% endif %}
+      </div>
+    </boy>

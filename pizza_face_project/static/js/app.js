@@ -8,60 +8,88 @@ var pairApp = angular.module('pairApp',[])
     }]);
 
 
+
 // Controller for pizzas
 pairApp.controller('pairsController', function ($scope, $http ) {
 
     // urls
-    var pairdata = $http.post("/test/"),
-    compsize = 0;
+    var pairdata = $http.post("/test/");
+    var compsize = 0, curr =0;
+    var right_pizza=[], left_pizza =[], index_pair =[];
+    $scope.round=1;
+    $scope.countdwn=10;
+    
     
     pairdata.then(function (response) {
-      $scope.rightside = response.data.rights;
-      $scope.indexs = response.data.pairindex;
-      $scope.leftside = response.data.lefts; // todo
-      compsize = response.data.pairindex.length;
+        // set paramaters
+      right_pizza = response.data.rights;
+      index_pair = response.data.pairindex;
+      left_pizza = response.data.lefts;
+      next_pair(curr);
+      compsize = 50;/////////////////////////////////////////// index_pair.length;
       
-      
-      console.log(response.data)
+      console.log(response.data);
       });
+      
+     var next_pair = function(i){
+         // Sets new pairs
+         $scope.rightside = right_pizza[i];
+         $scope.leftside = left_pizza[i];
+         $scope.indexs = index_pair[i];
+         console.log(right_pizza);
+         console.log($scope.indexs);
+         console.log($scope.leftside);
+     };
+     
+     var update_pair = function(){
+         // Posts preferrance results and updates scope
+         var pk= $scope.indexs['id'];
+         console.log($scope.countdwn);
+         if ($scope.countdwn < 1){
+             $scope.round++;
+             reset_countdwn($scope.round, $scope.round);
+         }
+         else{ $scope.countdwn = $scope.countdwn-1}
+         console.log($scope.countdwn,$scope.round);
+        
+         var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'] };
+             console.log(data, pk)
+             $http.put("/pair/"+pk+"/",data).success(function(data){
+                 $scope.new_index = data;
+               console.log(data);
+             });
+             console.log(curr);
+             if (curr<compsize){
+                 next_pair(curr++);
+             }
+             else{
+                 console.log(curr,compsize, 'end got to page' );
+                 window.location.href="https://pizza-face-site-robertburry.c9users.io/test/predict/";
+             }
+     };
+     
+     var reset_countdwn = function(round){
+         if (round == 4){
+             $scope.countdwn = 20;
+         }
+         else{
+             $scope.countdwn = 15;
+         }
+     };
     
      // left likes
-     $scope.prefLeft = function(item){
+     $scope.prefLeft = function(){
          // set pair oject values
-         $scope.indexs[item]['value'] = 1;
-         var pk= $scope.indexs[item]['id'];
-         
-       // angular.forEach($scope.new_index, function(i){
-        //           console.log(i.id, pk, i.index, $scope.indexs[item]['index']);
-        //           if (i.index === $scope.indexs[item]['index']){
-        //               console.log( '---in',i);
-         //              pk = i.id;
-          //             $scope.indexs[item]['index'] = i.index;
-        //               new_date = i.date;
-          //             new_slug = i.slug; } });
-        
-         var data = {id: pk, index: $scope.indexs[item]['index'], value: $scope.indexs[item]['value'] };
-         console.log(data, pk)
-         $http.put("/pair/"+pk+"/",data).success(function(data){
-             $scope.new_index = data;
-           console.log(data);
-         });
+         $scope.indexs['value'] = 1;
+         update_pair();
      };
      
      // right likes
-     $scope.prefRight = function(item){
-         console.log(item);
+     $scope.prefRight = function(){
          
          // set pair oject values
-         $scope.indexs[item]['value'] = -1;
-         var pk= $scope.indexs[item]['id'];
-         
-         var data = {id: pk, index: $scope.indexs[item]['index'], value: $scope.indexs[item]['value'] };
-         console.log(data, pk)
-         $http.put("/pair/"+pk+"/",data).success(function(data){
-             $scope.new_index = data;
-           console.log(data);
-         });
+         $scope.indexs['value'] = -1;
+         update_pair();
      };
      
 });

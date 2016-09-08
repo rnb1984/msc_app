@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <link href ='/static/css/bootstrap.min.css' rel='stylesheet' />
+        <link href ='/static/css/pizza-style.css' rel='stylesheet' />
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script src="/static/js/app.js"></script>
         <title>Pizza Face</title>
@@ -12,16 +13,16 @@
       {% verbatim %}
       <div ng-app="pairApp" ng-controller="pairsController">
 
-          <div class="col-xs-3">
+          <div class="pizzas">
           <!--Pizza left-->
-          <ol>
-              <li ng-repeat="left in leftside">
-            <h4>{{ left.name }}</h4>
-            <img style="width:100px;" src='{{ left.pic }}'/>
-            <button style='width:50px; background-color:#4477ff;' ng-click='prefLeft($index)'>This</button>
-            <small>index:{{ left.index }}</small>
+          <ol class ="pizzas-cont col-xs-3">
+              <li class="meal-cont">
+            <h3>{{ leftside.name }}</h3>
+            <div class="meal-image"><img src='{{ leftside.pic }}'/></div>
+            <button style='width:50px; background-color:#4477ff;' ng-click='prefLeft()'>This</button>
+            <small>index:{{ leftside.index }}</small>
             <ul>
-                <li ng-repeat="ingredient in left.ingredients">{{ ingredient }}</li>
+                <li ng-repeat="ingredient in leftside.ingredients">{{ ingredient }}</li>
             </ul>
             </li>
           </ol>
@@ -30,22 +31,22 @@
       <div class="col-xs-2">
           <!--Pizza left-->
           <ol>
-            <li ng-repeat="index in indexs"><small>pair index:{{ index.index }}, value: {{ index.value }} </small>
+            <li><small>pair index:{{ indexs.index }}, value: {{ indexs.value }} </small>
                 
             </li>
           </ol>
       </div>
       
-      <div class="col-xs-3">
+      <div class="pizzas">
           <!--Pizza right-->
-          <ol>
-              <li ng-repeat="right in rightside">
-            <h4>{{ right.name }}</h4>
-            <img style="width:100px;" src='{{ right.pic }}'/>
+          <ol class ="pizzas-cont col-xs-3">
+              <li class="meal-cont">
+            <h3>{{ rightside.name }}</h3>
+            <div class="meal-image"><img src='{{ rightside.pic }}'/></div>
             <button style='width:50px; background-color:#22ff55;' ng-click='prefRight($index)'>That</button>
-            <small>index:{{ right.index }}</small>
-            <ul>
-                <li ng-repeat="ingredient in right.ingredients">{{ ingredient }}</li>
+            <small>index:{{ rightside.index }}</small>
+            <ul class="meal-info">
+                <li ng-repeat="ingredient in rightside.ingredients">{{ ingredient }}</li>
             </ul>
             </li>
           </ol>
@@ -54,6 +55,7 @@
          <div class="col-xs-2">
               <button style='width:50px; background-color:#dd6611;' ng-click='pairs()'>pairs</button>
               {{ new_index }}
+              <h2><small>{{ round }}</small>{{ countdwn }}</h2>
         </div>
               
       </div>
