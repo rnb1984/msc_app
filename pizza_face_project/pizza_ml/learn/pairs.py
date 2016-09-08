@@ -71,34 +71,49 @@ class Pairs:
                 if item == i: return True
         return False
         
+    def get_train_item(self):
+        # generantes and returns random training item
+        return randint(self.train_start, self.train_end)
+        
     
     def add_to_index(self,size, comparisions, boo):
         # create a list the size of the comparisions needed from mixed list
         # check if a (true) or b (false)
         if boo == True:
-            
+            # select from full training set
             if size == self.TRAING_SET:
-                for i in range(0,comparisions):
-                    item = randint(self.train_start, self.train_end)
+                for i in range(1,comparisions+1):
+                    item = self.get_train_item()    #item = randint(self.train_start, self.train_end)
                     self.index_a.append(item)
+                    #print i, item, '========================================Check this===== for a Full train', boo, ' comparisions: ', comparisions,'size:', size
+            # select from smaller training set
             else:
-                for i in range(0,comparisions):
-                    random_i = randint(0, self.TRAIN_SUB)
+                for i in range(1,comparisions+1):
+                    random_i = randint(1, self.TRAIN_SUB)
                     for item in self.train_sub:
                         if self.train_sub[item] == random_i:
                             self.index_a.append(item)
-                            print '========================================Check this=============================================='
+                            #print i, item, '========================================Check this==================== for a small train','a: ', boo, ' comparisions: ', comparisions,'size:', size
         else:
             if size == self.TRAING_SET:
-                for i in range(0,comparisions):
-                     self.index_b.append(randint(self.train_start, self.train_end))
+                for i in range(1,comparisions+1):
+                    item = self.get_train_item() #item = randint(self.train_start, self.train_end)
+                    self.index_b.append(item)
+                    #print i, item, '========================================Check this===== for b Full train', boo, ' comparisions: ', comparisions,'size:', size
             else:
-                for i in range(0,comparisions):
-                    random_i = randint(0, self.TRAIN_SUB)
-                    for item in self.train_sub:
-                        if self.train_sub[item] == random_i:
-                            self.index_b.append(item)
-                            print '========================================Check this=============================================='
+                for i in range(1,comparisions+1):
+                    random_i = randint(1, self.TRAIN_SUB)
+                    j=0
+                    #print 'self.train_sub', self.train_sub
+                    item_select = False
+                    while(item_select == False):
+                        for item in self.train_sub:
+                            #print i, 'range 1 to ', comparisions, 'in sub the size', len(self.train_sub), j, 'self.train_sub[item] :' ,self.train_sub[item], 'random_i :', random_i
+                            if self.train_sub[item] == random_i:
+                                self.index_b.append(item)
+                                #print i, item, '========================================Check this====================== for b small train','b: ', boo, ' comparisions: ', comparisions,'size:', size
+                                item_select = True
+                            j = j+1
 
                         
 
@@ -165,44 +180,38 @@ class Pairs:
         if (left_pair > index_size) or (right_pair > index_size): return False
         elif (left_pair > no_of_items_in_index) or (right_pair > no_of_items_in_index): return False
         else:        return True
-
-
     
-        
-        
-
-pair = Pairs()
-# set up train
-# set up tracking
-pair.set_train(5)
-print ' Train set '
-pair.set_sub()
-print ' Sub set '
-comparisions = []
-comparisions.append(10)
-comparisions.append(15)
-comparisions.append(15)
-comparisions.append(20)
-pair.set_pairs(4,comparisions)
-print pair.index_a, len(pair.index_a)
-print pair.index_b, len(pair.index_b)
-
-dict_comparisions = { }
-
-print '-------------- Find index of pairs --------------------------'
-for i in range(len(pair.index_a)):
-    print '-------------- Pairs are ', pair.is_pair(pair.index_a[i], pair.index_b[i]),' --------------------------'
-    if pair.is_pair(pair.index_a[i], pair.index_b[i]):
-        pairs = pair.get_index_of_pair(pair.index_a[i], pair.index_b[i])
-        if (pair.index_a[i] == pair.index_b[i]):
-            print pairs, 'this set of pairs are the same: ', ' index_a[i] is ', pair.index_a[i], ' index_b[i] is ', pair.index_b[i]
-            dict_comparisions[pairs] = -1
+    def get_orginal_pair(self, exist_pair, dict_comparisions):
+        # recursive function to find orginal pair in dict
+        if exist_pair in dict_comparisions:
+            # pair exists
+            left_pair= self.get_train_item()
+            right_pair= self.get_train_item()
+            new_pair = self.get_index_of_pair(left_pair, right_pair)
+            new_pair = self.get_orginal_pair(new_pair, dict_comparisions)
+            return new_pair
         else:
-            dict_comparisions[pairs] = 0
-            print pairs, 'good pairs: ', ' index_a[i] is ', pair.index_a[i], ' index_b[i] is ', pair.index_b[i]
-            print '-------------- Validate index of pairs --------------------------'
-            print pair.get_pairs(pairs), ' do these match these ', 'index_a[i] is ', pair.index_a[i], ' index_b[i] is ', pair.index_b[i]
-            print '----------------------------------------'
-    else:
-        print '-------------- Pairs ', pair.index_a[i], pair.index_b[i], 'are ' , pair.is_pair(pair.index_a[i], pair.index_b[i]),' --------------------------'
-print dict_comparisions
+            # pair doesn't exist
+            return exist_pair
+    
+    def get_dict_comparisions(self):
+        # create a dictionary of non matching, orginal pairs
+        dict_comparisions = { }
+
+        for i in range(len(self.index_a)):
+
+            if self.is_pair(self.index_a[i], self.index_b[i]):
+                
+                if (self.index_a[i] == self.index_b[i]):
+                    # get unmatched right
+                    while (self.index_a[i] == self.index_b[i]):
+                        self.index_b[i] = self.get_train_item()
+                    
+                # check pair doesn't exist
+                pairs = self.get_index_of_pair(self.index_a[i], self.index_b[i])
+                pairs = self.get_orginal_pair(pairs,dict_comparisions)
+                dict_comparisions[pairs] = 0
+            else:
+                print 'Pairs are out of range ', self.index_a[i], self.index_b[i], 'are ' , self.is_pair(self.index_a[i], self.index_b[i])
+        
+        return dict_comparisions

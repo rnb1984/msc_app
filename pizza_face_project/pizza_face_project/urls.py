@@ -18,6 +18,9 @@ urlpatterns = patterns('',
     url(r'^', include('pizza_ml.urls')),
     url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.STATIC_PATH}),
     
+    #test
+    url(r'^test/', views.pizza_choice, name = 'test'),
+    
     # APIs
     url(r'^pizzas/', views.PizzaList.as_view()),
     url(r'^pizzas/(?P<pk>[0-9]+)/$', views.PizzaList.as_view()),

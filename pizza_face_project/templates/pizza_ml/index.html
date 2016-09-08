@@ -11,8 +11,8 @@ Hello World
     {% for ingredient in ingredients %}
     <li><h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5></li>
     {% endfor %}
-    {% endif %}
     </ol>
+    {% endif %}
 </div>
 
 
@@ -58,7 +58,7 @@ Hello World
         <ul>
           <li ng-repeat="pizza in pizzas">
             <h4>{{ pizza.name }}</h4>
-            <img style="width:100px;" src='{{ pizza.pic }}'/><small>id:{{ pizza.id }}, index:{{ pizza.index }}</small>
+            <img style="width:100px;" ng-src='{{ pizza.pic }}'/><small>id:{{ pizza.id }}, index:{{ pizza.index }}</small>
             <small>ingredient:{{ pizza.ingredients }}</small>
           </li>
         </ul>
