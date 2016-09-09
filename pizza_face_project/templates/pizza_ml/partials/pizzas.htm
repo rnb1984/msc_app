@@ -1,0 +1,9 @@
+<div class="pizzas" ng-controller="pizzaChoice">
+
+    <div ng-repeat="pizza in pizzas | limitTo:2">
+        <!--pizza details-->
+        <div class ="pizzas-cont col-xs-6" ng-include ="'/pizza_face/templates/meal.htm'"></div>
+        <div class ="col-xs-2"></div>
+    </div>
+    <div id="vs" class="vers"></div>
+</div>

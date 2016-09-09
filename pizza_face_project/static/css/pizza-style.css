@@ -9,10 +9,6 @@
     
 ***************************/
 
-@font-face {
-   font-family: Open Sans;
-   src: url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-}
 
 h1,h2,h3,h4,h5,h6, p{
     font-weight: lighter !important;
@@ -47,25 +43,25 @@ h1,h2,h3,h4,h5,h6, p{
 #like {
     width: 35px;
     height: 35px;
-    background: url(/pizza_face/static/graphics/sypf-btn.gif) 0 0;
+    background: url(/static/graphics/sypf-btn.gif) 0 0;
 }
 
 #vs {
     width: 50px;
     height: 35px;
-    background: url(/pizza_face/static/graphics/sypf-btn.gif) -35px 0;
+    background: url(/static/graphics/sypf-btn.gif) -35px 0;
 }
 
 #yes {
     width: 35px;
     height: 35px;
-    background: url(/pizza_face/static/graphics/sypf-btn.gif) 0 -36px;
+    background: url(/static/graphics/sypf-btn.gif) 0 -36px;
 }
 
 #no {
     width: 35px;
     height: 35px;
-    background: url(/pizza_face/static/graphics/sypf-btn.gif) -35px -36px;
+    background: url(/static/graphics/sypf-btn.gif) -35px -36px;
 }
 
 #like, #yes, #no{
@@ -100,6 +96,7 @@ h1,h2,h3,h4,h5,h6, p{
 ***************************/
 
 .pizzas{
+    min-height: 800px;
     padding: 10px;
 }
 .pizzas-cont{
@@ -110,8 +107,10 @@ h1,h2,h3,h4,h5,h6, p{
 .vers{
     display:block;
     position:absolute;
-    top:30%;
-    left:46%;
+    top:20%;
+    left:47%;
+    z-index: 5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /***************************
@@ -139,6 +138,17 @@ h1,h2,h3,h4,h5,h6, p{
 .meal-cont{
     float: left;
     width:100%;
+    height:500px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.meal-name{
+    min-height:100px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #A7C3F0;
+    padding: 0 15px;
+    box-shadow: 0 8px 30px -5px rgba(0, 0, 0, 0.15)
 }
 
 .meal-image {
@@ -155,6 +165,10 @@ h1,h2,h3,h4,h5,h6, p{
 
 .meal-info{
     width:100%;
+    height: 300px;
+}
+.meal-shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 
@@ -162,6 +176,9 @@ h1,h2,h3,h4,h5,h6, p{
     float:right;
     display:block;
     margin: 1px auto;
+    position: absolute;
+    top: 35%;
+    left: 40%;
 }
 
 @media only screen and  (max-width: 768px) {

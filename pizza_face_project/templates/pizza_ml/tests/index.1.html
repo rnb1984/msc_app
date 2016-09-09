@@ -1,0 +1,73 @@
+<!--Template-->
+{% extends 'pizza_ml/base.html' %}
+
+{% block body_block %}
+<script src="/static/js/app.test.js"></script>
+Hello World
+
+<div class="col-xs-3">
+    <!--Ingredients-->
+    {% if ingredients %}
+    <ol>
+    {% for ingredient in ingredients %}
+    <li><h5><small>index {{ ingredient.index }}</small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5></li>
+    {% endfor %}
+    </ol>
+    {% endif %}
+</div>
+
+
+{% verbatim %}
+<div ng-app="pizzaApp" ng-controller="pizzaController">
+    
+
+    <div class="col-xs-3">
+    user profile should be here...
+        <!--<input type='number' ng-model='new_userpro' ng-keyup='add($event)'>-->
+        <select ng-model="new_userpro">
+            <option value="0"> none
+            <option value="8">Dogs
+            <option value="10">Tutorials
+            <option value="9">Cars
+         </select>
+         <button type="text" ng-click='add($event)'>click me</button>
+        
+        <ul>
+          <li ng-repeat="user in userpro">
+            <h5><small>id:{{ user.id }}</small>gender:{{ user.gender }}, with allergies {{ user.allergies }}, diet {{ user.diet }} and dob {{ user.dob }}</h5>
+            <button style='width:50px; background-color:#4477ff;' ng-click='the($index)'>This</button>
+            <button style='width:50px; background-color:#22ff55;' ng-click='that($index)'>That</button>
+            </li>
+        </ul>
+        
+    </div>
+    
+    <div class="col-xs-3">
+    ingredients should be here...
+    
+        <ul>
+          <li ng-repeat="ingredient in ingredients">
+            <h5><small>id:{{ ingredient.id }},index {{ ingredient.index }} </small>;with {{ ingredient.amount }} {{ ingredient.name }}</h5>
+            </li>
+        </ul>
+    
+    </div>
+    
+    <div class="col-xs-3">
+   pizzas should be here...
+    
+        <ul>
+          <li ng-repeat="pizza in pizzas">
+            <h4>{{ pizza.name }}</h4>
+            <img style="width:100px;" ng-src='{{ pizza.pic }}'/><small>id:{{ pizza.id }}, index:{{ pizza.index }}</small>
+            <small>ingredient:{{ pizza.ingredients }}</small>
+          </li>
+        </ul>
+    
+    </div>
+    
+</div>
+
+{% endverbatim %}
+
+{% endblock %}

@@ -2,13 +2,47 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <!-- Pizza face custom CSS -->
+        <link href ='/static/css/pizza-style.css' rel='stylesheet' />
+        <!--Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+        <!-- Bootstrap CSS -->
         <link href ='/static/css/bootstrap.min.css' rel='stylesheet' />
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-        <script src="/static/js/app.test.js"></script>
+         <!-- jQuery library for Bootstrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled Boostrap JavaScript -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Pizza Face</title>
     </head>
-    <body>
-    	<div>{% block body_block %}{% endblock %}</div>
+    <body class="light-blue">
+        {% csrf_token %}
+    	<div class="container">
+    	    {% include 'pizza_ml/header.html' %}
+    	     <!--Main-->
+            <div class="row blue">
+            
+              <div class="col-xs-1"></div>
+              <!--inner container-->
+                <div class="col-xs-10">
+                  {% block content %}{% endblock %}
+                </div>
+                
+              <div class="col-xs-1"></div>
+            </div>
+        </div>
+    	    </div>
+    
     </body>
     <footer></footer>
+    {% block extra_script %}
+    <!-- Angular 1.5.8 -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script> -->
+    
+    <!-- Angular Apps -->
+    <script src="/static/js/app.js"></script>
+    <!--<script src="/static/js/app.route.js"></script> -->
+    {% endblock %}
+    
 </html>

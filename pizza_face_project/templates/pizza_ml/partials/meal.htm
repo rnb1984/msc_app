@@ -1,0 +1,19 @@
+<div>
+    <div class="meal-cont">
+        <!--pizza details-->
+        <div class="meal-image">
+            <img src="{{ pizza.image }}"/>
+        </div>
+        <div class="meal-btns">
+            <a  href="/"><div id="like"></div></a>
+            <a  href="/yes"><div id="yes"></div></a>
+            <a  href="/no"><di id="no"></di></a>
+        </div>
+        <div class="meal-info">
+            <h3> {{ pizza.name }} </h3>
+            <ul ng-repeat="ingredient in pizza.ingredients">
+                <li>{{ ingredient.name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>

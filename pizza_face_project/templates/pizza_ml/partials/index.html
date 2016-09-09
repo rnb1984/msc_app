@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Shutta your Pizza Face</title>
+        <meta charset="utf-8">
+        <!-- Pizza face custom CSS -->
+         <link rel="stylesheet" href="/pizza_face/style/style.css"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+       
+
+    </head>
+    <body class="light-blue">
+        <div class="container">
+            
+            <!--Header-->
+            <p><a href="#/">Main</a> | <a href="#details">Details</a> | <a href="#pizzas">Pizzas</a> | <a href="#prediction">Prediction</a></p>
+            
+            <!--Main-->
+            <div class="row blue">
+            <!--Logo-->
+            <div ><img class="logo" src="/pizza_face/static/graphics/logo_big.png"/></div>
+            
+              <div class="col-xs-1"></div>
+              
+              <!--inner container-->
+                <div class="col-xs-10">
+                  <ng-view></ng-view>
+                </div>
+                
+              <div class="col-xs-1"></div>
+            </div>
+        </div>
+        
+        <!-- Angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    
+    <!-- Temp Angular Script -->
+    <script src="pizza_face/lib/app.js"></script>
+    
+    </body>
+    
+    
+</html>

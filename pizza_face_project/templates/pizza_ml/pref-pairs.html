@@ -1,0 +1,43 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block content %}
+
+{% verbatim %}
+      <div ng-app="pairApp" ng-controller="pairsController" class="pizzas">
+          <h4><small>round {{ round }}</small> {{ countdwn }}</h4>
+          <!--Pizza left-->
+          <div class ="pizzas-cont col-xs-6">
+                  <article class="meal-cont">
+                    <div class="meal-image"><img src='{{ leftside.pic }}'/></div>
+                    
+                    <div class="meal-btns" id="like" ng-click='prefLeft()'></div>
+
+                    <div class="meal-info">
+                        <h3 class="meal-name">{{ leftside.name }}</h3>
+                        <a href="" ng-click='show( lingd )'><small>ingredient list</small></a>
+                        <ul ng-show="lingd.b" class="meal-info meal-shadow"><li ng-repeat="ingredient in leftside.ingredients">{{ ingredient }}</li><small>index:{{ leftside.index }}</small></ul>
+                    </div>
+                </article>
+          </div>
+          
+          <!--Pizza right-->
+          <div class ="pizzas-cont col-xs-6">
+                  <article class="meal-cont">
+                    <div class="meal-image"><img src='{{ rightside.pic }}'/></div>
+                    
+                    <div class="meal-btns" id="like" ng-click='prefRight()'></div>
+
+                    <div class="meal-info">
+                        <h3 class="meal-name">{{ rightside.name }}</h3>
+                        <a href="" ng-click='show( ringd )'><small>ingredient list</small></a>
+                        <ul ng-show="ringd.b" class="meal-info meal-shadow"><li ng-repeat="ingredient in rightside.ingredients">{{ ingredient }}</li><small>index:{{ rightside.index }}</small></ul>
+                    </div>
+                </article>
+          </div>
+        <div id="vs" class="vers"></div>
+              
+      </div>
+      
+{% endverbatim %}
+
+{% endblock %}

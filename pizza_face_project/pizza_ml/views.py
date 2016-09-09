@@ -30,8 +30,9 @@ from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProf
 -- get_pizza
 """
 
-# DEFINE FUNCTION !!!
+
 def index(request):
+    # landing page
     pizzas = Pizza.objects.all().order_by('index')
     ingredients = Ingredient.objects.all().order_by('index')
     # get_object_or_404(klass, *args, **kwargs)
@@ -43,7 +44,7 @@ def pizza_choice(request):
     
     if request.method == 'GET':
         context_dict = { 'welcome' : 'hello world' }
-        return render(request, 'pizza_ml/index_test.html', context_dict)
+        return render(request, 'pizza_ml/pref-pairs.html', context_dict)
     
     elif request.method == 'POST':
         
@@ -89,7 +90,8 @@ def predict_pizza(request):
         # pass all the pairs to ml
         # prediction to be calculated 
         context_dict = { 'welcome' : 'Ready for your predictiond', 'pairs': pairs }
-        return render(request, 'pizza_ml/test_predict.html', context_dict)
+        return render(request, 'pizza_ml/predict.html', context_dict)
+        
     elif request.method == 'POST':
         # on post 
         context_dict= {'prediction': 'prediction_pizza', 'guess': 'yes or no' }
