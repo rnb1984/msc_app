@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pizza_ml.models import Pizza, Ingredient, UserProfile, UserPreferance, PairPreferance
+from pizza_ml.models import Pizza, Ingredient, UserProfile, PairPreferance
 
 """
 Serializers
@@ -23,9 +23,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        #fields = ('dob','gender','allergies','diet')
-        fields = "__all__"
-
+        fields = ('id','dob','gender','allergies','diet','user')
 
 
 class PairPreferanceSerializer(serializers.ModelSerializer):

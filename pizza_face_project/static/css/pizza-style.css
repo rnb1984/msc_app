@@ -64,6 +64,26 @@ h1,h2,h3,h4,h5,h6, p{
     background: url(/static/graphics/sypf-btn.gif) -35px -36px;
 }
 
+#pz-med{
+    color: #d90e28;
+    z-index: 5;
+    position: absolute;
+    top:-5%;
+    left:90%;
+    width: 76px;
+    height: 76px;
+    background: url(/static/graphics/icons.png) -1px 75px;
+}
+
+#pz-small{
+    float: right;
+    margin-top: 50px;
+    color: #faefcd;
+    width: 25px;
+    height: 25px;
+    background: url(/static/graphics/icons.png) 24px -53px;
+}
+
 #like, #yes, #no{
     float: left;
     margin-left: 5px;
@@ -107,7 +127,7 @@ h1,h2,h3,h4,h5,h6, p{
 .vers{
     display:block;
     position:absolute;
-    top:20%;
+    top:22%;
     left:47%;
     z-index: 5;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -179,6 +199,10 @@ h1,h2,h3,h4,h5,h6, p{
     position: absolute;
     top: 35%;
     left: 40%;
+}
+
+.meal-pz{
+    padding:44%;
 }
 
 @media only screen and  (max-width: 768px) {

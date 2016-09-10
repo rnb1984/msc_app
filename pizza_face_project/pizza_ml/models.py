@@ -27,24 +27,33 @@ class UserProfile(models.Model):
 	- Stores user details of participance
 	to be used in post evaluation.
 	"""
-    
-    # user = models.OneToOneField(User)
+	
+    user = models.OneToOneField(User)
     dob = models.DateField(default=date.today())
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
     allergies = models.IntegerField(default=0)
     diet = models.IntegerField(default=0)
+    
+    """
+	UserPreferance
+	- Stores fk to pizza pair index, with 0 or 1 rating, used in comparsisons
+	- Stores latest prediction as pizza index integer
+	- Stores boolean for if prediction was true or false
+	"""
+	
+	# Current prediction = int
+    predict = models.IntegerField(default=0)
+	# Prediction correct = boolean
+    correct = models.BooleanField(default=False)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
-         self.slug = slugify(self.allergies)
+         self.slug = slugify(self.user.username)
          super(UserProfile, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        #return self.user.username
-        dob = str(self.dob)
-        return dob
-
-
+    	return self.user.username
+        
 
 class Pizza(models.Model):
 	"""
@@ -66,7 +75,6 @@ class Pizza(models.Model):
 	
 	def __unicode__(self):
 	    return self.name
-
 
 
 class Ingredient(models.Model):
@@ -93,8 +101,8 @@ class PairPreferance(models.Model):
 	UserPreferance
 	- Stores pair of pizza index, with 0 or 1 rating, used in comparsisons
 	"""
-	# Need a one2many link with user preferance
-
+	# Need link pair to user 
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	# Index of pair
 	index = models.IntegerField(default=0)
 	# Value of pair
@@ -111,23 +119,3 @@ class PairPreferance(models.Model):
 	def __unicode__(self):
 		index = str(self.index)
 		return index
-
-
-class UserPreferance(models.Model):
-	"""
-	UserPreferance
-	- Stores fk to pizza pair index, with 0 or 1 rating, used in comparsisons
-	- Stores latest prediction as pizza index integer
-	- Stores boolean for if prediction was true or false
-	"""
-
-	# Pair index dictionary with values of evaluated pairs
-	pairs = models.CharField(max_length=128)
-	# Current prediction = int
-	predict = models.IntegerField(default=0)
-	# Prediction correct = boolean
-	correct = models.BooleanField(default=False)
-	
-	def __unicode__(self):
-		predict = str(self.predict)
-		return predict

@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from pizza_ml.models import Pizza, Ingredient, UserPreferance, UserProfile, PairPreferance
+from pizza_ml.models import Pizza, Ingredient, UserProfile, PairPreferance
 from learn.pairs import Pairs
+from pizza_ml.forms import UserForm
 
 # For the RESTFUL API
 from rest_framework import generics
@@ -32,15 +33,60 @@ from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProf
 
 
 def index(request):
-    # landing page
+    # Landing page
     pizzas = Pizza.objects.all().order_by('index')
     ingredients = Ingredient.objects.all().order_by('index')
-    # get_object_or_404(klass, *args, **kwargs)
+
     context_dict = { 'pizzas' : pizzas, 'ingredients':ingredients }
     return render(request, 'pizza_ml/index.html', context_dict)
 
+def details(request):
+    # Details page
+    
+    context_dict = { 'hello' : 'Details please' }
+    return render(request, 'pizza_ml/details.html', context_dict)
+    
+def register(request):
+    # Reister for data gathering
+    context_dict={}
+    # A boolean value for telling the template whether the registration was successful.
+    registering = True
+
+    # If it's a HTTP POST, we're interested in processing form data.
+    if request.method == 'POST':
+
+        user_form = UserForm(data=request.POST)
+        # valid forms only
+        if user_form.is_valid():
+
+            # Save the user's form data to database.
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            print 'this is a user' , user, 'username', user.username
+
+            # create user profile object with default fields
+            profile = UserProfile.objects.get_or_create(user=user)[0] # add to pref pairs
+
+            context_dict = {'form': True}
+
+            return JsonResponse(context_dict)
+
+        # Invalid form or forms - mistakes or something else?
+        else:
+            return render(request, 'pizza_ml/register.html',{'user_form': user_form, 'errors': user_form.errors})
+
+    # For get request send user form
+    else:
+        user_form = UserForm()
+        context_dict ={'user_form': user_form, 'registering': registering}
+    
+    return render(request, 'pizza_ml/register.html',context_dict)
+
+
 def pizza_choice(request):
-    # Creates pairs and sends as a JSON
+    # Creates pairs and sends as a 
+    # get_object_or_404(klass, *args, **kwargs)
     
     if request.method == 'GET':
         context_dict = { 'welcome' : 'hello world' }
@@ -109,7 +155,7 @@ def get_ingredients(string):
         list_of_ingd[i] = int(list_of_ingd[i])
         if list_of_ingd[i] == 1:
             try:
-                ingd = Ingredient.objects.get(index=i)
+                ingd = Ingredient.objects.get(index=i) # get_object_or_404(klass, *args, **kwargs)
                 ingredients.append(ingd.name)
             except Ingredient.DoesNotExist:
                 print "Ingredient didn't exist"

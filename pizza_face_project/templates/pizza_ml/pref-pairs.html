@@ -4,7 +4,8 @@
 
 {% verbatim %}
       <div ng-app="pairApp" ng-controller="pairsController" class="pizzas">
-          <h4><small>round {{ round }}</small> {{ countdwn }}</h4>
+          
+          <div id="pz-med"><h2 class="col-xs-2">{{ countdwn }}</h2><div id="pz-small"><small class="meal-pz">{{ round }}</small></div></div>
           <!--Pizza left-->
           <div class ="pizzas-cont col-xs-6">
                   <article class="meal-cont">
@@ -35,7 +36,6 @@
                 </article>
           </div>
         <div id="vs" class="vers"></div>
-              
       </div>
       
 {% endverbatim %}

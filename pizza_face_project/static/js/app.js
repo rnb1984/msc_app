@@ -1,7 +1,6 @@
 
 var pairApp = angular.module('pairApp',[])
     .config(['$httpProvider', function($httpProvider) {
-        console.log('got here')
         // set CSRF for Django
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';

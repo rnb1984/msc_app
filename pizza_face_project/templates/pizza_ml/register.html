@@ -1,0 +1,29 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block content %}
+
+<div>
+    <form class="form-horizontal" id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+    
+    {% csrf_token %}
+
+    {% for hidden in user_form.hidden_fields %}
+        <small>{{ hidden }}</small>
+    {% endfor %}
+
+    {% for field in user_form.visible_fields %}
+    <div class="form-group">
+        <label class="control-label" for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        <input type ="{{ field.name }}" name="{{ field.name }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.name }}">
+        <small>{{ field.errors }}{{ field.help_text }}</small>
+    </div>
+    <br/>
+    {% endfor %}
+
+
+    <input type="submit" name="submit" value="Register" />
+
+    </form>
+
+</div>
+{% endblock %}
