@@ -83,7 +83,7 @@ DATABASES = {
 LANGUAGE_CODE = 'en-us'
 
 # Redirects non logged in users
-LOGIN_URL = '/bba/login/'
+LOGIN_URL = '/login/'
 
 TIME_ZONE = 'UTC'
 

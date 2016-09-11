@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('value', models.IntegerField(default=0)),
                 ('date', models.DateField(default=datetime.date(2016, 9, 10))),
                 ('slug', models.SlugField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.IntegerField(default=0)),
             ],
         ),
         migrations.CreateModel(

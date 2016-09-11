@@ -85,6 +85,7 @@ h1,h2,h3,h4,h5,h6, p{
 }
 
 #like, #yes, #no{
+    cursor:pointer;
     float: left;
     margin-left: 5px;
 }
@@ -105,7 +106,9 @@ h1,h2,h3,h4,h5,h6, p{
 .meal-btns, .meal-info, .intro{
     background-color: #fff;
 }
-
+.intro{
+    min-height: 1000px;
+}
 
 /***************************
     details

@@ -10,6 +10,7 @@
         <link href ='/static/css/bootstrap.min.css' rel='stylesheet' />
          <!-- jQuery library for Bootstrap -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="/pizza_face_project/static/jquery/pizza-face-jquery.js"></script>
         <!-- Latest compiled Boostrap JavaScript -->
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +26,15 @@
               <div class="col-xs-1"></div>
               <!--inner container-->
                 <div class="col-xs-10">
+                  <!-- authenticated -->
+                  {% if user.is_authenticated %}
+                  <p> <small>Username: {{ user.username }} & Email: {{ user.email }} </small></p>
+                  {% block user_content %}{% endblock %}
+                  {% else %}
+                  <h1>Please register to take part</h1>
                   {% block content %}{% endblock %}
+                  {% endif %}
+                  
                 </div>
                 
               <div class="col-xs-1"></div>
@@ -42,8 +51,8 @@
     
     <!-- Angular Apps -->
     <script src="/static/js/app.form.js"></script>
-    <!--<script src="/static/js/app.js"></script>
-    <script src="/static/js/app.route.js"></script> -->
+    <script src="/static/js/app.js"></script>
+    <!--<script src="/static/js/app.route.js"></script> -->
     {% endblock %}
     
 </html>

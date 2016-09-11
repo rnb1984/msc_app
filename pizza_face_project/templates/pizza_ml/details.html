@@ -1,6 +1,6 @@
 {% extends 'pizza_ml/base.html' %}
 
-{% block content %}
+{% block user_content %}
 
 {% verbatim %}
 
@@ -25,26 +25,27 @@
     <div class="hili" ng-app="formApp" ng-controller="formController">
       
       <p> {{ master }} </p>
+      <p> userdetails/ {{ two }} </p>
 
         <form class="form-horizontal" role="form" name="userForm" ng-model="user">
           
           <!-- age <span ng-show="userForm.age.$dirty && userForm.age.$invalid">Required filed</span> -->
           <div class="form-group">
-              <label for="age">age:</label> {{ userForm.age.$pristine }} {{ userForm.age.$dirty }}
-              <select class="form-control" ng-model="user.age" name="age">
-                <option ng-repeat="age in ages" value="{{ $index  }}">{{ age }}</option>
-              </select required>
-              <span ng-show=""><small>Please fill in</small></span>
+              <label for="age">age:</label>
+              <select class="form-control" ng-model="user.age" ng-options="age.code as age.name for age in ages" name="age" required>
+                <option value="">please select</option>
+              </select>
+              
               
               <br>
         </div>
         
         <!-- gender  -->
         <div class="form-group">
-              <label for="gender">gender:</label><span>{{userForm.age.$valid}}</span>
-              <select class="form-control" ng-model="user.gender"  value="Please select" name="gender">
-                <option ng-repeat="sex in gender" value="{{ sex.value }}"> {{ sex.name }}</option>
-              </select required>
+              <label for="gender">gender:</label>
+              <select class="form-control" ng-model="user.gender" ng-options="sex.code as sex.name for sex in gender" name="gender" required>
+                <option value="">please select</option>>
+              </select>
               <br>
         </div>
         
@@ -75,19 +76,14 @@
          <!-- occupation  -->
         <div class="form-group">
               <label for="live">occupation:</label>
-              <select id ="" class="form-control" ng-model="user.occupation" name="gender">
-                <option ng-repeat="occupation in occupations" value="{{ $index }}"> {{ occupation }} </option>
-              </select required>
+              <select id ="" class="form-control" ng-model="user.occupation" ng-options="occupation.code as occupation.name for occupation in occupations" name="occupation" required>
+                <option value="">please select</option>
+              </select>
               <br>
         </div>
           
-          <!-- Submit Button 
-          <div class="form-group"> 
-            <div class="col-sm-offset-2 col-sm-10">
-              <button  class="btn btn-default">Submit</button>
-            </div>
-          </div>-->
-      <p>{{ user }}</p>  
+          <!-- Submit Button -->
+      <p>{{ user }}{{userForm.$valid}} </p>  
     
      <button ng-click="fill()" class="btn btn-primary next" type="submit" role="button">Next</button>
      </form>

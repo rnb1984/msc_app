@@ -23,7 +23,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('id','dob','gender','allergies','diet','user')
+        fields = ('id','dob','gender','allergies','diet')
 
 
 class PairPreferanceSerializer(serializers.ModelSerializer):

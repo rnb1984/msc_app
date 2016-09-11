@@ -12,7 +12,9 @@ var pairApp = angular.module('pairApp',[])
 pairApp.controller('pairsController', function ($scope, $http ) {
 
     // urls
-    var pairdata = $http.post("/test/");
+    console.log('got here')
+
+    var pairdata = $http.post("/choices/");
     var compsize = 0, curr =0;
     var right_pizza=[], left_pizza =[], index_pair =[];
     $scope.round=1;
@@ -65,7 +67,7 @@ pairApp.controller('pairsController', function ($scope, $http ) {
          }
         else{
              console.log(curr,compsize, 'end got to page' );
-             window.location.href="https://pizza-face-site-robertburry.c9users.io/test/predict/";
+             window.location.href="/results/";
          }
      };
      $scope.lingd = {name: 'left', b:false};

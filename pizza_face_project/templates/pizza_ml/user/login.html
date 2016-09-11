@@ -1,0 +1,18 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block content %}
+
+<div class="col-xs-8">
+<h2>Login</h2>
+
+
+<form class="form-horizontal" id="login_form" method="post" action="/login/">
+    {% csrf_token %}
+    <label class="control-label" for ='username'>Username:</label><input id='username' class="form-control" type="text" name="username" value="" size="50" />
+    <br />
+    <label class="control-label" for ='pass'>Password:</label><input id='pass' class="form-control" type="password" name="password" value="" size="50" />
+    <br />
+    <input class="btn btn-primary" type="submit" value="submit" />
+</form>
+</div>
+{% endblock %}

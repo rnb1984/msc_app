@@ -25,10 +25,6 @@ ingrdIndex = IndexList()
 pizzas = PizzaMatrix()
 
 def populate():
-  # create test user
-  profile_a = add_userprof('M', 3, 5)
-  profile_b = add_userprof('F', 8, 9)
-  profile_c = add_userprof('F', 1, 1)
   
   # populate database with pizzas and set up matrix
   with open('pizza_toppings.csv', 'rb') as csvfile:

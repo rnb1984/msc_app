@@ -102,7 +102,7 @@ class PairPreferance(models.Model):
 	- Stores pair of pizza index, with 0 or 1 rating, used in comparsisons
 	"""
 	# Need link pair to user 
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.IntegerField(default=0)
 	# Index of pair
 	index = models.IntegerField(default=0)
 	# Value of pair
