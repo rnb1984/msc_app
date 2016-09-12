@@ -1,4 +1,4 @@
 {% load staticfiles %}
-<p><a href="/">Main</a> | <a href="/details/">Details</a> | <a href="/register/">Register</a> | <a href="/results/">Prediction</a>  | <a href="/login/">Login</a>  | <a href="/logout/">Logout</a> | <a href="/results/">Pizza game</a></p> 
+<p><a href="/">Main</a> | <a href="/details/">Details</a> | <a href="/register/">Register</a> | <a href="/results/">Prediction</a>  | <a href="/login/">Login</a>  | <a href="/logout/">Logout</a> | <a href="/results/">Pizza game</a>| {% if title %}{{ title }}{% else %}Shutta Your Pizza Face{% endif %}</p>
 <!--Logo-->
 <div class="row blue"><img class="logo" src="/static/graphics/logo_big.png"/></div>

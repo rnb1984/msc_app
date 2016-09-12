@@ -10,7 +10,6 @@ class PizzaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pizza
-        #fields = ('name', 'index', 'pic', 'ingredients', 'slug')
         fields = "__all__"
 
 
@@ -23,11 +22,10 @@ class IngredientSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('id','dob','gender','allergies','diet')
+        fields = ('id','dob','gender','allergies','diet', 'occupation')
 
 
 class PairPreferanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PairPreferance
         fields = ( 'id','index','value')
-        #fields = "__all__"

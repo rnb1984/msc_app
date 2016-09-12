@@ -42,7 +42,7 @@ def index(request):
     pizzas = Pizza.objects.all().order_by('index')
     ingredients = Ingredient.objects.all().order_by('index')
 
-    context_dict = { 'pizzas' : pizzas, 'ingredients':ingredients }
+    context_dict = { 'title' : 'Welcome','pizzas' : pizzas, 'ingredients':ingredients }
     return render(request, 'pizza_ml/index.html', context_dict)
  
 # Register page  
@@ -80,9 +80,10 @@ def register(request):
     # For get request send user form
     else:
         user_form = UserForm()
-        context_dict ={'user_form': user_form, 'registering': registering}
+        context_dict ={ 'title' : 'Register' ,'user_form': user_form, 'registering': registering}
     
-    return render(request, 'pizza_ml/register.html',context_dict)
+    return render(request, 'pizza_ml/register.html', context_dict)
+
 # Login page
 def user_login(request):
 
@@ -109,7 +110,7 @@ def user_login(request):
 
     else:
         # not logged in so register
-        return render(request, 'pizza_ml/user/login.html', {})
+        return render(request, 'pizza_ml/user/login.html', {'title' : 'Login'})
 
 @login_required
 def user_logout(request):
@@ -119,7 +120,8 @@ def user_logout(request):
 
 @login_required
 def restricted(request):
-    return HttpResponse("You are logged in")
+    return HttpResponse("MINKA!! You are logged in")
+
 
 # Posts user id
 def current_user(request):
@@ -130,15 +132,56 @@ def current_user(request):
 # Deails page
 def details(request):
     # Details page
-    context_dict = { 'id' : request.user.id }
+    context_dict = {'title' : 'Details', 'id' : request.user.id }
     return render(request, 'pizza_ml/details.html', context_dict)
+
+# Trainging for ui
+def train(request):
+    if request.method == 'GET':
+        context_dict = { 'title' : 'Training' }
+        return render(request, 'pizza_ml/pref-pairs.html', context_dict)
+    elif request.method == 'POST':
+        # create 3 pairs for user to train on
+         print 'in Post'
+         user = request.user
+         pair = Pairs()
+         # set up a 3 item training from the 0 indexed pizza item
+         pair.set_train(0)
+         pair.set_sub()
+         # number of comparisions
+         comparisions = []
+         comparisions.append(3)
+         pair.set_pairs(1,comparisions)
+         
+         # create JSON file
+         data = pair.get_dict_comparisions()
+         pizza_left =[]
+         pizza_right=[]
+         pizzas_index=[]
+         pizzas_rated=[]
+         
+         for index in data:
+             # from classget the index and create a pairobject
+            pairs = pair.get_pairs(index)
+            pizza_left.append(get_pizza_dict(pairs[0]))
+            pizza_right.append(get_pizza_dict(pairs[1]))
+            value = {
+                'id': 99999999999,
+                'index':index ,
+                'value': 2
+            }
+            pizzas_index.append(value)
+         print 'pizza_left', pizza_left, 'pizza_right', pizza_right
+         context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
+         return JsonResponse(context_dict)
 
 # Pizza choices page
 def pizza_choice(request):
     # Creates pairs and sends as a 
     print 'got here with', request.method
     if request.method == 'GET':
-        context_dict = { 'welcome' : 'hello world' }
+        # title differentates comands on client side
+        context_dict = { 'title' : 'Choices' } 
         return render(request, 'pizza_ml/pref-pairs.html', context_dict)
     
     elif request.method == 'POST':
@@ -172,7 +215,7 @@ def pizza_choice(request):
             value = {
                 'id': pair_db.id,
                 'index':index ,
-                'value': 0
+                'value': 2 # can't be 0 or 1
             }
             pizzas_index.append(value)
          print 'pizza_left', pizza_left, 'pizza_right', pizza_right
@@ -213,7 +256,7 @@ def results(request):
         doc_new.append(row)
         save_to_csv(doc_new)
         # feedback
-        context_dict = { 'welcome' : 'Ready for your predictiond', 'pairs': pairs }
+        context_dict = { 'title' : 'Congratulations', 'welcome' : 'Ready for your predictiond', 'pairs': pairs }
         return render(request, 'pizza_ml/predict.html', context_dict)
 
 

@@ -10,11 +10,14 @@
         <link href ='/static/css/bootstrap.min.css' rel='stylesheet' />
          <!-- jQuery library for Bootstrap -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/pizza_face_project/static/jquery/pizza-face-jquery.js"></script>
         <!-- Latest compiled Boostrap JavaScript -->
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Pizza Face</title>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Shutta Your Pizza Face</title>
+        {% endif %}
     </head>
     <body class="light-blue">
         {% csrf_token %}
@@ -31,7 +34,7 @@
                   <p> <small>Username: {{ user.username }} & Email: {{ user.email }} </small></p>
                   {% block user_content %}{% endblock %}
                   {% else %}
-                  <h1>Please register to take part</h1>
+                  <h1>{{ title }}</h1>
                   {% block content %}{% endblock %}
                   {% endif %}
                   
@@ -43,7 +46,7 @@
     	    </div>
     
     </body>
-    <footer></footer>
+    <footer class="container blue"><p>This website is part of masters research project at the University of Glasgow and no information will be used for commercial purposes or by third parties.</p></footer>
     {% block extra_script %}
     <!-- Angular 1.5.8 -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>

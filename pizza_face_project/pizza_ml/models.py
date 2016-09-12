@@ -29,10 +29,11 @@ class UserProfile(models.Model):
 	"""
 	
     user = models.OneToOneField(User)
-    dob = models.DateField(default=date.today())
+    dob = models.IntegerField(default=0)
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
-    allergies = models.IntegerField(default=0)
-    diet = models.IntegerField(default=0)
+    allergies = models.CharField(default="0", max_length=128)
+    diet = models.CharField(default="0", max_length=128)
+    occupation = models.IntegerField(default=0)
     
     """
 	UserPreferance
@@ -41,10 +42,8 @@ class UserProfile(models.Model):
 	- Stores boolean for if prediction was true or false
 	"""
 	
-	# Current prediction = int
-    predict = models.IntegerField(default=0)
-	# Prediction correct = boolean
-    correct = models.BooleanField(default=False)
+	# Current prediction = int    predict = models.IntegerField(default=0)			!!
+	# Prediction correct = boolean   correct = models.BooleanField(default=False)	!!
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -61,7 +60,7 @@ class Pizza(models.Model):
 	- Stores name of pizza, pic of pizza, index pizza is on matrix of pizza and a feature vecture of ingredients
 	"""
 
-	name = models.CharField(max_length=128) # maybe bigger!!
+	name = models.CharField(max_length=128) 
 	index = models.IntegerField(default=0)
 	pic = models.URLField()
 	ingredients = models.CharField(max_length=128) # prefer list of integers but might have to use string and parse!
@@ -106,7 +105,7 @@ class PairPreferance(models.Model):
 	# Index of pair
 	index = models.IntegerField(default=0)
 	# Value of pair
-	value = models.IntegerField(default=0)
+	value = models.IntegerField(default=2)
 	# Date of pair made
 	date = models.DateField(default=date.today())
 	

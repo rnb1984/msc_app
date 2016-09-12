@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^details/$', views.details, name='details'),
     url(r'^register/$', views.register, name='register'),
     url(r'^id/$', views.current_user, name='id'),
+    url(r'^train/$', views.train, name = 'train'),
     url(r'^choices/$', views.pizza_choice, name = 'choices'),
     url(r'^results/$', views.results, name='results'),
     
