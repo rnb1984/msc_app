@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+import json
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -124,18 +125,21 @@ def restricted(request):
 
 
 # Posts user id
+@login_required
 def current_user(request):
     user_profile = UserProfile.objects.get(user=request.user)
     data = { 'id' : user_profile.id , "dob": user_profile.dob,"gender": user_profile.gender,"allergies": user_profile.allergies,"diet": user_profile.diet}
     return JsonResponse(data)
 
 # Deails page
+@login_required
 def details(request):
     # Details page
     context_dict = {'title' : 'Details', 'id' : request.user.id }
     return render(request, 'pizza_ml/details.html', context_dict)
 
 # Trainging for ui
+@login_required
 def train(request):
     if request.method == 'GET':
         context_dict = { 'title' : 'Training' }
@@ -176,6 +180,7 @@ def train(request):
          return JsonResponse(context_dict)
 
 # Pizza choices page
+@login_required
 def pizza_choice(request):
     # Creates pairs and sends as a 
     print 'got here with', request.method
@@ -223,41 +228,65 @@ def pizza_choice(request):
          return JsonResponse(context_dict)
 
 # Last page
+@login_required
 def results(request):
     # send back holding page for prediction and calculate ml
     if request.method == 'GET':
-        pairs = PairPreferance.objects.all()
+        
         # pass all the pairs to ml # prediction to be calculated
-        user= request.user
-        user_pro = UserProfile.objects.get(user=user)
-        pairs = PairPreferance.objects.filter(user=user.id)
-        a =[]
-        for p in pairs:
-            x = {'index' : p.index, 'value':p.value}
-            a.append(x)
-        print a
-        pairs= a
-        doc_new=[]
-        row=[]
-        username= user.username
-        email= user.email
-        dob = user_pro.dob
-        gender = user_pro.gender
-        allergies = user_pro.allergies
-        diet = user_pro.diet
-        row.append(username)
-        row.append(email)
-        row.append(dob)
-        row.append(gender)
-        row.append(allergies)
-        row.append(diet)
-        row.append(pairs)
-        # save all info to a csv file
-        doc_new.append(row)
-        save_to_csv(doc_new)
-        # feedback
-        context_dict = { 'title' : 'Congratulations', 'welcome' : 'Ready for your predictiond', 'pairs': pairs }
+        context_dict = { 'title' : 'Congratulations'}
         return render(request, 'pizza_ml/predict.html', context_dict)
+    
+    elif request.method == 'POST':
+        # post should have returned a yes or no answer
+        pairs = PairPreferance.objects.all()
+        user= request.user
+        print ( 'request is: ', request.POST)
+        print json.loads(request.body)
+        answer = json.loads(request.body)
+        print answer
+        answer =  answer['answer']
+        
+        # make sure it is the correct data
+        if answer == 'yes' or answer == 'no':
+            user_pro = UserProfile.objects.get(user=user)
+            pairs = PairPreferance.objects.filter(user=user.id)
+            a =[]
+            for p in pairs:
+                x = {'index' : p.index, 'value':p.value}
+                a.append(x)
+            print a
+            pairs= a
+            doc_new=[]
+            row=[]
+            username= user.username
+            email= user.email
+            dob = user_pro.dob
+            gender = user_pro.gender
+            allergies = user_pro.allergies
+            diet = user_pro.diet
+            row.append(username)
+            row.append(email)
+            row.append(dob)
+            row.append(gender)
+            row.append(allergies)
+            row.append(diet)
+            row.append(pairs)
+            row.append(answer)
+            
+            # save all info to a csv file
+            doc_new.append(row)
+            save_to_csv(doc_new)
+                
+            context_dict={
+                'reply':'Thank you, we will be in touch soon'
+            }
+        else:
+            context_dict={
+                'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'
+                
+            }
+        return JsonResponse(context_dict)
 
 
 

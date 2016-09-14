@@ -7,32 +7,18 @@
 <div class="intro">
   
   <div class="">
-        <h3>Disclaimer</h3>
-        <ul>
-          The aim of this questionnaire is to investigate how decisions are made at meal time when preparing food for more than one person.
-          This is an investigation to find common problems with regard to meal time decision making.
-          The data from this questionnaire will be saved anonymously, safe way and means no one will be able to identify you after the form has been submitted.
-          If you could answer the following questions to the best of your ability and if the answer is not applicable please write n/a. Once filled out please email me with the form. The data will be collected and analysed with other data. Please ask questions, email 2155569b@student.gla.ac.uk , if you need to and please let me know when you are finished.
-        Please remember this is an investigation to find a common problem and your ability is not being evaluated.
-        Please be honest with your answers and don’t worry if you give the same answer twice.
-        You are welcome to stop and abort the questionnaire at any point. If you have any questions before you start please email 2155569b@student.gla.ac.uk .
-        Thank you.</ul>
-    </div>
-  
+        
   <h3>Please fill in form below.</h3>
     
     <!-- Form -->
     <div class="hili" ng-app="formApp" ng-controller="formController">
-      
-      <p> {{ master }} </p>
-      <p> userdetails/ {{ two }} </p>
 
         <form class="form-horizontal" role="form" name="userForm" ng-model="user">
           
           <!-- age <span ng-show="userForm.age.$dirty && userForm.age.$invalid">Required filed</span> -->
           <div class="form-group">
               <label for="age">age:</label>
-              <select class="form-control" ng-model="user.age" ng-options="age.code as age.name for age in ages" name="age" required>
+              <select id="age" class="form-control" ng-model="user.age" ng-options="age.code as age.name for age in ages" name="age" required>
                 <option value="">please select</option>
               </select>
               
@@ -43,7 +29,7 @@
         <!-- gender  -->
         <div class="form-group">
               <label for="gender">gender:</label>
-              <select class="form-control" ng-model="user.gender" ng-options="sex.code as sex.name for sex in gender" name="gender" required>
+              <select id="gender"class="form-control" ng-model="user.gender" ng-options="sex.code as sex.name for sex in gender" name="gender" required>
                 <option value="">please select</option>>
               </select>
               <br>
@@ -53,9 +39,9 @@
         <!-- diets  -->
         <div class="form-group col-xs-6">
               <label for="diets">diets:</label>
-                <ul class="checkbox" ng-model="user.diets" >
-                  <li ng-repeat="diet in diets">
-                    <input type="checkbox" id="{{ diet }}" name="{{ diet }}" ng-click="updateCheck($index, 'diets')"/><label for="{{ diet }}">{{ diet }}</label>
+                <ul class="checkbox">
+                  <li ng-repeat="(diet, enabled ) in diets">
+                    <input type="checkbox" id="{{ diet }}" name="{{ diet }}" ng-model="diets[diet]" /><label for="{{ diet }}">{{ diet }}</label>
                   </li>
                 </ul required>
               <br>
@@ -64,9 +50,9 @@
         <!-- allergies  -->
         <div class="form-group col-xs-6">
               <label for="allergies">allergies:</label>
-                <ul class="checkbox" ng-model="user.allergies">
-                  <li ng-repeat="alg in allergies">
-                    <input type="checkbox" id="{{ alg }}" name="{{ alg }}" ng-click="updateCheck($index, 'allergies')"/><label for="{{ alg }}">{{ alg }}</label>
+                <ul class="checkbox" >
+                  <li ng-repeat="(alg, enabled ) in allergies">
+                    <input type="checkbox" id="{{ alg }}" name="{{ alg }}" ng-model="allergies[alg]"/><label for="{{ alg }}">{{ alg }}</label>
                   </li>
                 </ul required>
               <br>
@@ -75,16 +61,14 @@
         
          <!-- occupation  -->
         <div class="form-group">
-              <label for="live">occupation:</label>
-              <select id ="" class="form-control" ng-model="user.occupation" ng-options="occupation.code as occupation.name for occupation in occupations" name="occupation" required>
+              <label for="occupation">occupation:</label>
+              <select id ="occupation" class="form-control" ng-model="user.occupation" ng-options="occupation.code as occupation.name for occupation in occupations" name="occupation" required>
                 <option value="">please select</option>
               </select>
               <br>
         </div>
           
           <!-- Submit Button -->
-      <p>{{ user }}{{userForm.$valid}} </p>  
-    
      <button ng-click="fill()" class="btn btn-primary next" type="submit" role="button">Next</button>
      </form>
      </div>

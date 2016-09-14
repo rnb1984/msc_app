@@ -14,16 +14,16 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     // urls
     console.log('got here', document.title);
     var COUNT = 0;
-    var save_pairs = false;
+    $scope.save_pairs = false;
     var PAIRDATA = {};
     if (document.title == 'Choices'){
         COUNT = 10;
-        save_pairs = true;
+        $scope.save_pairs = true;
         PAIRDATA = $http.post("/choices/");
     }
     else if (document.title == 'Training'){
         COUNT = 3;
-        save_pairs=false;
+        $scope.save_pairs=false;
         PAIRDATA = $http.post("/train/");
     }
 
@@ -55,15 +55,17 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
      };
      
      var update_pair = function(){
-         // Posts preferrance results and updates scope
-         var pk= $scope.indexs['id'];
+        // Posts preferrance results and updates scope if in game mode
+        if ($scope.save_pairs){
+            var pk= $scope.indexs['id'];
         
-         var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'] };
-             console.log(data, pk)
-        $http.put("/pair/"+pk+"/",data).success(function(data){
+            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'] };
+            console.log(data, pk)
+            $http.put("/pair/"+pk+"/",data).success(function(data){
                  $scope.new_index = data;
                console.log(data);
-             });
+            });
+        }
         
         console.log($scope.countdwn);
         
@@ -79,8 +81,8 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
         // check if complete
         if (curr<compsize) next_pair(curr++);
         else{
-            if (save_pairs) window.location.href="/results/";
-            else if (!save_pairs) window.location.href="/choices/";
+            if ($scope.save_pairs) window.location.href="/results/";
+            else if (!$scope.save_pairs) window.location.href="/choices/";
          }
      };
      
@@ -109,17 +111,18 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     
      // left likes
      $scope.prefLeft = function(){
+         console.log('got here');
          // set pair oject values
          $scope.indexs['value'] = 1;
-         if (save_pairs)update_pair();
+         update_pair();
      };
      
      // right likes
      $scope.prefRight = function(){
-         
+         console.log('got here');
          // set pair oject values
          $scope.indexs['value'] = 0;
-         if (save_pairs)update_pair();
+         update_pair();
      };
      
 });

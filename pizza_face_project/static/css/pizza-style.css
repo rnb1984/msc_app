@@ -10,11 +10,12 @@
 ***************************/
 
 
-h1,h2,h3,h4,h5,h6, p{
+small,h1,h2,h3,h4,h5,h6, p{
     font-weight: lighter !important;
     font-family:'Open Sans',Arial,sans-serif !important;
+}
+em, small{
     color: #236AD9;
-    
 }
 
 .deep-blue{
@@ -65,23 +66,15 @@ h1,h2,h3,h4,h5,h6, p{
 }
 
 #pz-med{
-    color: #d90e28;
-    z-index: 5;
-    position: absolute;
-    top:-5%;
-    left:90%;
     width: 76px;
     height: 76px;
     background: url(/static/graphics/icons.png) -1px 75px;
 }
 
 #pz-small{
-    float: right;
-    margin-top: 50px;
-    color: #faefcd;
     width: 25px;
     height: 25px;
-    background: url(/static/graphics/icons.png) 24px -53px;
+    background: url(/static/graphics/icons.png) 24px -52px;
 }
 
 #like, #yes, #no{
@@ -89,11 +82,15 @@ h1,h2,h3,h4,h5,h6, p{
     float: left;
     margin-left: 5px;
 }
+.answer{
+    float:left;
+    margin: 10px 5px;
+}
 
 /***************************
     introductions
 ***************************/
-.meal-info, .hili, .intro{
+.meal-info, .hili, .intro,.end{
     display: block;
     padding: 5px 20px;
 }
@@ -103,11 +100,15 @@ h1,h2,h3,h4,h5,h6, p{
     margin: 30px auto;
 }
 
-.meal-btns, .meal-info, .intro{
+.meal-btns, .meal-info, .intro,.end{
     background-color: #fff;
 }
+
 .intro{
     min-height: 1000px;
+}
+.end{
+    min-height: 250px;
 }
 
 /***************************
@@ -134,6 +135,22 @@ h1,h2,h3,h4,h5,h6, p{
     left:47%;
     z-index: 5;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.pz-num{
+    color: #d90e28;
+    z-index: 5;
+    position: absolute;
+    top:-5%;
+    left:90%;
+}
+
+.pz-round{
+    font-size: 14px;
+    float: right;
+    margin-top: 50px;
+    color: #faefcd;
 }
 
 /***************************

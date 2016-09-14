@@ -1,21 +1,17 @@
 {% extends 'pizza_ml/base.html' %}
 
 {% block user_content %}
+<div class="end">
+  {% verbatim %}
+  
+  <div class="col-xs-12" ng-app="permissionApp" ng-controller="permissionController">
+    <h3>Thank you for taking part in the preference assessment game.</h3>
+    <h4>We would you like to save your email address to deliver you a pizza prediction.</h4>
+    <h4>Your email address will be deleted after the project is finished and will not be passed to another party.</h4>
+  
+    <div ng-hide="answered"><h4><strong>Can we email you?</strong></h4><button class="btn btn-primary answer" ng-click="answer('yes')" />YES</button> <button class="btn btn-primary answer" ng-click="answer('no')"/>No</button></div>
+    <h4 ng-show="answered"><strong> {{ endmessage.reply }} </strong></h4>
+    {% endverbatim %}
 
-        <div class="col-xs-3">
-          <h3>Thank you for taking part in the preference assessment game.</h3>
-          <p>We would you like to save your email address to deliver you a pizza prediction.
-          Your email address will be deleted after the project is finished and will not be passed to another party.
-          Can we email you?</p>
-          <!--Pairs-->
-          {% if pairs %}
-          <ol>
-          {% for pair in pairs %}
-            <li><h4>{{ pair.index }}</h4><small>value:{{ pair.value }}</small></li>
-          {% endfor %}
-          </ol>
-          {% endif %}
-      </div>
-    </boy>
-
+</div>
 {% endblock %}

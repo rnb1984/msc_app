@@ -4,17 +4,31 @@
 
 {% verbatim %}
 <div class="intro">
-    <div>
+
         <h4>Welcome to Shutta Your Pizza Face preference game.</h4>
         <h4>The aim of the game is to help learn your pizza preference based on a series of pizzas pairs.</h4>
-    </div>
-    <div>
-        <h2>Objective</h2>
+
+        <h3>Objective</h3>
         <p>You will be asked a series of questions on your favourite pizza’s.
         After registering and filling out your details you will enter in to the Pizza Preference Game witch comprises of 5 rounds.
         Within each round you will be shown a series of pizzas pairs and asked which one you would prefer, to help you make your choice you can look at the toppings.
         And the end you will be given the option to have a pizza prediction delivered to you via email.</p>
-    </div>
+        
+        <h3>Disclaimer</h3>
+        <p>
+          The aim of this game is to gather data about users pizza preferances for the purposes of training a machine learning model.
+          This is part of a masters project, the data from this game will be saved anonymously, in a safe way and means no one will be able to identify you after the form has been submitted.
+          If you could fill in the following form and pick your preferances to the best of your ability.
+          Once the game is completed you will be asked if we can email you with your results, then the data will be collected and analysed with other data.
+          Please ask questions to email 2155569b@student.gla.ac.uk, if you need to and please make sure you pick a <strong>"yes" or "no" answer to the end question</strong>  when you have finished.
+        Please remember this is an data gathering exercise on your pizza preferances your ability is not being evaluated.
+        Please be honest with your answers and don’t worry if you give the same answer twice.
+        You are welcome to stop and abort the game at any point by logging out.
+        If you have any questions before you start please email 2155569b@student.gla.ac.uk .
+        Thank you for your time.</p>
+
+  
+
     
     <a href="/register/" class="btn btn-primary next" role="button">Next</a>
     <!-- buttons description -->
@@ -27,13 +41,13 @@
             </tr>
             
             <tr>
-                <td><div id="yes"></div></td>
-                <td><strong>Correct</strong> Click if you think the prediction is of a pizza you would enjoy eating.</td>
+                <td><div id="pz-med"></div></td>
+                <td><strong>Pizza number</strong> Shows you how many you have.</td>
             </tr>
             
             <tr>
-                <td><div id="no"></div></td>
-                <td><strong>Not correct</strong> Click if you think the prediction is of a pizza you really would not enjoy eating.</td>
+                <td><div id="pz-small"></div></td>
+                <td><strong>Round</strong> Shows you which round you are in.</td>
             </tr>
 
         </table>
