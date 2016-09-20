@@ -17,27 +17,23 @@ from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProf
 
 
 """
-!! TO DO !!
-# All views
-- index
+Views
+- Landing page
+- Register page
+- Login page
+- Log out
+- restrictions
+- Deails page
+- Trainging page
+- Pizza choices page
+- Last page
 
-- details
--- get_details_form
-
-- pizza_choice
--- is_details
--- store_details
--- get_pairs
--- get_pizzas
-
-- predict_pizza
--- is_data
--- pass_data_to_model
--- is_pred
--- get_pizza
+Helpers
+Custom API's
+API REST
 """
 
-
+# Landing page
 def index(request):
     # Landing page
     pizzas = Pizza.objects.all().order_by('index')
@@ -64,10 +60,10 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            print 'this is a user' , user, 'username', user.username
 
             # create user profile object with userprofile details and user id
             profile = UserProfile.objects.get_or_create(user=user)[0] # add to pref pairs
+            profile.exp_index = get_user_index()
             profile.save()
             
             # feed back
@@ -83,7 +79,7 @@ def register(request):
         user_form = UserForm()
         context_dict ={ 'title' : 'Register' ,'user_form': user_form, 'registering': registering}
     
-    return render(request, 'pizza_ml/register.html', context_dict)
+    return render(request, 'pizza_ml/user/register.html', context_dict)
 
 # Login page
 def user_login(request):
@@ -113,6 +109,7 @@ def user_login(request):
         # not logged in so register
         return render(request, 'pizza_ml/user/login.html', {'title' : 'Login'})
 
+# Log out
 @login_required
 def user_logout(request):
     # Uses django defaults to log out 
@@ -121,109 +118,80 @@ def user_logout(request):
 
 @login_required
 def restricted(request):
-    return HttpResponse("MINKA!! You are logged in")
-
-
-# Posts user id
-@login_required
-def current_user(request):
-    user_profile = UserProfile.objects.get(user=request.user)
-    data = { 'id' : user_profile.id , "dob": user_profile.dob,"gender": user_profile.gender,"allergies": user_profile.allergies,"diet": user_profile.diet}
-    return JsonResponse(data)
+    return HttpResponse("MINKA!! You are not logged in")
 
 # Deails page
 @login_required
 def details(request):
     # Details page
     context_dict = {'title' : 'Details', 'id' : request.user.id }
-    return render(request, 'pizza_ml/details.html', context_dict)
+    return render(request, 'pizza_ml/user/details.html', context_dict)
 
-# Trainging for ui
+# Trainging page
 @login_required
 def train(request):
     if request.method == 'GET':
         context_dict = { 'title' : 'Training' }
         return render(request, 'pizza_ml/pref-pairs.html', context_dict)
+        
     elif request.method == 'POST':
         # create 3 pairs for user to train on
-         print 'in Post'
-         user = request.user
-         pair = Pairs()
-         # set up a 3 item training from the 0 indexed pizza item
-         pair.set_train(0)
-         pair.set_sub()
-         # number of comparisions
-         comparisions = []
-         comparisions.append(3)
-         pair.set_pairs(1,comparisions)
-         
-         # create JSON file
-         data = pair.get_dict_comparisions()
-         pizza_left =[]
+         pizza_left= []
          pizza_right=[]
-         pizzas_index=[]
-         pizzas_rated=[]
+         pizza_pairs= [{ 'l': 2, 'r': 3 },{ 'l': 4, 'r': 35 },{ 'l': 14, 'r': 5 }]
+         value = {'id': 99999999999,'index':99999999,'value': 2, 'time':0  }  # for training 
+         pizza_index = []
          
-         for index in data:
-             # from classget the index and create a pairobject
-            pairs = pair.get_pairs(index)
-            pizza_left.append(get_pizza_dict(pairs[0]))
-            pizza_right.append(get_pizza_dict(pairs[1]))
-            value = {
-                'id': 99999999999,
-                'index':index ,
-                'value': 2
-            }
-            pizzas_index.append(value)
-         print 'pizza_left', pizza_left, 'pizza_right', pizza_right
-         context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
+         # add pizza details
+         for pair in pizza_pairs:
+             pizza_left.append(get_pizza_dict(pair['l']))
+             pizza_right.append(get_pizza_dict(pair['r']))
+             pizza_index.append(value)
+             
+         context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizza_index }
          return JsonResponse(context_dict)
 
 # Pizza choices page
 @login_required
 def pizza_choice(request):
     # Creates pairs and sends as a 
-    print 'got here with', request.method
     if request.method == 'GET':
         # title differentates comands on client side
         context_dict = { 'title' : 'Choices' } 
         return render(request, 'pizza_ml/pref-pairs.html', context_dict)
     
     elif request.method == 'POST':
-         print 'in Post'
+         # Post back assigned pairs from experiment design
          user = request.user
-         pair = Pairs()
-         # set up a 30 item training from the 5th indexed pizza item
-         pair.set_train(5)
-         pair.set_sub()
-         # set up 4 training rounds with a training set with a controlled sub set of 10
-         comparisions = []
-         comparisions.append(10)
-         comparisions.append(15)
-         comparisions.append(15)
-         comparisions.append(20)
-         pair.set_pairs(4,comparisions)
+         user_profile = UserProfile.objects.get(user=user)
+         user_index= user_profile.exp_index
+         print user_index
+         pairs = Pairs()
+         
+         pizzas_index= []
+         pizza_left = []
+         pizza_right= []
+         
+         # Get predefined pairs for user from experimental design
+         with open('pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+            reader = csv.reader(expPairs)
+            for row in reader:
+                if int(row[0]) == user_index:
+                    index = pairs.get_index_of_pair(int(row[2]),int(row[-1]))
+                    pizza_left.append(get_pizza_dict(int(row[2])))
+                    pizza_right.append(get_pizza_dict(int(row[-1])))
+                    pair_db = add_pair(index, user)
+                    value = {
+                        'id': pair_db.id,
+                        'index':index,
+                        'value': 2, # can't be 0 or 1 to start with
+                        'time':0 
+                    }
+                    pizzas_index.append(value)
+                    
+         expPairs.close()
          
          # create JSON file
-         data = pair.get_dict_comparisions()
-         pizza_left =[]
-         pizza_right=[]
-         pizzas_index=[]
-         pizzas_rated=[]
-         
-         for index in data:
-             # from classget the index and create a pairobject
-            pairs = pair.get_pairs(index)
-            pizza_left.append(get_pizza_dict(pairs[0]))
-            pizza_right.append(get_pizza_dict(pairs[1]))
-            pair_db = add_pair(index, user)
-            value = {
-                'id': pair_db.id,
-                'index':index ,
-                'value': 2 # can't be 0 or 1
-            }
-            pizzas_index.append(value)
-         print 'pizza_left', pizza_left, 'pizza_right', pizza_right
          context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
          return JsonResponse(context_dict)
 
@@ -238,13 +206,11 @@ def results(request):
         return render(request, 'pizza_ml/predict.html', context_dict)
     
     elif request.method == 'POST':
+        context_dict={'reply':' '}
         # post should have returned a yes or no answer
         pairs = PairPreferance.objects.all()
         user= request.user
-        print ( 'request is: ', request.POST)
-        print json.loads(request.body)
         answer = json.loads(request.body)
-        print answer
         answer =  answer['answer']
         
         # make sure it is the correct data
@@ -253,46 +219,41 @@ def results(request):
             pairs = PairPreferance.objects.filter(user=user.id)
             a =[]
             for p in pairs:
-                x = {'index' : p.index, 'value':p.value}
+                x = {'index' : p.index, 'value':p.value, 'time': p.time}
                 a.append(x)
-            print a
             pairs= a
             doc_new=[]
             row=[]
-            username= user.username
-            email= user.email
-            dob = user_pro.dob
-            gender = user_pro.gender
-            allergies = user_pro.allergies
-            diet = user_pro.diet
-            row.append(username)
-            row.append(email)
-            row.append(dob)
-            row.append(gender)
-            row.append(allergies)
-            row.append(diet)
+            row.append(user.username)
+            row.append(user.email)
+            row.append(user_pro.dob)
+            row.append(user_pro.gender)
+            row.append(user_pro.allergies)
+            row.append(user_pro.diet)
+            row.append(user_pro.occupation)
+            row.append(user_pro.nationality)
             row.append(pairs)
             row.append(answer)
             
             # save all info to a csv file
             doc_new.append(row)
             save_to_csv(doc_new)
-                
-            context_dict={
-                'reply':'Thank you, we will be in touch soon'
-            }
+            
+            if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
+            elif answer == 'yes': context_dict['reply'] = 'Thank you! You will recieve an email with your prediction on this address ' + user.email
         else:
-            context_dict={
-                'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'
-                
-            }
+            context_dict={'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'}
         return JsonResponse(context_dict)
 
 
-
-    
-
-# Helpers functions
+"""
+Helpers
+- get_ingredients
+- get_pizza_dict
+- get_user_index
+- add_pair
+- save_to_csv
+"""
 def get_ingredients(string):
     # parses the vector string from Pizza and returns all ingredients names
     ingredients=[]
@@ -314,7 +275,7 @@ def get_pizza_dict(new_index):
     try:
         pizza = Pizza.objects.get(index = new_index)
     except Pizza.DoesNotExist:
-        print "didn't exist"
+        print "Pizza didn't exist"
         
     pizza = {
         'index': pizza.index,
@@ -324,19 +285,27 @@ def get_pizza_dict(new_index):
     }
     return pizza
     
+def get_user_index():
+    # returns unused user index from experiment
+    new_index= 1
+    all_users = UserProfile.objects.all()
+    
+    if len(all_users) <1:
+        return new_index
+    else:
+        new_index=len(all_users)
+        return new_index
+
 def add_pair(pair_index, user):
-  # populate database with pairs
+  # Populate database with pairs
   user_id = user.id
-  p = PairPreferance.objects.get_or_create(index = pair_index)[0]
-  p.user=user_id
+  p = PairPreferance.objects.get_or_create(user=user_id, index = pair_index)[0]
   p.save()
-  print 'new', p
-  print 'p', p, 'id', p.id
   return p
 
 def save_to_csv(doc_new):
+    # Saves all results on exisiting file
     doc_in = []
-    # Open and read
     with open('pizza_ml/results/results.csv', 'rb') as inText:
         reader = csv.reader(inText)
         for row in reader:
@@ -358,14 +327,48 @@ def save_to_csv(doc_new):
     outText.close()
 
 
+"""
+API Custom
+- Current User details
+- Nationality dictionary
+"""
 
+# Current User details
+@login_required
+def current_user(request):
+    # Posts user information
+    user_profile = UserProfile.objects.get(user=request.user)
+    data = { 'id' : user_profile.id , "dob": user_profile.dob,"gender": user_profile.gender,"allergies": user_profile.allergies,"diet": user_profile.diet, "nationality" : user_profile.nationality, "occupation" : user_profile.occupation }
+    return JsonResponse(data)
 
-# API view
+# Nationality dictionary
+def nationality(request):
+    context_dict = {}
+    nat_list=[]
+    with open('pizza_ml/data/nations.csv', 'rb') as nat:
+        reader = csv.reader(nat)
+        for row in reader:
+            country = {
+                row[0] : row[1],
+                row[2] : row[3]
+            }
+            nat_list.append(country)
+    context_dict = { 'nationality' :nat_list}
+    return JsonResponse(context_dict)
+
+"""
+API REST
+- Pizza List
+- Ingredient List
+- UserProfile List
+- UserProfile Details
+- PairPref Lists
+- PairPref Details
+"""
 class PizzaList(generics.ListCreateAPIView):
     # returns a list of pizzas
     queryset = Pizza.objects.all().order_by('name')
     serializer_class = PizzaSerializer
-
 
 class IngredientList(generics.ListCreateAPIView):
     # returns a list of ingredients
@@ -393,3 +396,6 @@ class PairPrefDetails(generics.RetrieveUpdateDestroyAPIView):
     # edit a pairs depending on a id/pk
     queryset = PairPreferance.objects.all()
     serializer_class = PairPreferanceSerializer    
+
+
+

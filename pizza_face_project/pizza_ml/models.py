@@ -29,11 +29,14 @@ class UserProfile(models.Model):
 	"""
 	
     user = models.OneToOneField(User)
+    exp_index = models.IntegerField(default=0)
     dob = models.IntegerField(default=0)
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
     allergies = models.CharField(default="0", max_length=128)
     diet = models.CharField(default="0", max_length=128)
     occupation = models.IntegerField(default=0)
+    nationality = models.CharField(default="0", max_length=128)
+    
     
     """
 	UserPreferance
@@ -108,7 +111,7 @@ class PairPreferance(models.Model):
 	value = models.IntegerField(default=2)
 	# Date of pair made
 	date = models.DateField(default=date.today())
-	
+	time = models.IntegerField(default=0)
 	slug = models.SlugField()
 	
 	def save(self, *args, **kwargs):

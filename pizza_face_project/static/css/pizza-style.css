@@ -42,9 +42,13 @@ em, small{
 ***************************/
 
 #like {
-    width: 35px;
-    height: 35px;
-    background: url(/static/graphics/sypf-btn.gif) 0 0;
+    width: 71px;
+    height: 71px;
+    background: url(/static/graphics/sypf-btn.png) 0 0;
+}
+
+#like:hover {
+    background: url(/static/graphics/sypf-btn.png) 0 71px;
 }
 
 #vs {
@@ -142,8 +146,8 @@ em, small{
     color: #d90e28;
     z-index: 5;
     position: absolute;
-    top:-5%;
-    left:90%;
+    top:7%;
+    left:92%;
 }
 
 .pz-round{
@@ -217,7 +221,7 @@ em, small{
     display:block;
     margin: 1px auto;
     position: absolute;
-    top: 35%;
+    top: 30%;
     left: 40%;
 }
 
@@ -228,6 +232,10 @@ em, small{
 @media only screen and  (max-width: 768px) {
     .meal-image {
         height:150px;
+    }
+    .meal-btns{
+        top: 20%;
+        left: 35%;
     }
 }
 

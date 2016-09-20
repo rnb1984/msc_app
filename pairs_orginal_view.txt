@@ -1,0 +1,35 @@
+user = request.user
+         pair = Pairs()
+         # set up a 30 item training from the 5th indexed pizza item
+         pair.set_train(5)
+         pair.set_sub()
+         # set up 4 training rounds with a training set with a controlled sub set of 10
+         comparisions = []
+         comparisions.append(10)
+         comparisions.append(15)
+         comparisions.append(15)
+         comparisions.append(20)
+         pair.set_pairs(4,comparisions)
+         
+         # create JSON file
+         data = pair.get_dict_comparisions()
+         pizza_left =[]
+         pizza_right=[]
+         pizzas_index=[]
+         pizzas_rated=[]
+         
+         for index in data:
+             # from classget the index and create a pairobject
+            pairs = pair.get_pairs(index)
+            pizza_left.append(get_pizza_dict(pairs[0]))
+            pizza_right.append(get_pizza_dict(pairs[1]))
+            pair_db = add_pair(index, user)
+            value = {
+                'id': pair_db.id,
+                'index':index ,
+                'value': 2 # can't be 0 or 1
+            }
+            pizzas_index.append(value)
+         print 'pizza_left', pizza_left, 'pizza_right', pizza_right
+         context_dict= {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
+         return JsonResponse(context_dict)

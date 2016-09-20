@@ -22,10 +22,10 @@ class IngredientSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('id','dob','gender','allergies','diet', 'occupation')
+        fields = ('id','dob','gender','allergies','diet', 'occupation', 'nationality')
 
 
 class PairPreferanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PairPreferance
-        fields = ( 'id','index','value')
+        fields = ( 'id','index','value', 'time')

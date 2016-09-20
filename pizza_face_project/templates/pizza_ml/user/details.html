@@ -67,7 +67,16 @@
               </select>
               <br>
         </div>
-          
+        
+        <!-- nationality -->
+        <div class="form-group">
+              <label for="nationality">nationality:</label>
+              <select id ="nationality" class="form-control" ng-model="user.nationality" ng-options="country.code as country.name for country in nationalities" name="nationality" required>
+                <option value="">please select</option>
+              </select>
+              <br>
+        </div>
+
           <!-- Submit Button -->
      <button ng-click="fill()" class="btn btn-primary next" type="submit" role="button">Next</button>
      </form>
