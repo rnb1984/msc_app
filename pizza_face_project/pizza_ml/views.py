@@ -356,6 +356,30 @@ def nationality(request):
     context_dict = { 'nationality' :nat_list}
     return JsonResponse(context_dict)
 
+# Current Results
+def curr_results(request):
+    context_dict = {}
+    res_list=[]
+    with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as res:
+        reader = csv.reader(res)
+        for row in reader:
+            users = {
+                'username': row[0],
+                'email' : row[1],
+                'dob' : row[2],
+                'gender' : row[3],
+                'allergies': row[4],
+                'diet': row[5],
+                'occupation': row[6],
+                'nationality': row[7],
+                'pairs': row[8],
+                'permission' : row[-1],
+            }
+            res_list.append(users)
+    context_dict = { 'results' :res_list}
+    return JsonResponse(context_dict)
+
+
 """
 API REST
 - Pizza List
