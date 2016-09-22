@@ -15,6 +15,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     var start_count = 0, time_start = 0, pairtime = 0, compsize = 0, curr =0;
     $scope.save_pairs = false;
     var pair_data = {};
+    $scope.loadpizza = false;
     if (document.title == 'Choices'){
         start_count = 15;
         $scope.save_pairs = true;
@@ -37,6 +38,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
       index_pair = response.data.pairindex;
       left_pizza = response.data.lefts;
       next_pair(curr);
+      $scope.loadpizza = true;
       compsize = index_pair.length;
       });
       
@@ -86,8 +88,8 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
          }
      };
      
-     $scope.lingd = {name: 'left', b:false};
-     $scope.ringd = {name: 'right', b:false};
+     $scope.lingd = {name: 'left', b:true};
+     $scope.ringd = {name: 'right', b:true};
      // show ingredients list
      $scope.show = function(item){
          console.log(item.name, item.b );

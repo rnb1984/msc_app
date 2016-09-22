@@ -1,11 +1,11 @@
 {% extends 'pizza_ml/base.html' %}
 
 {% block content %}
-
+<div class="col-xs-12 white">
 <p>Please create an account for the game so that the data gethered can be safely seperated from each.</p>
     <p><strong>Please choose a random username that you can remember for the series of the game (i.e. first pets name or favourite pizza topping)</strong></p>
 
-<div class="col-xs-11">
+<div >
     
     
     <form class="form-horizontal" id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data" >
@@ -29,6 +29,6 @@
     <p><input class="btn btn-primary" type="submit" name="submit" value="Register" /> <a href="/login/">Login here</a> if you have already registered</p>
 
     </form>
-
+    </div>
 </div>
 {% endblock %}

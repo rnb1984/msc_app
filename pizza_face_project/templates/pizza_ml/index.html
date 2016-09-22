@@ -3,18 +3,20 @@
 {% block content %}
 
 {% verbatim %}
-<div class="intro">
+<div class="white">
 
-        <h4>Welcome to Shutta Your Pizza Face preference game.</h4>
         <h4>The aim of the game is to help learn your pizza preference based on a series of pizzas pairs.</h4>
+        <h4>You will be asked a series of questions on your favourite pizzas over 5 rounds.</h4>
+        <ol><li>After registering you will have to log in with the username and password you just created.</li>
+        <li>A form with apear, please fill out your details as best as possible.</li>
+        <li>Once complete you will enter the training round to practice (see below for important buttons and icons).</li>
+        <li>Once ready you can start the actual Pizza Preference Game of 5 rounds. Within each round you will be shown a series of pizzas pairs and asked which one you would prefer. To help you make your choice you can look at the toppings.</li>
+        <li>At the end you will be given the option to have a pizza prediction delivered to you via email.</li></ol>
+        <h4>It should take roughly 10 minutes to complete... Enjoy!!</h4>
+</div>
 
-        <h3>Objective</h3>
-        <p>You will be asked a series of questions on your favourite pizza’s.
-        After registering and filling out your details you will enter in to the Pizza Preference Game witch comprises of 5 rounds.
-        Within each round you will be shown a series of pizzas pairs and asked which one you would prefer, to help you make your choice you can look at the toppings.
-        And the end you will be given the option to have a pizza prediction delivered to you via email.</p>
-        
-        <h3>Disclaimer</h3>
+<div class="white">       
+        <h3>About</h3>
         <p>
           The aim of this game is to gather data about users pizza preferances for the purposes of training a machine learning model.
           This is part of a masters project, the data from this game will be saved anonymously, in a safe way and means no one will be able to identify you after the form has been submitted.
@@ -27,21 +29,23 @@
         If you have any questions before you start please email 2155569b@student.gla.ac.uk .
         Thank you for your time.</p>
 
-  
+</div>
+<div class="white">
 
-    
-    <a href="/register/" class="btn btn-primary next" role="button">Next</a>
     <!-- buttons description -->
     <div class="hili light-blue">
         <h3>Buttons</h3>
         <table class="table">
             <tr>
-                <td><div id="like"></div></td>
+                <td><div id="like" style="box-shadow:none;"></div></td>
                 <td><strong>Like</strong> Click if you prefer this pizza. i.e. hawian vs. pepperoni, if you prefer hawian to pepperoni.</td>
             </tr>
-            
+        </table>
+
+        <h3>Icons</h3>
+        <table class="table">
             <tr>
-                <td><div id="pz-med"></div></td>
+                <td><div id="pz-med" style="box-shadow:none;"></div></td>
                 <td><strong>Pizza number</strong> Shows you how many you have.</td>
             </tr>
             
@@ -49,10 +53,14 @@
                 <td><div id="pz-small"></div></td>
                 <td><strong>Round</strong> Shows you which round you are in.</td>
             </tr>
-
         </table>
     </div>
-    <a href="/register/" class="btn btn-primary next" role="button">Next</a>
+    <table class="table">
+            <tr>
+                <td></td>
+                <td><a href="/register/" class="btn btn-primary next" role="button">Next</a></td>
+            </tr>
+        </table>
 </div>
 
 {% endverbatim %}

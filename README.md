@@ -40,3 +40,17 @@ https://docs.djangoproject.com/en/1.9/intro/tutorial01/
 
 Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE.
 To watch some training videos, visit http://www.youtube.com/user/c9ide
+
+## Extras Heroku
+1. login to heroku
+2. run bash
+3. link to live app
+4. load updated git
+
+    $ heroku login
+    $ heroku run --app NameOfApp bash
+    $ heroku git:remote -a NameOfApp
+    $ git push heroku master
+    
+!!! Before pushing to heroku make sure below is changes in views !!!
+    #c9Testing:

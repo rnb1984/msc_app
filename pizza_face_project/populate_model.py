@@ -62,7 +62,12 @@ def populate():
        
         if pizza[2] != 'ingredients':
          # split up the list if character is an alphanumeric character or on a only white space character
-         pizza_ingr = ''.join(char for char in pizza[2] if char.isalnum() or char.isspace()).split()
+         pizza_ingr = ''.join(''.join(pizza[2].split('[')).split(']')).split(',')
+         for i in range(0, len(pizza_ingr)):
+          pizza_ingr[i] = pizza_ingr[i].split("'") #''.join(pizza_ingr[i].split("'"))
+          pizza_ingr[i][0] ='.'
+          pizza_ingr[i][2] ='.'
+          pizza_ingr[i] =''.join(''.join(pizza_ingr[i]).split("."))
          
          for ingr in pizza_ingr:
           # add ingredients to pizza matrix
