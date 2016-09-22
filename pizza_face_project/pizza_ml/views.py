@@ -363,6 +363,7 @@ def curr_results(request):
     with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as res:
         reader = csv.reader(res)
         for row in reader:
+            print len(row), ' is the size and this is the row :', row
             users = {
                 'username': row[0],
                 'email' : row[1],
