@@ -316,7 +316,7 @@ def save_to_csv(doc_new):
         doc_in.append(doc)
     
     # Store all information in a csv file    
-    with open("pizza_ml/results/results.csv", "w") as outText:
+    with open("pizza_face_project/pizza_ml/results/results.csv", "w") as outText:
         writer = csv.writer(outText, delimiter=",")
         writer.writerow(doc_in[0])
     
