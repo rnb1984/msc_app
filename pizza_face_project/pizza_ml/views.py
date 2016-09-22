@@ -345,7 +345,7 @@ def current_user(request):
 def nationality(request):
     context_dict = {}
     nat_list=[]
-    with open('pizza_ml/data/nations.csv', 'rb') as nat:
+    with open('pizza_face_project/pizza_ml/data/nations.csv', 'rb') as nat:
         reader = csv.reader(nat)
         for row in reader:
             country = {
