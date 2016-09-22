@@ -306,7 +306,7 @@ def add_pair(pair_index, user):
 def save_to_csv(doc_new):
     # Saves all results on exisiting file
     doc_in = []
-    with open('pizza_ml/results/results.csv', 'rb') as inText:
+    with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as inText:
         reader = csv.reader(inText)
         for row in reader:
             doc_in.append(row)
