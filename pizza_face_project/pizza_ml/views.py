@@ -72,7 +72,7 @@ def register(request):
 
         # Invalid form or forms - mistakes or something else?
         else:
-            return render(request, 'pizza_ml/register.html',{'user_form': user_form, 'errors': user_form.errors})
+            return render(request, 'pizza_ml/user/register.html',{'user_form': user_form, 'errors': user_form.errors})
 
     # For get request send user form
     else:
