@@ -173,7 +173,7 @@ def pizza_choice(request):
          pizza_right= []
          
          # Get predefined pairs for user from experimental design
-         with open('pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+         with open('pizza_face_project/pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
             reader = csv.reader(expPairs)
             for row in reader:
                 if int(row[0]) == user_index:
