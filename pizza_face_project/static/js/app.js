@@ -13,6 +13,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
 
     // urls
     var start_count = 0, time_start = 0, pairtime = 0, compsize = 0, curr =0;
+    var time_now = '';
     $scope.save_pairs = false;
     var pair_data = {};
     $scope.loadpizza = false;
@@ -41,14 +42,17 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
       $scope.loadpizza = true;
       compsize = index_pair.length;
       });
-      
+     
+     
      var next_pair = function(i){
          console.log('i', i, time_start);
          // Sets new pairs
          $scope.rightside = right_pizza[i];
          $scope.leftside = left_pizza[i];
          $scope.indexs = index_pair[i];
-         time_start = new Date().getTime();
+         var d = new Date();
+         time_now = d.getHours()+' : ' + d.getMinutes()
+         time_start = d.getTime();
          console.log('i', i, time_start);
      };
      
@@ -61,10 +65,18 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
         // PUT preferrance results and updates scope if in game mode
         if ($scope.save_pairs){
             var pk= $scope.indexs['id'];
-            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime };
+            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now};
             // update pair preferance
             $http.put("/pair/"+pk+"/",data).success(function(data){
                 $scope.new_index = data;
+            });
+            
+            // update pairs research data
+            /*global navigator*/
+            data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY};
+            console.log('_h', data.scrn_h, '_w', data.scrn_w, 'x', data.scroll_x, 'y', data.scroll_y)
+            $http.put("/device/"+pk+"/",data).success(function(data){
+                $scope.new_device = data;
             });
         }
         // if next pair not the last use them

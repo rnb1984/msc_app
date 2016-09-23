@@ -19,7 +19,7 @@ from pizzaMatrix import PizzaMatrix
 import csv
 
 # glodal vars to help populate database of pizzas
-Num_of_Pizzas = 53
+Num_of_Pizzas = 51
 pizzaIndex = IndexList()
 ingrdIndex = IndexList()
 pizzas = PizzaMatrix()

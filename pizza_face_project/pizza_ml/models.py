@@ -37,7 +37,6 @@ class UserProfile(models.Model):
     occupation = models.IntegerField(default=0)
     nationality = models.CharField(default="0", max_length=128)
     
-    
     """
 	UserPreferance
 	- Stores fk to pizza pair index, with 0 or 1 rating, used in comparsisons
@@ -112,6 +111,19 @@ class PairPreferance(models.Model):
 	# Date of pair made
 	date = models.DateField(default=date.today())
 	time = models.IntegerField(default=0)
+	t_at = models.CharField(default='none', max_length=50)
+	# Pairs have image
+	pic= models.BooleanField(default=True)
+	# Gets browser details
+	browser= models.CharField(default='none', max_length=228)
+	# Screen dimensions
+	scrn_h= models.IntegerField(default=0)
+	scrn_w= models.IntegerField(default=0)
+	# Amount scolled down y axis to check ingredients
+	scroll_x=models.IntegerField(default=0)
+	scroll_y=models.IntegerField(default=0)
+	# Experiement number
+	exp_no= models.IntegerField(default=0)
 	slug = models.SlugField()
 	
 	def save(self, *args, **kwargs):

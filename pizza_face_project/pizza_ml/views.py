@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
-import json
+import json, datetime, time
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,7 @@ import csv
 
 # For the RESTFUL API
 from rest_framework import generics
-from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer, PairPreferanceSerializer
+from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer, PairPreferanceSerializer, PairPreferanceDeviceSerializer
 
 
 """
@@ -173,8 +173,9 @@ def pizza_choice(request):
          pizza_right= []
          
          # Get predefined pairs for user from experimental design
-         #c9Testing: with open('pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
-         with open('pizza_face_project/pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+         #c9Testing:
+         with open('pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+         #with open('pizza_face_project/pizza_ml/learn/experiment/expdesign_pairs.csv', 'rb') as expPairs:
             reader = csv.reader(expPairs)
             for row in reader:
                 if int(row[0]) == user_index:
@@ -182,6 +183,7 @@ def pizza_choice(request):
                     pizza_left.append(get_pizza_dict(int(row[2])))
                     pizza_right.append(get_pizza_dict(int(row[-1])))
                     pair_db = add_pair(index, user)
+                    pair_db.exp_no = 2
                     value = {
                         'id': pair_db.id,
                         'index':index,
@@ -220,7 +222,18 @@ def results(request):
             pairs = PairPreferance.objects.filter(user=user.id)
             a =[]
             for p in pairs:
-                x = {'index' : p.index, 'value':p.value, 'time': p.time}
+                x = {
+                    'index' : p.index,
+                    'value':p.value,
+                    'time': p.time,
+                    'browser': p.browser,
+                    'b_h' : p.scrn_h,
+                    'b_w' : p.scrn_w,
+                    'scr_x': p.scroll_x,
+                    'scr_y': p.scroll_y,
+                    't_at' : p.t_at,
+                    'date' : p.date,
+                     }
                 a.append(x)
             pairs= a
             doc_new=[]
@@ -235,6 +248,7 @@ def results(request):
             row.append(user_pro.nationality)
             row.append(pairs)
             row.append(answer)
+            row.append(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
             
             # save all info to a csv file
             doc_new.append(row)
@@ -307,8 +321,9 @@ def add_pair(pair_index, user):
 def save_to_csv(doc_new):
     # Saves all results on exisiting file
     doc_in = []
-    #c9Testing: with open('pizza_ml/results/results.csv', 'rb') as inText:
-    with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as inText:
+    #c9Testing:
+    with open('pizza_ml/results/results.csv', 'rb') as inText:
+    #with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as inText:
         reader = csv.reader(inText)
         for row in reader:
             doc_in.append(row)
@@ -318,8 +333,9 @@ def save_to_csv(doc_new):
         doc_in.append(doc)
     
     # Store all information in a csv file
-    #c9Testing:with open('pizza_ml/results/results.csv', 'w') as outText:
-    with open("pizza_face_project/pizza_ml/results/results.csv", "w") as outText:
+    #c9Testing:
+    with open('pizza_ml/results/results.csv', 'w') as outText:
+    #with open("pizza_face_project/pizza_ml/results/results.csv", "w") as outText:
         writer = csv.writer(outText, delimiter=",")
         writer.writerow(doc_in[0])
     
@@ -348,8 +364,9 @@ def current_user(request):
 def nationality(request):
     context_dict = {}
     nat_list=[]
-    #c9Testing: with open('pizza_ml/data/nations.csv', 'rb') as nat:
-    with open('pizza_face_project/pizza_ml/data/nations.csv', 'rb') as nat:
+    #c9Testing:
+    with open('pizza_ml/data/nations.csv', 'rb') as nat:
+    #with open('pizza_face_project/pizza_ml/data/nations.csv', 'rb') as nat:
         reader = csv.reader(nat)
         for row in reader:
             country = {
@@ -364,8 +381,9 @@ def nationality(request):
 def curr_results(request):
     context_dict = {}
     res_list=[]
-    #c9Testing: with open('pizza_ml/results/results.csv', 'rb') as res:
-    with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as res:
+    #c9Testing:
+    with open('pizza_ml/results/results.csv', 'rb') as res:
+    #with open('pizza_face_project/pizza_ml/results/results.csv', 'rb') as res:
         reader = csv.reader(res)
         for row in reader:
             print len(row), ' is the size and this is the row :', row
@@ -379,7 +397,8 @@ def curr_results(request):
                 'occupation': row[6],
                 'nationality': row[7],
                 'pairs': row[8],
-                'permission' : row[-1],
+                'permission' : row[-2],
+                'completed time' : row[-1],
             }
             res_list.append(users)
     context_dict = { 'results' :res_list}
@@ -427,5 +446,8 @@ class PairPrefDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = PairPreferance.objects.all()
     serializer_class = PairPreferanceSerializer    
 
-
+class PairPrefDevice(generics.RetrieveUpdateDestroyAPIView):
+    # edit the users details for every pair prefance taken
+    queryset = PairPreferance.objects.all()
+    serializer_class = PairPreferanceDeviceSerializer
 

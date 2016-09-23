@@ -28,4 +28,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class PairPreferanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PairPreferance
-        fields = ( 'id','index','value', 'time')
+        fields = ( 'id','index','value', 'time', 't_at')
+        
+class PairPreferanceDeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PairPreferance
+        fields = ('browser','scrn_h','scrn_w','scroll_x','scroll_y')

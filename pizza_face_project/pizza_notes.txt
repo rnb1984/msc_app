@@ -1,6 +1,6 @@
 Toppings
 Removed
-These were all removed because they were either used in a standard pizza base or as a desciption of another ingredients, i.e pasta sauce.
+These were all removed because they were either used in a standard pizza base or as a desciption of another ingredients, i.e pasta sauce, bread mix.
 Yeast,6
 Flour,16
 butter,5
@@ -9,12 +9,16 @@ Zest,1
 pasta,4
 flour,3
 Vegetables,1
+Bread,16
+milk,3
+Sugar,7
+sugar,3
+Salt,6
 Swapped to be higher up "olive oil,37" so not to be confused with "Olives"
 
 Kept in
 These were kept in as could still be deciders in pizza choice
 Flatbread
-bread
 Focaccia
 
 
