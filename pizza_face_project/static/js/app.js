@@ -73,7 +73,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             
             // update pairs research data
             /*global navigator*/
-            data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY};
+            data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: true};
             console.log('_h', data.scrn_h, '_w', data.scrn_w, 'x', data.scroll_x, 'y', data.scroll_y)
             $http.put("/device/"+pk+"/",data).success(function(data){
                 $scope.new_device = data;

@@ -9,11 +9,11 @@ class Pairs:
         self.index_not = []             # index of pairs not to use 
         self.index_train = []
         self.index_sub = []
-        self.BASE_SIZE = 53                             # amount of items that will be compared
+        self.BASE_SIZE = 51                             # amount of items that will be compared
         self.TOTAL_COM = self.BASE_SIZE*self.BASE_SIZE  # total amount of comparisions possible, including with each other, is pizza_index square
-        # if pizza_index is 53 the max is 2809
-        self.LIMIT = 2756                               # amount of maxium pairs possible, not including with each other pizza_index square - pizza_index
-        self.USER_COM = 55                              # total amount of comparisons users will make
+        # if pizza_index is 53 the max is 2601
+        self.LIMIT = 2550                               # amount of maxium pairs possible, not including with each other pizza_index square - pizza_index
+        self.USER_COM = 20                              # total amount of comparisons users will make
         # if pizza_index is 53 the max is 2756
         self.TRAING_SET = 30            # set the size of pizza training set for the ML training
         self.train_start = 0            # start point of training set

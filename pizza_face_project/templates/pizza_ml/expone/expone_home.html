@@ -1,0 +1,81 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block content %}
+
+{% verbatim %}
+<div class="white">
+
+        <p>The aim of the experement is to help learn your pizza preference based on a series of pizzas pairs.<br>
+        You will be asked a series of questions on your favourite pizzas over 5 rounds.</p>
+        <ol class="hili light-blue" >
+            <li>First register a username and password, then log in with the same username and password you created.</li>
+            <li>You will then be presented with a form, please fill out your details as best as possible.</li>
+            <li>Once completed you will enter the training round to practice (see below for important buttons and icons).</li>
+            <li>Once ready you can start the actual Pizza Preference Game of 5 rounds. Within each round you will be shown a series of pizzas pairs and asked which one you would prefer.
+            To help you make your choice you can look at the toppings. Please note that if you leave in this mode you will have to restart the game mode if you return, from round 1. </li>
+            <li>At the end you will be given the option to have a pizza prediction delivered to you via email.</li></ol>
+        <p>It should take roughly 10 minutes to complete... Enjoy!!</p>
+</div>
+
+<div class="white">       
+        <h3>About This Experiment </h3>
+        <p>
+          The aim of this experiment is to gather data about users pizza preferances for the purposes of training a machine learning model.<br>
+          This is part of a masters project, the data from this experement will be saved anonymously, in a safe way and means no one will be able to identify you after the form has been submitted.<br>
+          If you could fill in the following form and pick your preferances to the best of your ability.<br>
+          Once the experement is completed you will be asked if we can email you with your results, then anonymous data will be collected and analysed with other anonymous data.<br>
+          Please ask questions to email 2155569b@student.gla.ac.uk or Roderick.Murray-Smith@glasgow.ac.uk, if you need to.<br>
+          Please make sure you pick a <strong> "yes" or "no" answer to the end question</strong> when you have finished.<br>
+        Please remember this is a data gathering exercise on your pizza preferances your ability is not being evaluated.<br>
+        Please be honest with your answers and don’t worry if you give the same answer twice.<br>
+        You are welcome to stop and abort the experement at any point by logging out(click the Logout link at the top of the page).<br>
+        If you have any questions before you start please email 2155569b@student.gla.ac.uk.<br>
+        Thank you for your time.</p>
+
+</div>
+<div class="white">
+
+    <!-- buttons description -->
+    <div class="hili light-blue">
+        <h3>Buttons</h3>
+        <table class="table">
+            <tr>
+                <td><a class="btn btn-primary next" role="button" style="float:left;">Next</a></td>
+                <td><strong>Next</strong> Click to procced through the experement.</td>
+            </tr>
+            <tr>
+                <td><div id="like" style="box-shadow:none;"></div></td>
+                <td><strong>Like</strong> Click if you prefer this pizza. i.e. hawian vs. pepperoni, if you prefer hawian to pepperoni.</td>
+            </tr>
+        </table>
+
+        <h3>Icons</h3>
+        <table class="table">
+            <tr>
+                <td><div id="pz-med" style="box-shadow:none;"></div></td>
+                <td><strong>Round</strong> Shows you which round you are currently in.</td>
+            </tr>
+            
+            <tr>
+                <td><div id="pz-small" style="box-shadow:none;"></div></td>
+                <td><strong>Pizza number</strong> Shows you how many pairs you have left in this round .</td>
+            </tr>
+        </table>
+    </div>
+    <table class="table">
+            <tr>
+                <td></td>
+                <td><a href="/register/" class="btn btn-primary next" role="button">Next</a></td>
+            </tr>
+        </table>
+</div>
+
+{% endverbatim %}
+
+{% endblock %}
+
+{% block user_content %}
+
+<div class="white">To see all the informaton from the home page please click <a href="/logout/">Logout</a> </div>
+
+{% endblock %}

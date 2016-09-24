@@ -14,6 +14,13 @@ urlpatterns = patterns('',
     url(r'^train/$', views.train, name = 'train'),
     url(r'^choices/$', views.pizza_choice, name = 'choices'),
     url(r'^results/$', views.results, name='results'),
+    
+    # Experiment One
+     url(r'^expone/$', views.exp_one, name='expone'),
+     url(r'^expone/image-pairs/$', views.exp_one_pairs, name='expone-pairs'),
+     url(r'^expone/start/$', views.start, name='expone-start'),
+     url(r'^expone/end/$', views.finish, name='expone-end'),
+     url(r'^expone/curr-results/$', views.exp_results, name='expone-results'),
 
     
     # Authentication urls to django defaults

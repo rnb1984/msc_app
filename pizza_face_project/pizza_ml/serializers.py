@@ -33,4 +33,4 @@ class PairPreferanceSerializer(serializers.ModelSerializer):
 class PairPreferanceDeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PairPreferance
-        fields = ('browser','scrn_h','scrn_w','scroll_x','scroll_y')
+        fields = ('browser','scrn_h','scrn_w','scroll_x','scroll_y','pic')
