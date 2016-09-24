@@ -12,6 +12,7 @@ var pairApp = angular.module('pairApp',[])
 pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
 
     // urls
+    var pair_count =0;
     var start_count = 0, time_start = 0, pairtime = 0, compsize = 0, curr =0;
     var time_now = '';
     $scope.save_pairs = false;
@@ -41,11 +42,11 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
       next_pair(curr);
       $scope.loadpizza = true;
       compsize = index_pair.length;
+      console.log('index is',compsize);
       });
      
      
      var next_pair = function(i){
-         console.log('i', i, time_start);
          // Sets new pairs
          $scope.rightside = right_pizza[i];
          $scope.leftside = left_pizza[i];
@@ -53,14 +54,13 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
          var d = new Date();
          time_now = d.getHours()+' : ' + d.getMinutes()
          time_start = d.getTime();
-         console.log('i', i, time_start);
      };
      
      var update_pair = function(){
         // catch end time
         var time_end = new Date().getTime();
         pairtime = time_end - time_start;
-        console.log('time_end: ', time_end, '- time_start:', time_start, 'pairtime : ', pairtime);
+        console.log('current is: ', curr);
         
         // PUT preferrance results and updates scope if in game mode
         if ($scope.save_pairs){
@@ -69,12 +69,13 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             // update pair preferance
             $http.put("/pair/"+pk+"/",data).success(function(data){
                 $scope.new_index = data;
+                console.log('pair saved',pair_count);
+                pair_count++;
             });
             
             // update pairs research data
             /*global navigator*/
             data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: true};
-            console.log('_h', data.scrn_h, '_w', data.scrn_w, 'x', data.scroll_x, 'y', data.scroll_y)
             $http.put("/device/"+pk+"/",data).success(function(data){
                 $scope.new_device = data;
             });
@@ -84,7 +85,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
         if (curr<compsize){
             next_pair(curr);
             // Count down
-            if ($scope.countdwn === 0 ){
+            if ($scope.countdwn === 1 ){
                  $scope.round++;
                  reset_countdwn();
              }else $scope.countdwn = $scope.countdwn-1;
@@ -104,14 +105,11 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
      $scope.ringd = {name: 'right', b:true};
      // show ingredients list
      $scope.show = function(item){
-         console.log(item.name, item.b );
-         if (item.name === 'right' )item.b = !item.b;
-         else item.b = !item.b;
+         item.b = !item.b;
      }
      
      // Countdown for rounds 
      var reset_countdwn = function(){
-         console.log('gothere', $scope.round)
          if(curr == compsize){
              $scope.round='X';
              $scope.countdwn = 0;
@@ -129,7 +127,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
                      $scope.countdwn = 25;
                      break;
                  case 5:
-                     $scope.countdwn = 30;
+                     $scope.countdwn = 35;
                      break;
                  default:
                      $scope.countdwn = 15;

@@ -7,7 +7,6 @@ var expApp = angular.module('expApp',[])
     }]);
 
 
-
 // Controller for experiement one preferances
 expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
 

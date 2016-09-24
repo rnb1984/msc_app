@@ -211,6 +211,7 @@ def results(request):
             
             # save all info to a csv file
             doc_new.append(row)
+            print len(row[8]), user, len(pairs)
             result.save_to_csv(doc_new, 'results')
             
             if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."

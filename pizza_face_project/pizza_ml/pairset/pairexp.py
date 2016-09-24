@@ -108,6 +108,6 @@ def get_pair_dict(user):
                     'time':0 
                 }
                 pizzas_index.append(value)
-                
+        print len(pizzas_index), user_index
         expPairs.close()
     return {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }
