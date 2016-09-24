@@ -8,7 +8,7 @@ var expApp = angular.module('expApp',[])
 
 
 
-// Controller for pizzas
+// Controller for experiement one preferances
 expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
 
     // urls
@@ -23,7 +23,6 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
         var x = response.data.start;
         if (x % 2 == 0) $scope.expone= true;
         else if (x % 2 != 0)  $scope.expone= false;
-console.log('start', x, 'is', x % 2);
     });
 
     var right_pizza=[], left_pizza =[], index_pair =[], right_pizza_p=[], left_pizza_p =[], index_pair_p =[];
@@ -41,10 +40,6 @@ console.log('start', x, 'is', x % 2);
       right_pizza = response.data.nopics.rights;
       index_pair = response.data.nopics.pairindex;
       left_pizza = response.data.nopics.lefts;
-
-console.log(' rights : with pics ', index_pair_p);
-console.log( 'without pics ', index_pair );
-
 
       next_pair(curr);
       $scope.loadpizza = true;
@@ -76,18 +71,16 @@ console.log( 'without pics ', index_pair );
         // PUT preferrance results and updates
         var pk= $scope.indexs['id'];
         var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now};
-console.log('send', data);
+
         $http.put("/pair/"+pk+"/",data).success(function(data){
-console.log('back', data);
             $scope.new_index = data;
         });
         
         // update pairs research data
         /*global navigator*/
         data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
-console.log('send', data);
+
         $http.put("/device/"+pk+"/",data).success(function(data){
-console.log('back',data);
             $scope.new_device = data;
         });
         var countdown = function(){
@@ -99,7 +92,6 @@ console.log('back',data);
         }
         // if next pair not the last use them0
         curr ++;
-console.log('check what round', curr , compsize, compsize*2)
         if (curr<compsize){
             next_pair(curr);
             countdown();
@@ -112,17 +104,14 @@ console.log('check what round', curr , compsize, compsize*2)
                 $scope.expone = !$scope.expone;
                 next_pair(curr-compsize);
                 countdown();
-console.log('1st round 2',curr-compsize, $scope.expone);
             }
         else if (curr<compsize*2){
             next_pair(curr-compsize);
             countdown();
-console.log('round 2',curr-compsize);
         }
         else{
             // if experiment completed
             if ($scope.exp_finish) window.location.href="/expone/end/";
-            
          }
      };
      
@@ -135,13 +124,11 @@ console.log('round 2',curr-compsize);
      
      // Countdown for rounds 
      var reset_countdwn = function(){
-         console.log('gothere', $scope.round)
          if(curr == compsize*2){
              $scope.round='X';
              $scope.countdwn = 0;
          }
          else $scope.countdwn = 20;
-         
      };
     
      // left likes

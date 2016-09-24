@@ -2,26 +2,26 @@
 
 {% block user_content %}
 
-
   {% verbatim %}
   
   <div class="col-xs-12 white" ng-app="permissionApp" ng-controller="permissionExpOneController">
-    <h3>Thank you for taking part in experiment on the impact of priming from images on preference choice </h3>
-    <p> The main aim of this experement was to investigate food preferances for pairwise learning (picking from a choice of two).<br>
-          However I am specifically interested to see if your choices will help with a machine learning system for predicting food,<br>
-          in this case pizza, that you would consider eating.<br>
-          Do you have any comments or questions about the questionnaire?<br>
-          
-          Please take a note of my email;2155569b@student.gla.ac.uk,<br>
-          and the email address of the module co-ordinator; Roderick.Murray-Smith@glasgow.ac.uk,<br>
-          to please let us know if you have any further questions about this experiment.
+    <h3>Thank you for taking part in experiment on the impact of <br> priming from images on preference choice </h3>
+    <p> The main aim of this experement was to investigate the effect of images, within a GUI (graphical user infterface), <br>
+        on your food choice as part of research for pairwise learning approach.<br>
+        I am specifically interested to see if their is a differance with the use of an image of a pizzas over no image <br>
+        when choosing your preffered food, in this case pizza, that you would consider eating.<br>
+        Do you have any comments or questions about the questionnaire?</p>
+
+    <p> Please take a note of my email;2155569b@student.gla.ac.uk,<br>
+        and the email address of the module co-ordinator; Roderick.Murray-Smith@glasgow.ac.uk,<br>
+        to please let us know if you have any further questions about this experiment.
     </p>
-    <p>We would you like to use data from pizza prediction experement for the research of the mentioned machine learning system.<br>
+    <p>We would like to use your data from pizza prediction experement for the research of the mentioned machine learning system.<br>
     If the work is to be published we will would like to contact for permission other wise your email address (stated below)<br>
     will be deleted after the project is finished. Your details will not be passed to another party.</p>
   
-    <div class="light-blue" ng-hide="answered" style="padding:1%;"><h4><strong>Can we use your details for the research stated above?</strong></h4>
-    <p><a href=""ng-click="answer('yes')" /><strong>YES</strong>: I agree to my data from this experement to be used in mentioned research, that all information is accurate and I am over the age of 16 years.</a> <br>
+    <div class="hili light-blue" ng-hide="answered"><h4><strong>Can we use your details for the research stated above?</strong></h4>
+    <p><a href=""ng-click="answer('yes')" /><strong>YES</strong>: I agree to my data from this experement to be used in mentioned research, that all information is accurate and I that am over the age of 16 years.</a> <br>
     <a href="" ng-click="answer('no')"/><strong>No</strong>: I do not agree to my data from this experement to be used in mentioned research and I wish all my experement data to be removed</a></p></div>
     <h4 ng-show="answered"><strong> {{ endmessage.reply }} </strong></h4>
     </div>
