@@ -1,0 +1,52 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block user_content %}
+
+{% verbatim %}
+
+      <div ng-app="pairApp" ng-controller="pairsController" class="pizzas">
+        <div class="pizza-head">        
+            <h3 ng-show=" save_pairs ">Game Mode: Pick Your Favourite of the Two </h3>
+            <h3 ng-hide=" save_pairs ">Training Mode: Pick Your Favourite of the Two</h3>
+        </div>  
+            <!-- loader -->
+          <div class="meal-wait" ng-hide=" loadpizza " ><div id="face"></div><h3> Wait'ta one Second!! <br> I'm Getting the Pizzas!!</h3></div>
+          
+          <div id="pz-med" class="pz-num"><h2 class="col-xs-2">{{ round }}</h2><div id="pz-small" class="pz-round"><span class="meal-pz">{{ countdwn }}</span></div></div>
+          <!--Pizza left-->
+          <div class ="pizzas-cont col-xs-6">
+                  <article class="meal-cont">
+                    <div class="meal-image"><img ng-src='{{ leftside.pic }}'/></div>
+                    
+                    <span class="meal-btns" id="like" ng-click='prefLeft()'></span>
+
+                    <div class="meal-info">
+                        <h3 class="meal-name">{{ leftside.name }}</h3>
+                        <a ng-hide="lingd.b" href="" ng-click='show( lingd )'><small>See Toppings</small></a>
+                        <ul ng-show="lingd.b" class="meal-info meal-shadow"><a href="" ng-click='show( lingd )'><small>Hide Toppings</small></a>
+                        <li ng-repeat="ingredient in leftside.ingredients"><p>{{ ingredient }}</p></li></ul>
+                    </div>
+                </article>
+          </div>
+          
+          <!--Pizza right-->
+          <div class ="pizzas-cont col-xs-6">
+                  <article class="meal-cont">
+                    <div class="meal-image"><img ng-src='{{ rightside.pic }}'/></div>
+                    
+                    <span class="meal-btns" id="like" ng-click='prefRight()'></span>
+
+                    <div class="meal-info">
+                        <h3 class="meal-name">{{ rightside.name }}</h3>
+                        <a ng-hide="ringd.b" href="" ng-click='show( ringd )'><small>See Toppings</small></a>
+                        <ul ng-show="ringd.b" class="meal-info meal-shadow"><a href="" ng-click='show( ringd )'><small>Hide Toppings</small></a>
+                        <li ng-repeat="ingredient in rightside.ingredients" ><p>{{ ingredient }}</p></li></ul>
+                    </div>
+                </article>
+          </div>
+        <div id="vs" class="vers"></div>
+      </div>
+      
+{% endverbatim %}
+
+{% endblock %}

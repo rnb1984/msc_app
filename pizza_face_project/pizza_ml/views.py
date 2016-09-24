@@ -184,6 +184,8 @@ def pizza_choice(request):
                     pizza_right.append(get_pizza_dict(int(row[-1])))
                     pair_db = add_pair(index, user)
                     pair_db.exp_no = 2
+                    pair_db.save()
+
                     value = {
                         'id': pair_db.id,
                         'index':index,
@@ -203,9 +205,9 @@ def pizza_choice(request):
 def results(request):
     # send back holding page for prediction and calculate ml
     if request.method == 'GET':
-        
+        userd = UserProfile.objects.get( user= request.user)
         # pass all the pairs to ml # prediction to be calculated
-        context_dict = { 'title' : 'Congratulations'}
+        context_dict = { 'title' : 'Congratulations', 'details' :userd }
         return render(request, 'pizza_ml/predict.html', context_dict)
     
     elif request.method == 'POST':
@@ -233,6 +235,8 @@ def results(request):
                     'scr_y': p.scroll_y,
                     't_at' : p.t_at,
                     'date' : p.date,
+                    'exp' : p.exp_no,
+                    'pic' : p.pic,
                      }
                 a.append(x)
             pairs= a

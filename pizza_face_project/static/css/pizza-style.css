@@ -146,8 +146,11 @@ td{
 }
 
 
-.white h4, .white p, .end h4, .end p, .intro h4, .intro p{
+.white li, .white h4, .white p, .end h4, .end p, .intro h4, .intro p{
     color:#000 !important;
+}
+.white li{
+    line-height: 2 !important;
 }
 
 .logo{
