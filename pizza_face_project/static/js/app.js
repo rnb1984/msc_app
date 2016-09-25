@@ -10,6 +10,18 @@ var pairApp = angular.module('pairApp',[])
 
 // Controller for pizzas
 pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
+    // browser
+     var get_agent = function(){
+     /*global navigator*/
+     var n = navigator.userAgent;
+     if (n.match(/Chrome/i) != null) return 'Chrome';
+        else if (n.match(/Opera/i) != null) return 'Opera/';
+        else if (n.match(/Firefox/i) != null) return 'Firefox';
+        else if (n.match(/Safari/i) != null) return 'Safari';
+        else if (n.match(/IE/i) != null) return 'IE';
+        else if (n.match(/Edge/i) != null) return '/Edge';
+     };
+     var agent = get_agent();
 
     // urls
     var pair_count =0;
@@ -17,7 +29,8 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     var time_now = '';
     $scope.save_pairs = false;
     var pair_data = {};
-    $scope.lingd, $scope.ringd = true;
+    $scope.lingd = true;
+    $scope.ringd = true;
     $scope.loadpizza = false;
     if (document.title == 'Choices'){
         start_count = 15;

@@ -19,7 +19,7 @@ from pizzaMatrix import PizzaMatrix
 import csv
 
 # glodal vars to help populate database of pizzas
-Num_of_Pizzas = 51
+Num_of_Pizzas = 50
 pizzaIndex = IndexList()
 ingrdIndex = IndexList()
 pizzas = PizzaMatrix()
@@ -89,7 +89,8 @@ def populate():
 def add_pizza(pizza_name, pizza_image, pizza_index): # populate database with pizzas
   print "pizza added to database, Pizza_name", pizza_name, "pizza_image", pizza_image, "pizza_index_number", pizza_index
   print "ingredients vector"
-  p = Pizza.objects.get_or_create(name=pizza_name.lower(), pic= pizza_image , index=pizza_index, ingredients=pizzas.get_ingr(pizza_index) )[0]
+  # pizza_index +1, one is added because exp design data starts from 1 and not 0 
+  p = Pizza.objects.get_or_create(name=pizza_name.lower(), pic= pizza_image , index=pizza_index+1, ingredients=pizzas.get_ingr(pizza_index) )[0]
   p.save()
   return p
 

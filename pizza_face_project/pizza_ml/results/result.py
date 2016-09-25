@@ -1,7 +1,7 @@
 import csv, datetime, time, os
 from pizza_ml.models import Pizza, Ingredient, UserProfile, PairPreferance
 from django.contrib.auth.models import User
-from pizza_ml.pairset.pairexp import prep_pairs
+from pizza_ml.pairset.pairexp import prep_pairs, DIR_CSV 
 
 
 
@@ -18,9 +18,6 @@ are helpers functions for the views needing data from the resulst in the csv
 - get_user_all_pairs
 
 """
-#c9Testing:
-DIR_CSV = 'pizza_ml/'
-#DIR_CSV =  'pizza_face_project/pizza_ml/'
 
 def save_to_csv(doc_new, name, new):
     # Saves all results on exisiting file
@@ -28,7 +25,6 @@ def save_to_csv(doc_new, name, new):
     file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
     
     # Check file exists
-    print os.path.exists(file_csv)
     if os.path.exists(file_csv) == True:
         if new == False:
             with open(file_csv, 'rb') as inText:
@@ -37,12 +33,11 @@ def save_to_csv(doc_new, name, new):
                     doc_in.append(row)
                 inText.close()
         else:
-            print "got to remove", len(doc_new)
             os.remove(file_csv)
             
-        
     for doc in doc_new:
         doc_in.append(doc)
+   
     
     
     # Store all information in a csv file
@@ -51,7 +46,6 @@ def save_to_csv(doc_new, name, new):
         writer.writerow(doc_in[0])
     
         for i in range(1,len(doc_in)):
-            #out_doc = doc_in[i]
             writer.writerow(doc_in[i])
     outText.close()
 
@@ -81,6 +75,7 @@ def save_user_to_csv(user, name, answer):
     
     # save all info to a csv file
     doc_new.append(row)
+    
     save_to_csv(doc_new, name, False)
 
 def save_user_pairs_to_csv(user, exp):
@@ -88,23 +83,11 @@ def save_user_pairs_to_csv(user, exp):
     doc_new = []
     row =[]
     pairs = PairPreferance.objects.all()
-    pairs = PairPreferance.objects.filter(user=user.id, exp_no=exp)
-    print len(pairs), user.id, exp
+    pairs = pairs.filter(user=user.id, exp_no=exp)
     for p in pairs:
-        row.append(p.exp_no)
-        row.append(p.index)
-    	row.append(p.value)
-    	row.append(p.pic)
-    	row.append(p.time)
-    	row.append(p.t_at)
-    	row.append(p.date)
-    	row.append(p.browser)
-    	row.append(p.scrn_h)
-    	row.append(p.scrn_w)
-    	row.append(p.scroll_x)
-    	row.append(p.scroll_y )
-    	doc_new.append(row)
-    name = 'user/' + user.username
+        row=[p.exp_no,p.index,p.value,p.pic,p.time,p.t_at,p.date,p.browser,p.scrn_h,p.scrn_w,p.scroll_x, p.scroll_y]
+        doc_new.append(row)
+    name = 'users/' + user.username
     save_to_csv(doc_new, name+str(exp), True)
 
 def get_nationality():
@@ -147,7 +130,7 @@ def get_results_dict(name, exp):
 def get_user_pairs_dict(name, exp):
     # returns user pairs by experiement
     res_list=[]
-    file_csv = DIR_CSV + 'results/csv/user/'+ name+str(exp) + '.csv'
+    file_csv = DIR_CSV + 'results/csv/users/'+ name+str(exp) + '.csv'
     
     # Check file exists
     if os.path.exists(file_csv) == True:

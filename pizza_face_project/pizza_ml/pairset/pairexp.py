@@ -12,6 +12,10 @@ are helpers for setting up experimental pairs for view
 - get_pair_dict
 """
 
+#c9Testing:
+DIR_CSV = 'pizza_ml/'
+#DIR_CSV =  'pizza_face_project/pizza_ml/'
+
 def add_pair(pair_index, user, exp, pics):
   # Populate database with pairs
   user_id = user.id
@@ -87,11 +91,11 @@ def get_pair_dict(user):
     pizzas_index= []
     pizza_left = []
     pizza_right= []
+    i = 0
+    t =[]
     
     # Get predefined pairs for user from experimental design
-    #c9Testing:
-    with open('pizza_ml/pairset/experiment/expdesign_pairs.csv', 'rb') as expPairs:
-        #with open('pizza_face_project/pizza_ml/pairset/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+    with open( DIR_CSV + '/pairset/experiment/expdesign_pairs.csv', 'rb') as expPairs:
         reader = csv.reader(expPairs)
         for row in reader:
             if int(row[0]) == user_index:
@@ -100,6 +104,9 @@ def get_pair_dict(user):
                 pizza_right.append(get_pizza_dict(int(row[-1])))
                 pair_db = add_pair(index, user, 2, True)
                 pair_db.save()
+                if pair_db in t:
+                        print pair_db
+                t.append(pair_db)
         
                 value = {
                     'id': pair_db.id,
@@ -108,6 +115,10 @@ def get_pair_dict(user):
                     'time':0 
                 }
                 pizzas_index.append(value)
-        print len(pizzas_index), user_index
+                i= i+1
+                print i , pair_db
+        
+        p = PairPreferance.objects.filter(user=user.id, exp_no=2)
+        print len(pizzas_index), user_index, len(p)
         expPairs.close()
     return {'lefts':pizza_left, 'rights': pizza_right, 'pairindex': pizzas_index }

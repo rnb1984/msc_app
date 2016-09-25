@@ -24,7 +24,7 @@ def get_ingredients(string):
     return ingredients
 
 def get_pizza_dict(new_index):
-    # Reutrns a dictionary of Pizzas to be past as JSON 
+    # Reutrns a dictionary of Pizzas to be past as JSON
     try:
         pizza = Pizza.objects.get(index = new_index)
     except Pizza.DoesNotExist:

@@ -190,7 +190,7 @@ def results(request):
         # make sure it is the correct data
         if answer == 'yes' or answer == 'no':
             # save all info to a csv file
-            result.save_to_csv(user, 'results', answer)
+            result.save_user_to_csv(user, 'results', answer)
             # save all pairs
             result.save_user_pairs_to_csv(user, 2)
             
