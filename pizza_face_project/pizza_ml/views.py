@@ -14,7 +14,7 @@ from pizza_ml.forms import UserForm
 
 # For the RESTFUL API
 from rest_framework import generics
-from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer, PairPreferanceSerializer, PairPreferanceDeviceSerializer
+from pizza_ml.serializers import PizzaSerializer, IngredientSerializer, UserProfileSerializer, PairPreferanceSerializer
 
 # Exp one
 from random import randint
@@ -134,11 +134,12 @@ def details(request):
 @login_required
 def train(request):
     if request.method == 'GET':
+        print 'got here GET'
         context_dict = { 'title' : 'Training' }
         return render(request, 'pizza_ml/pref-pairs.html', context_dict)
         
     elif request.method == 'POST':
-        # create 3 pairs for user to train on
+         # create 3 pairs for user to train on
          pizza_left= []
          pizza_right=[]
          pizza_pairs= [{ 'l': 2, 'r': 3 },{ 'l': 4, 'r': 35 },{ 'l': 14, 'r': 5 }]
@@ -233,6 +234,8 @@ def curr_results_pairs(request):
     context_dict = result.get_user_all_pairs(2)
     return JsonResponse(context_dict)
 
+# Update object
+#def pair_update(request):if request.method == 'POST', user = request.user,   value = request.POST.get('value'),   index = request.POST.get('index'),   pairs = PairPreferance.objects.filter(user=user.id, )
 
 """
 Experiement One
@@ -248,6 +251,7 @@ def exp_one(request):
     return render(request, 'pizza_ml/expone/expone_home.html', context_dict)
 
 # Experiment One Pairs Page
+@login_required
 def exp_one_pairs(request):
     if request.method == 'GET':
         context_dict = { 'title' : 'Experiement One'}
@@ -269,13 +273,27 @@ def exp_one_pairs(request):
         context_dict= {'pics':pics, 'nopics': nopics}
         return JsonResponse(context_dict)
 
+# Deails page
+@login_required
+def exp_one_details(request):
+    # Details page
+    context_dict = {'title' : 'Experment Details', 'id' : request.user.id }
+    return render(request, 'pizza_ml/user/details.html', context_dict)
+
+# Trainging page
+@login_required
+def exp_one_train(request):
+    context_dict = { 'title' : 'TrainEX' }
+    return render(request, 'pizza_ml/pref-pairs.html', context_dict)
+
 # Start API
 def start(request):
     # API that returns a random integer to indecate wether the user will be given images or not to start with
     data={'start': randint(1,10) }
     return JsonResponse(data)
 
-# Final Page 
+# Final Page
+@login_required
 def finish(request):
     if request.method == 'GET':
         userd = UserProfile.objects.get( user= request.user)
@@ -356,8 +374,4 @@ class PairPrefDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = PairPreferance.objects.all()
     serializer_class = PairPreferanceSerializer    
 
-class PairPrefDevice(generics.RetrieveUpdateDestroyAPIView):
-    # edit the users details for every pair prefance taken
-    queryset = PairPreferance.objects.all()
-    serializer_class = PairPreferanceDeviceSerializer
 

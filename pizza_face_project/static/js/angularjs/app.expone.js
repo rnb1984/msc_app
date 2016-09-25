@@ -21,7 +21,6 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
         else if (n.match(/Edge/i) != null) return '/Edge';
      };
      var agent = get_agent();
-     console.log(agent);
 
     // urls
     var start_count = 20, time_start = 0, pairtime = 0, compsize = 0, curr =0;
@@ -71,10 +70,14 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
              $scope.indexs = index_pair[i];
          }
          var d = new Date();
-         time_now = d.getHours()+' : ' + d.getMinutes()
+         time_now = d.getHours()+' : ' + d.getMinutes();
          time_start = d.getTime();
      };
      
+     var sendagain = function(pk,data){
+         $http.put("/pair/"+pk+"/",data).success(function(data_out){
+                if (data_out.value == 2) sendagain(pk,data);});
+     };
      
      var update_pair = function(){
         // catch end time
@@ -83,25 +86,26 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
 
         // PUT preferrance results and updates
         var pk= $scope.indexs['id'];
-        var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now};
+        var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now, browser : agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
+        console.log(data.value,$scope.indexs['value']);
+        console.log(data);
 
-        $http.put("/pair/"+pk+"/",data).success(function(data){
-            $scope.new_index = data;
+        // update pair preferance
+        $http.put("/pair/"+pk+"/",data).success(function(data_out){
+            // update pair preferance
+            $scope.new_index = data_out;
+            console.log(data_out.value);
+            console.log(data_out);
+            sendagain(pk,data);
         });
         
-        // update pairs research data
-        data ={ browser : agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
-
-        $http.put("/device/"+pk+"/",data).success(function(data){
-            $scope.new_device = data;
-        });
         var countdown = function(){
             // Count down
             if ($scope.countdwn === 1 ){
                  $scope.round++;
                  reset_countdwn();
              }else $scope.countdwn = $scope.countdwn-1;
-        }
+        };
         // if next pair not the last use them0
         curr ++;
         if (curr<compsize){

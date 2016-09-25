@@ -85,6 +85,7 @@ def save_user_pairs_to_csv(user, exp):
     pairs = PairPreferance.objects.all()
     pairs = pairs.filter(user=user.id, exp_no=exp)
     for p in pairs:
+        print p.value
         row=[p.exp_no,p.index,p.value,p.pic,p.time,p.t_at,p.date,p.browser,p.scrn_h,p.scrn_w,p.scroll_x, p.scroll_y]
         doc_new.append(row)
     name = 'users/' + user.username

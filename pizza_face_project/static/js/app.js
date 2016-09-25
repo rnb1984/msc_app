@@ -24,7 +24,6 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
      var agent = get_agent();
 
     // urls
-    var pair_count =0;
     var start_count = 0, time_start = 0, pairtime = 0, compsize = 0, curr =0;
     var time_now = '';
     $scope.save_pairs = false;
@@ -32,12 +31,12 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     $scope.lingd = true;
     $scope.ringd = true;
     $scope.loadpizza = false;
-    if (document.title == 'Choices'){
+    if (document.title === 'Choices'){
         start_count = 15;
         $scope.save_pairs = true;
         pair_data = $http.post("/choices/");
     }
-    else if (document.title == 'Training'){
+    else if (document.title === 'Training' || document.title === 'TrainEX' ){
         start_count = 3;
         $scope.save_pairs=false;
         pair_data = $http.post("/train/");
@@ -56,7 +55,6 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
       next_pair(curr);
       $scope.loadpizza = true;
       compsize = index_pair.length;
-      console.log('index is',compsize);
       });
      
      
@@ -66,32 +64,32 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
          $scope.leftside = left_pizza[i];
          $scope.indexs = index_pair[i];
          var d = new Date();
-         time_now = d.getHours()+' : ' + d.getMinutes()
+         time_now = d.getHours()+' : ' + d.getMinutes();
          time_start = d.getTime();
+     };
+     
+     var sendagain = function(pk,data){
+         // if getting 2's back
+         $http.put("/pair/"+pk+"/",data).success(function(data_out){
+            console.log('second',data_out.value);
+            console.log(data_out);
+            if (data_out.value == 2)sendagain(pk,data);});
      };
      
      var update_pair = function(){
         // catch end time
         var time_end = new Date().getTime();
         pairtime = time_end - time_start;
-        console.log('current is: ', curr);
-        
+
         // PUT preferrance results and updates scope if in game mode
         if ($scope.save_pairs){
             var pk= $scope.indexs['id'];
-            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now};
+            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now,  browser : navigator.vendor + '|'+ navigator.appName +'|'+ agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: true};
             // update pair preferance
-            $http.put("/pair/"+pk+"/",data).success(function(data){
-                $scope.new_index = data;
-                console.log('pair saved',pair_count);
-                pair_count++;
-            });
-            
-            // update pairs research data
-            /*global navigator*/
-            data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: true};
-            $http.put("/device/"+pk+"/",data).success(function(data){
-                $scope.new_device = data;
+            $http.put("/pair/"+pk+"/",data).success(function(data_out){
+                // update pair preferance
+                $scope.new_index = data_out;
+                sendagain(pk,data);
             });
         }
         // if next pair not the last use them
@@ -109,7 +107,10 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             if ($scope.save_pairs) window.location.href="/results/";
             else if (!$scope.save_pairs){ 
                 var ready = confirm('Click OK if you are ready\nClick Cancel for more practice');
-                if (ready) window.location.href="/choices/";
+                if (ready) {
+                    if (document.title == 'TrainEX') window.location.href="/expone/image-pairs/";
+                    else window.location.href="/choices/";
+                }
                 else window.location.href="/train/";
             }
          }

@@ -60,17 +60,14 @@ formApp.controller('formController', function ($scope, $http ) {
             $scope.master['occupation'] = $scope.user.occupation;
             $scope.master['nationality'] = $scope.user.nationality;
             
-            console.log($scope.master, $scope.two);
-            console.log('test', $scope.master['dob'], $scope.master['gender'],$scope.master['allergies'], $scope.master['diet'] );
             var form_data = $scope.master;
             var pk =  $scope.master['id'];
             
-            console.log(form_data, 'pk', pk);
-            
-             $http.put("/userdetail/"+pk+"/",form_data).success(function(data){ console.log('data');
+             $http.put("/userdetail/"+pk+"/",form_data).success(function(data){
              // got to pizza pair choices
-             window.location.href="/train/";
-             console.log(data);
+             if (document.title === 'Details') window.location.href="/train/";
+             else window.location.href="/expone/train/";
+
              }); 
             }
      };
