@@ -183,36 +183,16 @@ def results(request):
     elif request.method == 'POST':
         context_dict={'reply':' '}
         # post should have returned a yes or no answer
-        pairs = PairPreferance.objects.all()
         user= request.user
         answer = json.loads(request.body)
         answer =  answer['answer']
         
         # make sure it is the correct data
         if answer == 'yes' or answer == 'no':
-            user_pro = UserProfile.objects.get(user=user)
-            pairs = PairPreferance.objects.filter(user=user.id)
-            a =[]
-            for p in pairs:
-                if p.exp_no ==2: a.append(pairexp.prep_pairs( p.index, p.value, p.time,  p.browser,  p.scrn_h,  p.scrn_w,  p.scroll_x,  p.scroll_y, p.t_at, p.date, p.exp_no, p.pic ))
-            pairs= a
-            doc_new=[]
-            row=[]
-            row.append(user.username)
-            row.append(user_pro.dob)
-            row.append(user_pro.gender)
-            row.append(user_pro.allergies)
-            row.append(user_pro.diet)
-            row.append(user_pro.occupation)
-            row.append(user_pro.nationality)
-            row.append(pairs)
-            row.append(answer)
-            row.append(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-            
             # save all info to a csv file
-            doc_new.append(row)
-            print len(row[8]), user, len(pairs)
-            result.save_to_csv(doc_new, 'results')
+            result.save_to_csv(user, 'results', answer)
+            # save all pairs
+            result.save_user_pairs_to_csv(user, 2)
             
             if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
             elif answer == 'yes':
@@ -243,9 +223,14 @@ def nationality(request):
     context_dict = result.get_nationality()
     return JsonResponse(context_dict)
 
-# Current Results
+# Current Results user
 def curr_results(request):
     context_dict = result.get_results_dict('results',2)
+    return JsonResponse(context_dict)
+
+# Current Results pairs
+def curr_results_pairs(request):
+    context_dict = result.get_user_all_pairs(2)
     return JsonResponse(context_dict)
 
 
@@ -300,7 +285,6 @@ def finish(request):
     elif request.method == 'POST':
         context_dict={'reply':' '}
         # post should have returned a yes or no answer
-        #pairs = PairPreferance.objects.all()
         user= request.user
         answer = json.loads(request.body)
         answer =  answer['answer']
@@ -308,32 +292,10 @@ def finish(request):
         # make sure it is the correct data
         if answer == 'yes' or answer == 'no':
             user_pro = UserProfile.objects.get(user=user)
-            pairs = PairPreferance.objects.filter(user=user.id)
-            a =[]
-            b =[]
-            for p in pairs:
-                if p.exp_no != 2:
-                    if p.pic:
-                        a.append( pairexp.prep_pairs( p.index, p.value, p.time,  p.browser,  p.scrn_h,  p.scrn_w,  p.scroll_x,  p.scroll_y, p.t_at, p.date, p.exp_no, p.pic ) )
-                    else:
-                        b.append( pairexp.prep_pairs( p.index, p.value, p.time,  p.browser,  p.scrn_h,  p.scrn_w,  p.scroll_x,  p.scroll_y, p.t_at, p.date, p.exp_no, p.pic ) )
-            doc_new=[]
-            row=[]
-            row.append(user.username)
-            row.append(user_pro.dob)
-            row.append(user_pro.gender)
-            row.append(user_pro.allergies)
-            row.append(user_pro.diet)
-            row.append(user_pro.occupation)
-            row.append(user_pro.nationality)
-            row.append(a)
-            row.append(b)
-            row.append(answer)
-            row.append(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-            
-            # save all info to a csv file
-            doc_new.append(row)
-            result.save_to_csv(doc_new, 'exp_one')
+            # save all users details to exp_one doc
+            result.save_user_to_csv(user, 'exp_one', answer)
+            # save all pairs in a their own doc
+            result.save_user_pairs_to_csv(user, 1)
             
             if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
             elif answer == 'yes':
@@ -343,9 +305,14 @@ def finish(request):
             context_dict={'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'}
         return JsonResponse(context_dict)
 
-# API exp results
+# API exp results user
 def exp_results(request):
     context_dict = result.get_results_dict('exp_one', 1)
+    return JsonResponse(context_dict)
+
+# API exp results pairs
+def exp_results_pairs(request):
+    context_dict = result.get_user_all_pairs(1)
     return JsonResponse(context_dict)
 
 """

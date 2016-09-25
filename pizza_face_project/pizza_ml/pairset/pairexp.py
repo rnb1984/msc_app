@@ -1,7 +1,7 @@
 from pairs import Pairs
 from pizza_ml.models import Pizza, Ingredient, UserProfile, PairPreferance
 from pizza_ml.pizza.prep import get_pizza_dict, get_ingredients,get_user_index
-import csv
+import csv, datetime, time
 
 """
 Pairexp
@@ -20,19 +20,19 @@ def add_pair(pair_index, user, exp, pics):
   p.save()
   return p
     
-def prep_pairs(index,value,time, browser, scrn_h, scrn_w, scroll_x, scroll_y,t_at,date,exp_no,pic ):
-    x = {    'index' :index,
-            'value':value,
-            'time':time,
-            'browser':browser,
-            'b_h' :scrn_h,
-            'b_w' :scrn_w,
-            'scr_x':scroll_x,
-            'scr_y':scroll_y,
-            't_at' :t_at,
-            'date' :date,
-            'exp' :exp_no,
-            'pic' :pic,
+def prep_pairs( p ):
+    x = {    'index' : p.index,
+            'value': p.value,
+            'time': p.time,
+            'browser': p.browser,
+            'b_h' : p.scrn_h,
+            'b_w' : p.scrn_w,
+            'scr_x': p.scroll_x,
+            'scr_y': p.scroll_y,
+            't_at' : p.t_at,
+            'date' : str(p.date),
+            'exp' : p.exp_no,
+            'pic' : p.pic,
              }
     return x
 

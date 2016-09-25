@@ -1,20 +1,132 @@
-import csv
+import csv, datetime, time, os
 from pizza_ml.models import Pizza, Ingredient, UserProfile, PairPreferance
+from django.contrib.auth.models import User
+from pizza_ml.pairset.pairexp import prep_pairs
+
+
 
 """
 Result
 are helpers functions for the views needing data from the resulst in the csv
-- get_results_dict
+
 - save_to_csv
 - save_emails
+- save_user_pairs_to_csv
 - get_nationality
+- get_results_dict
+- get_user_pairs_dict
+- get_user_all_pairs
+
 """
+#c9Testing:
+DIR_CSV = 'pizza_ml/'
+#DIR_CSV =  'pizza_face_project/pizza_ml/'
+
+def save_to_csv(doc_new, name, new):
+    # Saves all results on exisiting file
+    doc_in = []
+    file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
+    
+    # Check file exists
+    print os.path.exists(file_csv)
+    if os.path.exists(file_csv) == True:
+        if new == False:
+            with open(file_csv, 'rb') as inText:
+                reader = csv.reader(inText)
+                for row in reader:
+                    doc_in.append(row)
+                inText.close()
+        else:
+            print "got to remove", len(doc_new)
+            os.remove(file_csv)
+            
+        
+    for doc in doc_new:
+        doc_in.append(doc)
+    
+    
+    # Store all information in a csv file
+    with open(file_csv, 'w') as outText:
+        writer = csv.writer(outText, delimiter=",")
+        writer.writerow(doc_in[0])
+    
+        for i in range(1,len(doc_in)):
+            #out_doc = doc_in[i]
+            writer.writerow(doc_in[i])
+    outText.close()
+
+def save_emails(username, email):
+    # save emails
+    e_doc=[]
+    row=[]
+    row.append(username)
+    row.append(email)
+    e_doc.append(row)
+    save_to_csv(e_doc, 'email', False)
+
+def save_user_to_csv(user, name, answer):
+    user_pro = UserProfile.objects.get(user=user)
+    
+    doc_new=[]
+    row=[]
+    row.append(user.username)
+    row.append(user_pro.dob)
+    row.append(user_pro.gender)
+    row.append(user_pro.allergies)
+    row.append(user_pro.diet)
+    row.append(user_pro.occupation)
+    row.append(user_pro.nationality)
+    row.append(answer)
+    row.append(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    
+    # save all info to a csv file
+    doc_new.append(row)
+    save_to_csv(doc_new, name, False)
+
+def save_user_pairs_to_csv(user, exp):
+    # formats and then saves a users pair preferances to a csv file
+    doc_new = []
+    row =[]
+    pairs = PairPreferance.objects.all()
+    pairs = PairPreferance.objects.filter(user=user.id, exp_no=exp)
+    print len(pairs), user.id, exp
+    for p in pairs:
+        row.append(p.exp_no)
+        row.append(p.index)
+    	row.append(p.value)
+    	row.append(p.pic)
+    	row.append(p.time)
+    	row.append(p.t_at)
+    	row.append(p.date)
+    	row.append(p.browser)
+    	row.append(p.scrn_h)
+    	row.append(p.scrn_w)
+    	row.append(p.scroll_x)
+    	row.append(p.scroll_y )
+    	doc_new.append(row)
+    name = 'user/' + user.username
+    save_to_csv(doc_new, name+str(exp), True)
+
+def get_nationality():
+    context_dict = {}
+    nat_list=[]
+    file_csv = DIR_CSV + '/data/nations.csv'
+
+    with open(file_csv, 'rb') as nat:
+        reader = csv.reader(nat)
+        for row in reader:
+            country = {
+                row[0] : row[1],
+                row[2] : row[3]
+            }
+            nat_list.append(country)
+    return { 'nationality' :nat_list}
 
 def get_results_dict(name, exp):
     res_list=[]
-    #c9Testing:
-    with open('pizza_ml/results/csv/'+ name +'.csv', 'rb') as res:
-    #with open('pizza_face_project/pizza_ml/results/csv/'+ name +'.csv', 'rb') as res:
+    file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
+    
+    with open(file_csv, 'rb') as res:
         reader = csv.reader(res)
         for row in reader:
             users = {
@@ -28,61 +140,46 @@ def get_results_dict(name, exp):
                 'permission' : row[-2],
                 'completed time' : row[-1],
             }
-            if exp == 2:
-                users['pairs']= row[7]
-            else:
-                users['pairs_nopics']= row[7]
-                users['pairs_pics']= row[8]
                 
             res_list.append(users)
     return { 'results' :res_list}
 
-def save_to_csv(doc_new, name):
-    # Saves all results on exisiting file
-    doc_in = []
-    #c9Testing:
-    with open('pizza_ml/results/csv/'+ name + '.csv', 'rb') as inText:
-    #with open('pizza_face_project/pizza_ml/results/csv/'+ name + '.csv', 'rb') as inText:
-        reader = csv.reader(inText)
-        for row in reader:
-            doc_in.append(row)
-    inText.close()
+def get_user_pairs_dict(name, exp):
+    # returns user pairs by experiement
+    res_list=[]
+    file_csv = DIR_CSV + 'results/csv/user/'+ name+str(exp) + '.csv'
     
-    for doc in doc_new:
-        doc_in.append(doc)
-    
-    # Store all information in a csv file
-    #c9Testing:
-    with open('pizza_ml/results/csv/'+ name + '.csv', 'w') as outText:
-    #with open('pizza_face_project/pizza_ml/results/csv/'+ name + '.csv', 'w') as outText:
-        writer = csv.writer(outText, delimiter=",")
-        writer.writerow(doc_in[0])
-    
-        for i in range(1,len(doc_in)):
-            out_doc = doc_in[i]
-            writer.writerow(out_doc)
-    outText.close()
-
-def save_emails(username, email):
-    # save emails
-    e_doc=[]
-    row=[]
-    row.append(username)
-    row.append(email)
-    e_doc.append(row)
-    save_to_csv(e_doc, 'email')
-
-def get_nationality():
-    context_dict = {}
-    nat_list=[]
-    #c9Testing:
-    with open('pizza_ml/data/nations.csv', 'rb') as nat:
-    #with open('pizza_face_project/pizza_ml/data/nations.csv', 'rb') as nat:
-        reader = csv.reader(nat)
-        for row in reader:
-            country = {
-                row[0] : row[1],
-                row[2] : row[3]
-            }
-            nat_list.append(country)
-    return { 'nationality' :nat_list}
+    # Check file exists
+    if os.path.exists(file_csv) == True:
+        with open(file_csv, 'rb') as res:
+            reader = csv.reader(res)
+            for row in reader:
+                if int(row[0]) == exp:
+                    pairs = {
+                        'exp_no': int(row[0]), 
+                        'index' :  int(row[1]),
+                        'value' :  int(row[2]),
+                        'pic': row[3],
+                        'time':  int(row[4]),
+                        't_at': row[5],
+                        'date': row[6],
+                        'browser' : row[7],
+                        'scrn_h' :  int(row[8]),
+                        'scrn_w':  int(row[9]),
+                        'scroll_x' :  int(row[10]),
+                        'scroll_y' :  int(row[-1]),
+                    }
+                    res_list.append(pairs)
+                else:
+                    pass
+        return { name : res_list}
+    else:
+        return { name : "False"}
+   
+def get_user_all_pairs(exp):
+    # returns a dictionary of all user pair details dependent on the experement
+    users = User.objects.all()
+    all_pairs = []
+    for u in users:
+        all_pairs.append(get_user_pairs_dict(u.username, exp))
+    return { 'exp_'+ str(exp) : all_pairs }

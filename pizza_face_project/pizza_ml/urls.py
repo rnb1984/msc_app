@@ -10,17 +10,21 @@ urlpatterns = patterns('',
     url(r'^register/$', views.register, name='register'),
     url(r'^id/$', views.current_user, name='id'),
     url(r'^nationality/$', views.nationality, name='nationality'),
-    url(r'^curr-results/$', views.curr_results, name='curr-results'),
     url(r'^train/$', views.train, name = 'train'),
     url(r'^choices/$', views.pizza_choice, name = 'choices'),
     url(r'^results/$', views.results, name='results'),
     
+    # Experiment Two results
+    url(r'^curr-results/$', views.curr_results, name='curr-results'),
+    url(r'^curr-results/pairs/$', views.curr_results_pairs, name='curr-results-pairs'),
+    
     # Experiment One
-     url(r'^expone/$', views.exp_one, name='expone'),
-     url(r'^expone/image-pairs/$', views.exp_one_pairs, name='expone-pairs'),
-     url(r'^expone/start/$', views.start, name='expone-start'),
-     url(r'^expone/end/$', views.finish, name='expone-end'),
-     url(r'^expone/curr-results/$', views.exp_results, name='expone-results'),
+    url(r'^expone/$', views.exp_one, name='expone'),
+    url(r'^expone/image-pairs/$', views.exp_one_pairs, name='expone-pairs'),
+    url(r'^expone/start/$', views.start, name='expone-start'),
+    url(r'^expone/end/$', views.finish, name='expone-end'),
+    url(r'^expone/curr-results/$', views.exp_results, name='expone-results'),
+    url(r'^expone/curr-results/pairs/$', views.exp_results_pairs, name='expone-results-pairs'),
 
     
     # Authentication urls to django defaults

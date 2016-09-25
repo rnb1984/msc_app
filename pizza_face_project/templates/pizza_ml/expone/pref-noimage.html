@@ -9,24 +9,26 @@
             <h3> Pick Your Favourite of the Two </h3>
         </div>
             <!-- loader -->
-          <div class="meal-wait" ng-hide=" loadpizza " ><div id="face"></div><h3> Wait'ta one Second!! <br> I'm Getting the Pizzas!!</h3></div>
+          <div class="meal-wait" ng-hide=" loadpizza " ><div id="face"></div><h3> Wait a one Second!! <br> I'm Getting the Pizzas!!</h3></div>
           <!-- distraction -->
-          <div class="meal-wait" ng-show=" intermission.b " ><div id="face"></div><h3 ng-click='show( intermission )'> Wating fornext round!! </h3></div>
+          <div class="meal-wait" ng-show="intermission" ><div id="face"></div><h3> Wating for the next round!! </h3>
+          <a ng-click='intermission=!intermission' class="btn btn-primary next" role="button">Next</a></div>
           
           <div id="pz-med" class="pz-num"><h2 class="col-xs-2">{{ round }}</h2><div id="pz-small" class="pz-round"><span class="meal-pz">{{ countdwn }}</span></div></div>
           
           <!--Pizza left-->
           <div class ="pizzas-cont col-xs-6">
                   <article class="meal-cont">
-                      <!--NO IMAGES IF FALSE-->
+                    <!--IMAGES IF True-->
                     <div ng-show="expone" class="meal-image"><img ng-src='{{ leftside.pic }}'/></div>
-                    
-                    <span class="meal-btns" id="like" ng-click='prefLeft()'></span>
+                    <span ng-show="expone" class="meal-btns" id="like" ng-click='prefLeft()'></span>
+                    <!--NO IMAGES IF FALSE-->
+                    <span ng-hide="expone" class="meal-btns-exp" id="like" ng-click='prefLeft()'></span>
 
                     <div class="meal-info">
                         <h3 class="meal-name">{{ leftside.name }}</h3>
-                        <a ng-hide="lingd.b" href="" ng-click='show( lingd )'><small>See Toppings</small></a>
-                        <ul ng-show="lingd.b" class="meal-info meal-shadow"><a href="" ng-click='show( lingd )'><small>Hide Toppings</small></a>
+                        <a ng-hide="lingd" href="" ng-click="lingd=!lingd"><small>See Toppings</small></a>
+                        <ul ng-show="lingd" class="meal-info meal-shadow"><a href="" ng-click="lingd=!lingd"><small>Hide Toppings</small></a>
                         <li ng-repeat="ingredient in leftside.ingredients"><p>{{ ingredient }}</p></li></ul>
                     </div>
                 </article>
@@ -35,15 +37,16 @@
           <!--Pizza right-->
           <div class ="pizzas-cont col-xs-6">
                   <article class="meal-cont">
-                       <!--NO IMAGES IF FALSE-->
+                    <!--IMAGES IF True-->
                     <div ng-show="expone" class="meal-image"><img ng-src='{{ rightside.pic }}'/></div>
-                    
-                    <span class="meal-btns" id="like" ng-click='prefRight()'></span>
+                    <span ng-show="expone" class="meal-btns" id="like" ng-click='prefRight()'></span>
+                    <!--NO IMAGES IF FALSE-->
+                    <span ng-hide="expone" class="meal-btns-exp" id="like" ng-click='prefRight()'></span>
 
                     <div class="meal-info">
                         <h3 class="meal-name">{{ rightside.name }}</h3>
-                        <a ng-hide="ringd.b" href="" ng-click='show( ringd )'><small>See Toppings</small></a>
-                        <ul ng-show="ringd.b" class="meal-info meal-shadow"><a href="" ng-click='show( ringd )'><small>Hide Toppings</small></a>
+                        <a ng-hide="ringd" href="" ng-click="ringd=!ringd"><small>See Toppings</small></a>
+                        <ul ng-show="ringd" class="meal-info meal-shadow"><a href="" ng-click="ringd=!ringd"><small>Hide Toppings</small></a>
                         <li ng-repeat="ingredient in rightside.ingredients" ><p>{{ ingredient }}</p></li></ul>
                     </div>
                 </article>

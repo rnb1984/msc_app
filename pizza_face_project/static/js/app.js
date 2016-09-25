@@ -17,6 +17,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     var time_now = '';
     $scope.save_pairs = false;
     var pair_data = {};
+    $scope.lingd, $scope.ringd = true;
     $scope.loadpizza = false;
     if (document.title == 'Choices'){
         start_count = 15;
@@ -100,13 +101,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             }
          }
      };
-     
-     $scope.lingd = {name: 'left', b:true};
-     $scope.ringd = {name: 'right', b:true};
-     // show ingredients list
-     $scope.show = function(item){
-         item.b = !item.b;
-     }
+    
      
      // Countdown for rounds 
      var reset_countdwn = function(){

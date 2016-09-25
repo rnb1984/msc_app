@@ -282,13 +282,18 @@ td{
 }
 
 
-.meal-btns{
-    float:right;
+.meal-btns-exp, .meal-btns{
     display:block;
     margin: 1px auto;
     position: absolute;
-    top: 17%;
-    left: 40%;
+}
+.meal-btns{
+    top: 33%;
+    left: 70%;
+}
+.meal-btns-exp{
+    top: 10%;
+    left: 70%;
 }
 
 .meal-pz{

@@ -9,14 +9,26 @@ var expApp = angular.module('expApp',[])
 
 // Controller for experiement one preferances
 expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
+     var get_agent = function(){
+     /*global navigator*/
+     var n = navigator.userAgent;
+     if (n.match(/Chrome/i) != null) return 'Chrome';
+        else if (n.match(/Opera/i) != null) return 'Opera/';
+        else if (n.match(/Firefox/i) != null) return 'Firefox';
+        else if (n.match(/Safari/i) != null) return 'Safari';
+        else if (n.match(/IE/i) != null) return 'IE';
+        else if (n.match(/Edge/i) != null) return '/Edge';
+     };
+     var agent = get_agent();
+     console.log(agent);
 
     // urls
     var start_count = 20, time_start = 0, pairtime = 0, compsize = 0, curr =0;
     var time_now = '';
-    var pair_data = {} ;
     $scope.exp_finish = false;
     $scope.loadpizza = false;
-    $scope.intermission = {name:'intermission', b:false};
+    $scope.lingd = true, $scope.ringd = true;
+    $scope.intermission = false;
     
     $http.post("/expone/start/").then(function (response) {
         var x = response.data.start;
@@ -62,6 +74,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
          time_start = d.getTime();
      };
      
+     
      var update_pair = function(){
         // catch end time
         var time_end = new Date().getTime();
@@ -76,8 +89,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
         });
         
         // update pairs research data
-        /*global navigator*/
-        data ={ browser : navigator.vendor + '|'+ navigator.appName +'|'+ navigator.userAgent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
+        data ={ browser : agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
 
         $http.put("/device/"+pk+"/",data).success(function(data){
             $scope.new_device = data;
@@ -97,7 +109,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
         }
         else if (!$scope.exp_finish && curr<compsize*2){ 
                 // Show distraction
-                $scope.intermission.b = true;
+                $scope.intermission = true;
                 // Change pic for last round
                 $scope.exp_finish = true;
                 $scope.expone = !$scope.expone;
@@ -113,13 +125,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
             if ($scope.exp_finish) window.location.href="/expone/end/";
          }
      };
-     
-     $scope.lingd = {name: 'left', b:true};
-     $scope.ringd = {name: 'right', b:true};
-     // show ingredients list
-     $scope.show = function(item){
-         item.b = !item.b;
-     }
+
      
      // Countdown for rounds 
      var reset_countdwn = function(){
