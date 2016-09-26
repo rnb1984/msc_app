@@ -12,8 +12,10 @@ are helpers for setting up experimental pairs for view
 - get_pair_dict
 """
 
-#c9Testing: DIR_CSV = 'pizza_ml/'
-DIR_CSV = 'pizza_face_project/pizza_ml/'
+#c9Testing:
+DIR_CSV = 'pizza_ml/'
+#DIR_CSV = 'pizza_face_project/pizza_ml/'
+DIR_EXP = 'static/csv/experiment/'
 
 def add_pair(pair_index, user, exp, pics):
   # Populate database with pairs
@@ -47,7 +49,7 @@ def get_expone_pair_dict(user, pics, exp, rnd):
     pizza_right= []
     
     # Get last of predefined pairs for user from experimental design
-    with open(DIR_CSV + '/pairset/experiment/experiment_one.csv', 'rb') as expPairs:
+    with open(DIR_EXP +'experiment_one.csv', 'rb') as expPairs:
         reader = csv.reader(expPairs)
         for row in reader:
             if int(row[0]) == 100:
@@ -92,7 +94,7 @@ def get_pair_dict(user):
     t =[]
     
     # Get predefined pairs for user from experimental design
-    with open( DIR_CSV + '/pairset/experiment/expdesign_pairs.csv', 'rb') as expPairs:
+    with open( DIR_EXP + 'expdesign_pairs.csv', 'rb') as expPairs:
         reader = csv.reader(expPairs)
         for row in reader:
             if int(row[0]) == user_index:
