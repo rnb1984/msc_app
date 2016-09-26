@@ -1,0 +1,319 @@
+/***************************
+    1. base
+    2. graphics
+    3. introductions
+    4. details
+    5. pizza choice
+    6. predictions
+    7. pizza
+    
+***************************/
+
+
+small,h1,h2,h3,h4,h5,h6, li, p{
+    font-weight: lighter !important;
+    font-family:'Open Sans',Arial,sans-serif !important;
+    line-height: 1.5 !important;
+    color: #236AD9 !important;
+}
+em, small{
+    color: #236AD9;
+}
+
+.deep-blue{
+    background-color: #236AD9;
+}
+
+.blue{
+    background-color: #A7C3F0;
+}
+
+.light-blue{
+    background-color: #EDF3FC;
+}
+
+
+.next{
+    float:right;
+}
+
+td{
+    vertical-align: middle !important;
+}
+
+.white{
+    padding: 10px 20px !important;
+    background-color: #fff;
+}
+
+/***************************
+    graphics
+***************************/
+
+#like {
+    width: 69px;
+    height: 69px;
+    background: transparent url("/static/graphics/sypf-btn.png") repeat scroll -1px -1px;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1), 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+    border-radius: 55%;
+}
+
+#like:hover {
+    background: url(/static/graphics/sypf-btn.png) 0 71px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1), 0px 0px 5px 0px rgba(0, 0, 0, 0.9);
+}
+
+#vs {
+    width: 50px;
+    height: 35px;
+    background: url(/static/graphics/sypf-btn.gif) -35px 0;
+}
+
+#yes {
+    width: 35px;
+    height: 35px;
+    background: url(/static/graphics/sypf-btn.gif) 0 -36px;
+}
+
+#no {
+    width: 35px;
+    height: 35px;
+    background: url(/static/graphics/sypf-btn.gif) -35px -36px;
+}
+
+#face{
+    width: 76px;
+    height: 76px;
+    background: url(/static/graphics/icons.png) 0 0;
+    padding: 10px;
+    display: block;
+    margin: auto;
+}
+
+#pz-med{
+    width: 75px;
+    height: 75px;
+    background: url(/static/graphics/icons.png) -1px 75px;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1), 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 55%;
+}
+
+#pz-small{
+    width: 22px;
+    height: 22px;
+    background: url(/static/graphics/icons.png) 21px -53px;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1), 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 55%;
+}
+
+#like, #yes, #no{
+    cursor:pointer;
+    float: left;
+    margin-left: 5px;
+}
+.answer{
+    float:left;
+    margin: 10px 5px;
+}
+.meal-wait{
+    z-index: 15;
+    top:10%;
+    left:20%;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 5px solid rgba(167, 195, 240, 0.95);
+    text-align: center;
+    width: 60%;
+}
+.meal-wait h3{
+    line-height: 1.5;
+}
+
+/***************************
+    introductions
+***************************/
+.meal-info, .hili, .intro,.end{
+    display: block;
+    padding: 5px 20px;
+}
+
+.meal-info li{
+    list-style-type: none;
+    margin-left: 15%;
+}
+.meal-info small{
+    color:#bbc !important;
+}
+
+
+.white li, .white h4, .white p, .end h4, .end p, .intro h4, .intro p{
+    color:#000 !important;
+}
+.white li{
+    line-height: 2 !important;
+}
+
+.logo{
+    display: block;
+    margin: 30px auto;
+}
+
+.meal-btns, .meal-info, .intro,.end{
+    background-color: #fff;
+}
+
+.intro{
+    min-height: 1000px;
+}
+.end{
+    min-height: 250px;
+}
+
+/***************************
+    details
+***************************/
+
+/***************************
+    pizza choice
+***************************/
+
+.pizzas{
+    min-height: 800px;
+    padding: 10px;
+}
+.pizzas-cont{
+    position:static;
+    float:left;
+}
+
+.meal-wait, .vers{
+    display:block;
+    position:absolute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+.vers{
+    z-index: 5;
+    top:45%;
+    left:47.5%;
+}
+
+.pz-num{
+    z-index: 5;
+    position: absolute;
+    top:0%;
+    left:46%;
+}
+
+.pz-num h2{
+    position:absolute;
+    left:20%;
+    top:-5%;
+    color: #d90e28 !important;
+    font-weight: 400 !important;
+}
+
+.pz-round{
+    font-size: 12px;
+    float: right;
+    margin-top: 50px;
+    color: #faefcd;
+}
+
+/***************************
+    predictions 
+***************************/
+
+.pred-cont{
+    display:block;
+    margin: 0 auto;
+    position:relative;
+    min-height: 300px;
+    overflow: auto;
+    padding: 0 0 !important;
+}
+
+.pred-cont h2{
+    color: #fff;
+    text-align: center;
+    
+}
+
+/***************************
+    pizza 
+***************************/
+.pizza-head{
+    text-align: center;
+    padding:20px;
+}
+
+.meal-cont{
+    float: left;
+    width:100%;
+    height:900px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.meal-name{
+    min-height:100px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #A7C3F0;
+    padding: 0 15px;
+}
+
+.meal-image {
+    width:100%;
+    height:200px;
+    overflow: hidden;
+}
+
+.meal-image img{
+    display:block;
+    width: 100%;
+    margin: auto;
+}
+
+.meal-info{
+    width:100%;
+    height: 550px;
+}
+.meal-shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.meal-btns-exp, .meal-btns{
+    display:block;
+    margin: 1px auto;
+    position: absolute;
+}
+.meal-btns{
+    top: 33%;
+    left: 70%;
+}
+.meal-btns-exp{
+    top: 10%;
+    left: 70%;
+}
+
+.meal-pz{
+    position: absolute;
+    left: 76%;
+    top: 70%;
+}
+
+@media only screen and  (max-width: 768px) {
+    .meal-image {
+        height:150px;
+    }
+    .meal-btns{
+        top: 20%;
+        left: 35%;
+    }
+}
+
+@media only screen and  (max-width: 480px) {
+    .meal-image {
+        height:100px;
+    }
+}

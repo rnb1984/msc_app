@@ -109,7 +109,7 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
