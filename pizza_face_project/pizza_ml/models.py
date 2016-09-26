@@ -46,7 +46,7 @@ class UserProfile(models.Model):
 	
 	# Current prediction = int    predict = models.IntegerField(default=0)			!!
 	# Prediction correct = boolean   correct = models.BooleanField(default=False)	!!
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=128)
 
     def save(self, *args, **kwargs):
          self.slug = slugify(self.user.username)
@@ -66,9 +66,7 @@ class Pizza(models.Model):
 	index = models.IntegerField(default=0)
 	pic = models.URLField()
 	ingredients = models.CharField(max_length=228) # prefer list of integers but might have to use string and parse!
-	# allergies = models.IntegerField(default=0) ~ possible feature for end system
-	# diet = models.IntegerField(default=0) ~ possible feature for end system
-	slug = models.SlugField() # for post requests
+	slug = models.SlugField(max_length=228) # for post requests
 	
 	def save(self, *args, **kwargs):
 	    self.slug = slugify(self.name)
@@ -87,7 +85,7 @@ class Ingredient(models.Model):
 	name = models.CharField(max_length=228)
 	index = models.IntegerField(default=0)
 	amount = models.IntegerField(default=0)
-	slug = models.SlugField()
+	slug = models.SlugField(max_length=228)
 	
 	def save(self, *args, **kwargs):
 	    self.slug = slugify(self.name)
@@ -124,7 +122,7 @@ class PairPreferance(models.Model):
 	scroll_y=models.IntegerField(default=0)
 	# Experiement number
 	exp_no= models.IntegerField(default=0)
-	slug = models.SlugField()
+	slug = models.SlugField(max_length=128)
 	
 	def save(self, *args, **kwargs):
 	    self.slug = slugify(self.index)
