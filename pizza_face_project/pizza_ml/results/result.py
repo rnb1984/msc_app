@@ -214,13 +214,12 @@ def get_user_dict(name):
     username=[]
     mail=[]
     # Check file exists
-    if os.path.exists(file_csv) == True:
-        with open(file_csv, 'rb') as res:
-            reader = csv.reader(res)
-            for row in reader:
-                    username.append(row[0])
-                    mail.append(row[-1])
-        res.close()
-        return {'username': username, 'mail' :  mail,}
-    else:
-        return {'username': 'False', 'mail' :  'False',}
+    #if os.path.exists(file_csv) == True:
+    with open(file_csv, 'rb') as res:
+        reader = csv.reader(res)
+        for row in reader:
+                username.append(row[0])
+                mail.append(row[-1])
+    res.close()
+    return {'username': username, 'mail' :  mail,}
+    #else: return {'username': 'False', 'mail' :  'False',}
