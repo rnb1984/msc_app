@@ -111,7 +111,7 @@ class PairPreferance(models.Model):
 	# Date of pair made
 	date = models.DateField(default=date.today())
 	time = models.IntegerField(default=0)
-	t_at = models.CharField(default='none', max_length=50)
+	t_at = models.CharField(default='none', max_length=228)
 	# Pairs have image
 	pic= models.BooleanField(default=True)
 	# Gets browser details
