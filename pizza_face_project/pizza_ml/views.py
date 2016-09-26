@@ -166,8 +166,10 @@ def pizza_choice(request):
     
     elif request.method == 'POST':
          # Post back assigned pairs from experiment design
+         print 'in post'
          user = request.user
          # create JSON file
+         print 'got user', user
          context_dict= pairexp.get_pair_dict(user)
          return JsonResponse(context_dict)
 

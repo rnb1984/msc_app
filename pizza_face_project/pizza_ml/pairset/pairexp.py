@@ -91,9 +91,10 @@ def get_pair_dict(user):
     pizza_right= []
     i = 0
     t =[]
-    
+    print 'got into pairs'
     # Get predefined pairs for user from experimental design
     with open( DIR_EXP + 'expdesign_pairs.csv', 'rb') as expPairs:
+        print 'opend file'
         reader = csv.reader(expPairs)
         for row in reader:
             if int(row[0]) == user_index:
