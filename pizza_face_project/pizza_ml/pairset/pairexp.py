@@ -47,9 +47,7 @@ def get_expone_pair_dict(user, pics, exp, rnd):
     pizza_right= []
     
     # Get last of predefined pairs for user from experimental design
-    #c9Testing:
-    with open('pizza_ml/pairset/experiment/experiment_one.csv', 'rb') as expPairs:
-        #with open('pizza_face_project/pizza_ml/pairset/experiment/experiment_one.csv', 'rb') as expPairs:
+    with open(DIR_CSV + '/pairset/experiment/experiment_one.csv', 'rb') as expPairs:
         reader = csv.reader(expPairs)
         for row in reader:
             if int(row[0]) == 100:

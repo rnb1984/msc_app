@@ -209,12 +209,11 @@ def get_user_all_pairs(exp):
     return { 'exp_'+ str(exp) : all_pairs }
     
 def get_user_dict(name):
-    # returns user pairs by experiement
-    file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
     username=[]
     mail=[]
-    # Check file exists
-    #if os.path.exists(file_csv) == True:
+    # returns user pairs by experiement
+    file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
+    
     with open(file_csv, 'rb') as res:
         reader = csv.reader(res)
         for row in reader:
@@ -222,4 +221,3 @@ def get_user_dict(name):
                 mail.append(row[-1])
     res.close()
     return {'username': username, 'mail' :  mail,}
-    #else: return {'username': 'False', 'mail' :  'False',}
