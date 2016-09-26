@@ -32,10 +32,10 @@ class UserProfile(models.Model):
     exp_index = models.IntegerField(default=0)
     dob = models.IntegerField(default=0)
     gender = models.CharField(default="U", max_length=1, choices=GENDER_CHOICES)
-    allergies = models.CharField(default="0", max_length=128)
-    diet = models.CharField(default="0", max_length=128)
+    allergies = models.CharField(default="0", max_length=228)
+    diet = models.CharField(default="0", max_length=228)
     occupation = models.IntegerField(default=0)
-    nationality = models.CharField(default="0", max_length=128)
+    nationality = models.CharField(default="0", max_length=228)
     
     """
 	UserPreferance
@@ -62,10 +62,10 @@ class Pizza(models.Model):
 	- Stores name of pizza, pic of pizza, index pizza is on matrix of pizza and a feature vecture of ingredients
 	"""
 
-	name = models.CharField(max_length=128) 
+	name = models.CharField(max_length=228) 
 	index = models.IntegerField(default=0)
 	pic = models.URLField()
-	ingredients = models.CharField(max_length=128) # prefer list of integers but might have to use string and parse!
+	ingredients = models.CharField(max_length=228) # prefer list of integers but might have to use string and parse!
 	# allergies = models.IntegerField(default=0) ~ possible feature for end system
 	# diet = models.IntegerField(default=0) ~ possible feature for end system
 	slug = models.SlugField() # for post requests
@@ -84,7 +84,7 @@ class Ingredient(models.Model):
 	- Stores name of ingredient and index of ingredients on pizza matrix with the amount with total counted in pizzas
 	"""
 	
-	name = models.CharField(max_length=128)
+	name = models.CharField(max_length=228)
 	index = models.IntegerField(default=0)
 	amount = models.IntegerField(default=0)
 	slug = models.SlugField()
