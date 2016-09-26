@@ -99,6 +99,7 @@ def get_pair_dict(user):
         for row in reader:
             if int(row[0]) == user_index:
                 index = pairs.get_index_of_pair(int(row[2]),int(row[-1]))
+                print 'index', index,'row 2',row[-1],'row-1', row[-1]
                 pizza_left.append(get_pizza_dict(int(row[2])))
                 pizza_right.append(get_pizza_dict(int(row[-1])))
                 pair_db = add_pair(index, user, 2, True)
