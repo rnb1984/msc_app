@@ -14,7 +14,7 @@ are helpers for setting up experimental pairs for view
 
 #c9Testing:DIR_CSV = 'pizza_ml/'
 DIR_CSV = 'pizza_face_project/pizza_ml/'
-DIR_EXP = 'static/csv/experiment/'
+DIR_EXP = 'pizza_face_project/static/csv/experiment/'
 
 def add_pair(pair_index, user, exp, pics):
   # Populate database with pairs
