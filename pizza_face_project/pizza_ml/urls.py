@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # Experiment Two results
     url(r'^curr-results/$', views.curr_results, name='curr-results'),
     url(r'^curr-results/pairs/$', views.curr_results_pairs, name='curr-results-pairs'),
+    url(r'^curr-results/users/$', views.curr_results_users, name='curr-results-users'),
     
     # Experiment One
     url(r'^expone/$', views.exp_one, name='expone'),

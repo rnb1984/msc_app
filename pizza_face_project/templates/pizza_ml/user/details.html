@@ -52,7 +52,7 @@
               <label for="allergies">allergies:</label>
                 <ul class="checkbox" >
                   <li ng-repeat="(alg, enabled ) in allergies">
-                    <input type="checkbox" id="{{ alg }}" name="{{ alg }}" ng-model="allergies[alg]"/><label for="{{ alg }}">{{ alg }}</label>
+                    <input type="checkbox" id="a_{{ alg }}" name="{{ alg }}" ng-model="allergies[alg]"/><label for="a_{{ alg }}">{{ alg }}</label>
                   </li>
                 </ul required>
               <br>

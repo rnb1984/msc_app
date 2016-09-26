@@ -16,6 +16,7 @@ are helpers functions for the views needing data from the resulst in the csv
 - get_results_dict
 - get_user_pairs_dict
 - get_user_all_pairs
+- get_user_dict
 
 """
 
@@ -107,30 +108,57 @@ def get_nationality():
     return { 'nationality' :nat_list}
 
 def get_results_dict(name, exp):
-    res_list=[]
+    username=[]
+    dob=[]
+    gender=[]
+    allergies=[]
+    diet=[]
+    occupation=[]
+    nationality=[]
+    permission=[]
+    completed=[]
     file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
     
     with open(file_csv, 'rb') as res:
         reader = csv.reader(res)
         for row in reader:
-            users = {
-                'username': row[0],
-                'dob' : row[1],
-                'gender' : row[2],
-                'allergies': row[3],
-                'diet': row[4],
-                'occupation': row[5],
-                'nationality': row[6],
-                'permission' : row[-2],
-                'completed time' : row[-1],
+            username.append(row[0])
+            dob.append(row[1])
+            gender.append(row[2])
+            allergies.append(row[3])
+            diet.append(row[4])
+            occupation.append(row[5])
+            nationality.append(row[6])
+            permission.append(row[-2])
+            completed.append(row[-1])
+    res.close()
+    return {
+            'username': username,
+            'dob' : dob,
+            'gender' : gender,
+            'allergies': allergies,
+            'diet': diet,
+            'occupation': occupation,
+            'nationality': nationality,
+            'permission' : permission,
+            'completed time' : completed,
             }
-                
-            res_list.append(users)
-    return { 'results' :res_list}
 
 def get_user_pairs_dict(name, exp):
     # returns user pairs by experiement
     res_list=[]
+    index=[]
+    value=[]
+    pic=[]
+    time=[]
+    t_at=[]
+    date=''
+    browser=''
+    scrn_h=[]
+    scrn_w=[]
+    scroll_x=[]
+    scroll_y=[]
+    
     file_csv = DIR_CSV + 'results/csv/users/'+ name+str(exp) + '.csv'
     
     # Check file exists
@@ -139,23 +167,35 @@ def get_user_pairs_dict(name, exp):
             reader = csv.reader(res)
             for row in reader:
                 if int(row[0]) == exp:
-                    pairs = {
-                        'exp_no': int(row[0]), 
-                        'index' :  int(row[1]),
-                        'value' :  int(row[2]),
-                        'pic': row[3],
-                        'time':  int(row[4]),
-                        't_at': row[5],
-                        'date': row[6],
-                        'browser' : row[7],
-                        'scrn_h' :  int(row[8]),
-                        'scrn_w':  int(row[9]),
-                        'scroll_x' :  int(row[10]),
-                        'scroll_y' :  int(row[-1]),
-                    }
-                    res_list.append(pairs)
+                    index.append(int(row[1]))
+                    value.append(int(row[2]))
+                    pic.append(row[3])
+                    time.append(int(row[4]))
+                    t_at.append(row[5])
+                    date = row[6]
+                    browser = row[7]
+                    scrn_h.append(int(row[8]))
+                    scrn_w.append(int(row[9]))
+                    scroll_x.append(int(row[10]))
+                    scroll_y.append(int(row[-1]))
                 else:
                     pass
+            pairs = {
+                    'exp_no': exp, 
+                    'index' :  index,
+                    'value' :  value,
+                    'pic': pic,
+                    'time':  time,
+                    't_at': t_at,
+                    'date': date,
+                    'browser' : browser,
+                    'scrn_h' :  scrn_h,
+                    'scrn_w':  scrn_w,
+                    'scroll_x' :  scroll_x,
+                    'scroll_y' :  scroll_y,
+                    }
+            res_list.append(pairs)
+        res.close()
         return { name : res_list}
     else:
         return { name : "False"}
@@ -167,3 +207,20 @@ def get_user_all_pairs(exp):
     for u in users:
         all_pairs.append(get_user_pairs_dict(u.username, exp))
     return { 'exp_'+ str(exp) : all_pairs }
+    
+def get_user_dict(name):
+    # returns user pairs by experiement
+    file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
+    username=[]
+    mail=[]
+    # Check file exists
+    if os.path.exists(file_csv) == True:
+        with open(file_csv, 'rb') as res:
+            reader = csv.reader(res)
+            for row in reader:
+                    username.append(row[0])
+                    mail.append(row[-1])
+        res.close()
+        return {'username': username, 'mail' :  mail,}
+    else:
+        return {'username': 'False', 'mail' :  'False',}

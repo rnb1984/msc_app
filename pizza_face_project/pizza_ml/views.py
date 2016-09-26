@@ -234,8 +234,10 @@ def curr_results_pairs(request):
     context_dict = result.get_user_all_pairs(2)
     return JsonResponse(context_dict)
 
-# Update object
-#def pair_update(request):if request.method == 'POST', user = request.user,   value = request.POST.get('value'),   index = request.POST.get('index'),   pairs = PairPreferance.objects.filter(user=user.id, )
+# Current Results users
+def curr_results_users(request):
+    context_dict = result.get_user_dict('email')
+    return JsonResponse(context_dict)
 
 """
 Experiement One

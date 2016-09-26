@@ -1,13 +1,1 @@
-username, dob, gender, allergies, diet, occupation, nationality, permission, time completed  
-t1,0,U,0,0,0,0,yes,2016-09-25 18:11:29
-t1,0,U,0,0,0,0,no,2016-09-25 18:15:44
-t4,0,U,0,0,0,0,no,2016-09-25 20:13:48
-t5,0,U,0,0,0,0,yes,2016-09-25 20:23:05
-Tmo,0,U,0,0,0,0,yes,2016-09-25 20:28:36
-t5,0,U,0,0,0,0,no,2016-09-25 20:44:58
-t5,0,U,0,0,0,0,no,2016-09-25 21:09:17
-t5,0,U,0,0,0,0,no,2016-09-25 21:11:12
-t5,0,U,0,0,0,0,no,2016-09-25 21:12:38
-t5,0,U,0,0,0,0,yes,2016-09-25 21:26:44
-t6,1,F,"dairy,peanut,sesame","vegatarian,lowcarb",3,AU,no,2016-09-25 21:39:30
-t7,0,U,0,0,0,0,yes,2016-09-25 21:45:36
+username, dob, gender, allergies, diet, occupation, nationality, permission, time completed
