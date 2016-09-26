@@ -23,7 +23,7 @@ def add_pair(pair_index, user, exp, pics):
   p.save()
   return p
     
-def prep_pairs( p ):
+def prep_pairs(p):
     x = {    'index' : p.index,
             'value': p.value,
             'time': p.time,
