@@ -9,17 +9,155 @@ from pizza_ml.pairset.pairexp import prep_pairs, DIR_CSV
 Result
 are helpers functions for the views needing data from the resulst in the csv
 
+db updates
+- is_exp
+- set_permission
+- get_user_emails
+- get_user_details
+- get_all_user_details
+- get_user_pairs
+- get_all_users_pairs
+
+csv updates
 - save_to_csv
 - save_emails
 - save_user_pairs_to_csv
 - get_nationality
-- get_results_dict
-- get_user_pairs_dict
+- get_results_csv
+- get_user_pairs_csv
 - get_user_all_pairs
-- get_user_dict
+- get_user_csv
 
 """
 
+def is_exp(user,exp):
+    if PairPreferance.objects.filter(user=user.id, exp_no = exp):
+        return True
+    else:
+        return False
+
+# Set for results to db
+def set_permission(user, permission):
+    user_pro = UserProfile.objects.get(user=user)
+    user_pro.permission = permission
+    user_pro.save()
+
+# Getters for results fomr databas
+def get_user_emails(answer):
+    username=[]
+    mail=[]
+    users = User.objects.all()
+    users_p = UserProfile.objects.all()
+    for user in users_p:
+        print user.permission, user
+        if user.permission==answer:
+            username.append(user.user.username)
+            mail.append(user.user.email)
+        else:
+            pass
+    return {'username': username, 'mail' :  mail,}
+
+def get_user_details(user):
+    user_pro = UserProfile.objects.get(user=user)
+    return [user.username, user_pro.dob, user_pro.gender, user_pro.allergies, user_pro.diet, user_pro.occupation, user_pro.nationality, user_pro.permission, datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') ]
+
+def get_all_user_details(exp):
+    username=[]
+    dob=[]
+    gender=[]
+    allergies=[]
+    diet=[]
+    occupation=[]
+    nationality=[]
+    permission=[]
+    completed=[]
+    users = User.objects.all()
+    for u in users:
+        if is_exp(u,exp) ==True:
+            row = get_user_details(u)
+            username.append(row[0])
+            dob.append(row[1])
+            gender.append(row[2])
+            allergies.append(row[3])
+            diet.append(row[4])
+            occupation.append(row[5])
+            nationality.append(row[6])
+            permission.append(row[-2])
+            completed.append(row[-1])
+        else:
+            pass
+    return {
+            'username': username,
+            'dob' : dob,
+            'gender' : gender,
+            'allergies': allergies,
+            'diet': diet,
+            'occupation': occupation,
+            'nationality': nationality,
+            'permission' : permission,
+            'completed time' : completed,
+            }
+    
+def get_user_pairs(user, exp):
+    print user
+    pairs = PairPreferance.objects.filter(user=user.id, exp_no=exp)
+    
+    # returns user pairs by experiement
+    res_list=[]
+    index=[]
+    value=[]
+    pic=[]
+    time=[]
+    t_at=[]
+    date=''
+    browser=''
+    scrn_h=[]
+    scrn_w=[]
+    scroll_x=[]
+    scroll_y=[]
+    
+    # Check pairs for experiment
+    for p in pairs:
+        if p.exp_no == exp:
+            index.append( p.index )
+            value.append( p.value )
+            pic.append( p.pic )
+            time.append( p.time )
+            t_at.append( p.t_at )
+            date = p.date
+            browser = p.browser
+            scrn_h.append( p.scrn_h )
+            scrn_w.append( p.scrn_w )
+            scroll_x.append( p.scroll_x )
+            scroll_y.append( p.scroll_y )
+        else:
+            pass
+    pairs = {
+            'exp_no': exp, 
+            'index' :  index,
+            'value' :  value,
+            'pic': pic,
+            'time':  time,
+            't_at': t_at,
+            'date': date,
+            'browser' : browser,
+            'scrn_h' :  scrn_h,
+            'scrn_w':  scrn_w,
+            'scroll_x' :  scroll_x,
+            'scroll_y' :  scroll_y,
+            }
+    res_list.append(pairs)
+    return { user.username : res_list}
+
+def get_all_users_pairs(exp):
+    # returns a dictionary of all users pairs from database
+    users = User.objects.all()
+    all_pairs = []
+    for u in users:
+        all_pairs.append(get_user_pairs(u, exp))
+    return { 'exp_'+ str(exp) : all_pairs }
+
+# Setters for results to CSV
 def save_to_csv(doc_new, name, new):
     # Saves all results on exisiting file
     doc_in = []
@@ -50,7 +188,7 @@ def save_to_csv(doc_new, name, new):
             writer.writerow(doc_in[i])
     outText.close()
 
-def save_emails(username, email):
+def save_emails_csv(username, email):
     # save emails
     e_doc=[]
     row=[]
@@ -92,6 +230,7 @@ def save_user_pairs_to_csv(user, exp):
     name = 'users/' + user.username
     save_to_csv(doc_new, name+str(exp), True)
 
+# Getters for results to CSV
 def get_nationality():
     context_dict = {}
     nat_list=[]
@@ -107,7 +246,7 @@ def get_nationality():
             nat_list.append(country)
     return { 'nationality' :nat_list}
 
-def get_results_dict(name, exp):
+def get_results_csv(name, exp):
     username=[]
     dob=[]
     gender=[]
@@ -200,7 +339,7 @@ def get_user_pairs_dict(name, exp):
     else:
         return { name : "False"}
    
-def get_user_all_pairs(exp):
+def get_user_all_pairs_csv(exp):
     # returns a dictionary of all user pair details dependent on the experement
     users = User.objects.all()
     all_pairs = []
@@ -208,9 +347,10 @@ def get_user_all_pairs(exp):
         all_pairs.append(get_user_pairs_dict(u.username, exp))
     return { 'exp_'+ str(exp) : all_pairs }
     
-def get_user_dict(name):
+def get_user_csv(name):
     username=[]
     mail=[]
+    
     # returns user pairs by experiement
     file_csv = DIR_CSV + 'results/csv/'+ name + '.csv'
     
@@ -221,3 +361,4 @@ def get_user_dict(name):
                 mail.append(row[-1])
     res.close()
     return {'username': username, 'mail' :  mail,}
+    

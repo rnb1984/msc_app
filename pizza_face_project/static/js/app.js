@@ -111,7 +111,9 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
                     if (document.title == 'TrainEX') window.location.href="/expone/image-pairs/";
                     else window.location.href="/choices/";
                 }
-                else window.location.href="/train/";
+                else {
+                    if (document.title == 'TrainEX')window.location.href="/expone/train/";
+                    else window.location.href="/train/";}
             }
          }
      };

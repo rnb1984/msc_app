@@ -191,16 +191,12 @@ def results(request):
         answer =  answer['answer']
         
         # make sure it is the correct data
-        if answer == 'yes' or answer == 'no':
-            # save all info to a csv file
-            result.save_user_to_csv(user, 'results', answer)
-            # save all pairs
-            result.save_user_pairs_to_csv(user, 2)
-            
-            if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
-            elif answer == 'yes':
-                result.save_emails(user.username, user.email)
-                context_dict['reply'] = 'Thank you! You will recieve an email with your prediction on this address ' + user.email
+        if answer == 'no':
+            result.set_permission(user, False)
+            context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
+        elif answer == 'yes':
+            result.set_permission(user, True)
+            context_dict['reply'] = 'Thank you! You will recieve an email with your prediction on this address ' + user.email
         else:
             context_dict={'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'}
         return JsonResponse(context_dict)
@@ -217,7 +213,8 @@ API Custom
 @login_required
 def current_user(request):
     # Posts user information
-    user_profile = UserProfile.objects.get(user=request.user)
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
     data = { 'id' : user_profile.id , "dob": user_profile.dob,"gender": user_profile.gender,"allergies": user_profile.allergies,"diet": user_profile.diet, "nationality" : user_profile.nationality, "occupation" : user_profile.occupation }
     return JsonResponse(data)
 
@@ -228,17 +225,20 @@ def nationality(request):
 
 # Current Results user
 def curr_results(request):
-    context_dict = result.get_results_dict('results',2)
+    #context_dict = result.get_results_dict('results',2)
+    context_dict = result.get_all_user_details(2)
     return JsonResponse(context_dict)
 
 # Current Results pairs
 def curr_results_pairs(request):
-    context_dict = result.get_user_all_pairs(2)
+    #context_dict = result.get_user_all_pairs_csv(2)
+    context_dict = result.get_all_users_pairs(2)
     return JsonResponse(context_dict)
 
 # Current Results users
 def curr_results_users(request):
-    context_dict = result.get_user_dict('email')
+    #context_dict = result.get_user_dict('email')
+    context_dict = result.get_user_emails(True)
     return JsonResponse(context_dict)
 
 """
@@ -303,38 +303,17 @@ def finish(request):
         userd = UserProfile.objects.get( user= request.user)
         context_dict = { 'title' : 'Congratulations', 'details' :userd }
         return render(request, 'pizza_ml/expone/expone-permissions.html', context_dict)
-    
-    elif request.method == 'POST':
-        context_dict={'reply':' '}
-        # post should have returned a yes or no answer
-        user= request.user
-        answer = json.loads(request.body)
-        answer =  answer['answer']
-        
-        # make sure it is the correct data
-        if answer == 'yes' or answer == 'no':
-            user_pro = UserProfile.objects.get(user=user)
-            # save all users details to exp_one doc
-            result.save_user_to_csv(user, 'exp_one', answer)
-            # save all pairs in a their own doc
-            result.save_user_pairs_to_csv(user, 1)
-            
-            if answer == 'no': context_dict['reply'] = "Thank you. You will not recieve an email with a pizza prediction."
-            elif answer == 'yes':
-                result.save_emails(user.username, user.email)
-                context_dict['reply'] = 'Thank you! You will recieve an email with your prediction on this address ' + user.email
-        else:
-            context_dict={'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'}
-        return JsonResponse(context_dict)
 
 # API exp results user
 def exp_results(request):
-    context_dict = result.get_results_dict('exp_one', 1)
+    #context_dict = result.get_results_csv('exp_one', 1)
+    context_dict = result.get_all_user_details(1)
     return JsonResponse(context_dict)
 
 # API exp results pairs
 def exp_results_pairs(request):
-    context_dict = result.get_user_all_pairs(1)
+    #context_dict = result.get_user_all_pairs_csv(1)
+    context_dict = result.get_all_users_pairs(1)
     return JsonResponse(context_dict)
 
 """

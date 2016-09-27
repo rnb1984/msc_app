@@ -36,6 +36,7 @@ class UserProfile(models.Model):
     diet = models.CharField(default="0", max_length=228)
     occupation = models.IntegerField(default=0)
     nationality = models.CharField(default="0", max_length=228)
+    permission = models.BooleanField(default=False)
     
     """
 	UserPreferance

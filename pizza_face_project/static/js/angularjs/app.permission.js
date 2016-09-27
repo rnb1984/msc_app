@@ -42,7 +42,7 @@ function permissionExpOneController ($scope, $http, $rootScope ) {
             $scope.answered = true;
             var data = {answer: result };
             console.log(data)
-            $http.post("/expone/end/",data).success(function(data){
+            $http.post("/results/",data).success(function(data){
                  $scope.endmessage = data;
             });
         }
