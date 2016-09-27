@@ -86,7 +86,24 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
 
         // PUT preferrance results and updates
         var pk= $scope.indexs['id'];
-        var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now, browser : agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: $scope.expone};
+        var data = {
+                id: pk,
+                user : $scope.indexs['user'],
+                index : $scope.indexs['index'],
+                value : $scope.indexs['value'],
+                time : pairtime,
+                t_at : time_now, 
+                browser : navigator.vendor + '|'+ navigator.appName +'|'+ agent,
+                scrn_h : window.innerHeight,
+                scrn_w : window.innerWidth,
+                scroll_x : window.scrollX,
+                scroll_y : window.scrollY,
+                pic : $scope.expone,
+                exp_no : $scope.indexs['exp_no'],
+                slug : $scope.indexs['slug'],
+                date : $scope.indexs['date'],
+            };
+        
         console.log(data.value,$scope.indexs['value']);
         console.log(data);
 

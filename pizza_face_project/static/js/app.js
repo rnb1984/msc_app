@@ -96,7 +96,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
                 scrn_w : window.innerWidth,
                 scroll_x : window.scrollX,
                 scroll_y : window.scrollY,
-                pic : true,
+                pic : $scope.indexs['pic'],
                 exp_no : $scope.indexs['exp_no'],
                 slug : $scope.indexs['slug'],
                 date : $scope.indexs['date'],
