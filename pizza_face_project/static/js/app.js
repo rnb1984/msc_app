@@ -86,6 +86,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             var pk= $scope.indexs['id'];
             var data = {
                 id: pk,
+                user: $scope.indexs['user'],
                 index: $scope.indexs['index'],
                 value: $scope.indexs['value'],
                 time:pairtime,
@@ -100,6 +101,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
                 slug : $scope.indexs['slug'],
                 date : $scope.indexs['date'],
             };
+            console.log(data)
             // update pair preferance
             $http.put("/pair/"+pk+"/",data).success(function(data_out){
                 // update pair preferance
