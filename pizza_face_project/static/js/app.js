@@ -84,7 +84,22 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
         // PUT preferrance results and updates scope if in game mode
         if ($scope.save_pairs){
             var pk= $scope.indexs['id'];
-            var data = {id: pk, index: $scope.indexs['index'], value: $scope.indexs['value'], time:pairtime, t_at:time_now,  browser : navigator.vendor + '|'+ navigator.appName +'|'+ agent, scrn_h : window.innerHeight, scrn_w : window.innerWidth, scroll_x : window.scrollX, scroll_y : window.scrollY, pic: true};
+            var data = {
+                id: pk,
+                index: $scope.indexs['index'],
+                value: $scope.indexs['value'],
+                time:pairtime,
+                t_at:time_now, 
+                browser : navigator.vendor + '|'+ navigator.appName +'|'+ agent,
+                scrn_h : window.innerHeight,
+                scrn_w : window.innerWidth,
+                scroll_x : window.scrollX,
+                scroll_y : window.scrollY,
+                pic: true,
+                exp_no : $scope.indexs['exp_no'],
+                slug : $scope.indexs['slug'],
+                date : $scope.indexs['date'],
+            };
             // update pair preferance
             $http.put("/pair/"+pk+"/",data).success(function(data_out){
                 // update pair preferance
