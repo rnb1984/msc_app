@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['pizza-face-ml.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -81,6 +81,8 @@ DATABASES = {
         'PORT': '',   
     }
 }
+
+DATABASE_URL = postgres://dbecegbybpremj:Yz8bDwrQ5O-Th_TTzm9eFJqslF@ec2-54-228-192-254.eu-west-1.compute.amazonaws.com:5432/dbjjt9o5mpd192
 
 # Below is adivice for heroku from
 # https://devcenter.heroku.com/articles/django-app-configuration
