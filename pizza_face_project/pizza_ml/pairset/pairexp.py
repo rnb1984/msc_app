@@ -74,7 +74,11 @@ def get_expone_pair_dict(user, pics, exp, rnd):
                     'id': pair_db.id,
                     'index':index,
                     'value': 2, # can't be 0 or 1 to start with
-                    'time':0 
+                    'time':0,
+                    'exp_no': pair_db.exp_no,
+                    'slug': pair_db.slug,
+                    'date': pair_db.date,
+                    'user': pair_db.user,
                 }
                 pizzas_index.append(value)
     expPairs.close()
@@ -112,7 +116,11 @@ def get_pair_dict(user):
                     'id': pair_db.id,
                     'index':index,
                     'value': 2, # can't be 0 or 1 to start with
-                    'time':0 
+                    'time':0
+                    'exp_no': pair_db.exp_no,
+                    'slug': pair_db.slug,
+                    'date': pair_db.date,
+                    'user': pair_db.user,
                 }
                 pizzas_index.append(value)
                 i= i+1
