@@ -82,8 +82,6 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = postgres://dbecegbybpremj:Yz8bDwrQ5O-Th_TTzm9eFJqslF@ec2-54-228-192-254.eu-west-1.compute.amazonaws.com:5432/dbjjt9o5mpd192
-
 # Below is adivice for heroku from
 # https://devcenter.heroku.com/articles/django-app-configuration
 db_from_env = dj_database_url.config(conn_max_age=500)
