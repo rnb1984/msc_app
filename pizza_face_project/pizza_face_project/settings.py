@@ -72,8 +72,12 @@ TEMPLATE_DIRS = (
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djangodb',                     
+        'USER': 'user',
+        'PASSWORD': 'O_xod_FaFLleC1rtPIgsrzsuFQ',
+        'HOST': '127.0.0.1', 
+        'PORT': ' ', 
     }
 }
 # Below is adivice for heroku from
