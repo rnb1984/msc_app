@@ -70,16 +70,18 @@ TEMPLATE_DIRS = (
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangodb',                     
-        'USER': 'user',
-        'PASSWORD': 'O_xod_FaFLleC1rtPIgsrzsuFQ',
-        'HOST': '127.0.0.1', 
-        'PORT': ' ', 
+# DB settings for Heroku
+DATABASES = {  
+    'default': {      
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',     
+        'NAME': 'pizzaml',                           
+        'USER': 'pizzafac',       
+        'PASSWORD': 'password',       
+        'HOST': 'localhost',        
+        'PORT': '',   
     }
 }
+
 # Below is adivice for heroku from
 # https://devcenter.heroku.com/articles/django-app-configuration
 db_from_env = dj_database_url.config(conn_max_age=500)
