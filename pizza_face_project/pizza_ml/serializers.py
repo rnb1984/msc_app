@@ -28,5 +28,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class PairPreferanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PairPreferance
-        fields = ( 'id','index','value', 'time', 't_at','browser','scrn_h','scrn_w','scroll_x','scroll_y','pic')
-        #fields = "__all__"
+        #fields = ( 'id','index','value', 'time', 't_at','browser','scrn_h','scrn_w','scroll_x','scroll_y','pic')
+        fields = "__all__"

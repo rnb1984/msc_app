@@ -97,9 +97,9 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
                 scroll_x : window.scrollX,
                 scroll_y : window.scrollY,
                 pic : $scope.indexs['pic'],
-                //exp_no : $scope.indexs['exp_no'],
-                //slug : $scope.indexs['slug'],
-                //date : $scope.indexs['date'],
+                exp_no : $scope.indexs['exp_no'],
+                slug : $scope.indexs['slug'],
+                date : $scope.indexs['date'],
             };
             console.log(data)
             // update pair preferance
