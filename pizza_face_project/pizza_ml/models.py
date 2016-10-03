@@ -109,6 +109,7 @@ class PairPreferance(models.Model):
 	value = models.IntegerField(default=2)
 	# Date of pair made
 	date = models.DateField(default=date.today())
+	u_index = models.IntegerField(default=0)
 	time = models.IntegerField(default=0)
 	t_at = models.CharField(default='none', max_length=228)
 	# Pairs have image

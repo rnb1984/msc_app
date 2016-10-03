@@ -102,6 +102,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
                 exp_no : $scope.indexs['exp_no'],
                 slug : $scope.indexs['slug'],
                 date : $scope.indexs['date'],
+                u_index : $scope.indexs['u_index'],
             };
         
         console.log(data.value,$scope.indexs['value']);
