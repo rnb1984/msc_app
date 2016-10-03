@@ -26,7 +26,6 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     // urls
     var start_count = 0, time_start = 0, pairtime = 0, compsize = 0, curr =0;
     var time_now = '';
-    var data_updated = false;
     $scope.save_pairs = false;
     var pair_data = {};
     $scope.lingd = true;
@@ -74,9 +73,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
          $http.put("/pair/"+pk+"/",data).success(function(data_out){
             console.log('second',data_out.value);
             console.log(data_out);
-            if (data_out.value == 2)sendagain(pk,data);
-             else data_updated = true;
-         });
+            if (data_out.value == 2)sendagain(pk,data);});
      };
      
      var update_pair = function(){
@@ -107,42 +104,37 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             };
             console.log(data)
             // update pair preferance
-            data_updated = false;
             $http.put("/pair/"+pk+"/",data).success(function(data_out){
                 // update pair preferance
                 $scope.new_index = data_out;
-                sendagain(pk,data);
+                sendagain(pk,data_out);
             });
         }
         // if next pair not the last use them
         curr ++;
-        if (data_updated == true || $scope.save_pairs == false){
-            if (curr<compsize){
-                next_pair(curr);
-                // Count down
-                if ($scope.countdwn === 1 ){
-                     $scope.round++;
-                     reset_countdwn();
-                 }else $scope.countdwn = $scope.countdwn-1;
-            }
-            else{
-                // if in game mode goto result page other wise give option if user ready to play
-                if ($scope.save_pairs) window.location.href="/results/";
-                else if (!$scope.save_pairs){ 
-                    var ready = confirm('Click OK if you are ready\nClick Cancel for more practice');
-                    if (ready) {
-                        if (document.title == 'TrainEX') window.location.href="/expone/image-pairs/";
-                        else window.location.href="/choices/";
-                    }
-                    else {
-                        if (document.title == 'TrainEX')window.location.href="/expone/train/";
-                        else window.location.href="/train/";}
+        if (curr<compsize){
+            next_pair(curr);
+            // Count down
+            if ($scope.countdwn === 1 ){
+                 $scope.round++;
+                 reset_countdwn();
+             }else $scope.countdwn = $scope.countdwn-1;
+        }
+        else{
+            // if in game mode goto result page other wise give option if user ready to play
+            if ($scope.save_pairs) window.location.href="/results/";
+            else if (!$scope.save_pairs){ 
+                var ready = confirm('Click OK if you are ready\nClick Cancel for more practice');
+                if (ready) {
+                    if (document.title == 'TrainEX') window.location.href="/expone/image-pairs/";
+                    else window.location.href="/choices/";
                 }
-             }
-     
+                else {
+                    if (document.title == 'TrainEX')window.location.href="/expone/train/";
+                    else window.location.href="/train/";}
             }
-            else sendagain(pk,data);
-        };
+         }
+     };
     
      
      // Countdown for rounds 

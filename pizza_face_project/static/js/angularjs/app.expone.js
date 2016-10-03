@@ -114,7 +114,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
             $scope.new_index = data_out;
             console.log(data_out.value);
             console.log(data_out);
-            sendagain(pk,data);
+            sendagain(pk,data_out);
         });
         
         var countdown = function(){
