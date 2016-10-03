@@ -19,7 +19,7 @@ DIR_EXP = DIR_CSV + '/pairset/experiment/'
 def add_pair(pair_index, user, exp, pics, u_index):
   # Populate database with pairs
   user_id = user.id
-  if exp == 1: p = PairPreferance.objects.create(user=user_id, index = pair_index, exp_no=exp, pic=pics)[0]
+  if exp == 1: p = PairPreferance.objects.create(user=user_id, index = pair_index, exp_no=exp, pic=pics)
   else: p = PairPreferance.objects.get_or_create(user=user_id, index = pair_index, exp_no=exp, u_index=u_index)[0]
   p.save()
   return p
