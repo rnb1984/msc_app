@@ -75,7 +75,7 @@ pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
             console.log(data_out);
             if (data_out.value == 2)put_pair(pk,data);})
             .error(function(e){
-                console.log('Got Error ', e )
+                console.log('Got Error ')
                 put_pair(pk,data);});;
      };
      
