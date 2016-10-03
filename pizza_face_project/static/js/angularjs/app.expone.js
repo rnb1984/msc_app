@@ -74,9 +74,15 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
          time_start = d.getTime();
      };
      
-     var sendagain = function(pk,data){
+     var put_pair = function(pk,data){
+         // if getting 2's back
          $http.put("/pair/"+pk+"/",data).success(function(data_out){
-                if (data_out.value == 2) sendagain(pk,data);});
+            console.log('second',data_out.value);
+            console.log(data_out);
+            if (data_out.value == 2)put_pair(pk,data);})
+            .error(function(e){
+                console.log('Got Error ', e )
+                put_pair(pk,data);});;
      };
      
      var update_pair = function(){
@@ -109,13 +115,7 @@ expApp.controller('expOneController', function ($scope, $http, $rootScope ) {
         console.log(data);
 
         // update pair preferance
-        $http.put("/pair/"+pk+"/",data).success(function(data_out){
-            // update pair preferance
-            $scope.new_index = data_out;
-            console.log(data_out.value);
-            console.log(data_out);
-            sendagain(pk,data_out);
-        });
+        put_pair(pk,data);
         
         var countdown = function(){
             // Count down
