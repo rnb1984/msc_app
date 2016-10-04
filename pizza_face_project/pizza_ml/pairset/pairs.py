@@ -30,6 +30,10 @@ class Pairs:
         if right_pair == no_of_items_in_index: left_pair = starting_point_of_pair_set_in_index
         else: left_pair = starting_point_of_pair_set_in_index + 1
         
+        if right_pair == 0:
+            right_pair = no_of_items_in_index
+            left_pair = starting_point_of_pair_set_in_index
+        
         return left_pair, right_pair
     
     def get_dict_comparisions(self):
