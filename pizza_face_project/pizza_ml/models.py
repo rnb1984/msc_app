@@ -20,7 +20,7 @@ GENDER_CHOICES = (
     ('M', 'Male'),
 )
 
-# DEFINE MODEL !!!
+
 class UserProfile(models.Model):
     """
 	UserProfile
