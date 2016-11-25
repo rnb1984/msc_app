@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^train/$', views.train, name = 'train'),
     url(r'^choices/$', views.pizza_choice, name = 'choices'),
     url(r'^results/$', views.results, name='results'),
+    url(r'^this-pizzas/(?P<pk>[0-9]+)/$', views.pizza_page, name='pizza-page'),
     
     # Experiment Two results
     url(r'^curr-results/$', views.curr_results, name='curr-results'),

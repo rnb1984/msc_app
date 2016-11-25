@@ -8,7 +8,7 @@ var pairApp = angular.module('pairApp',[])
 
 
 
-// Controller for pizzas
+// Controller for pizzas pairs
 pairApp.controller('pairsController', function ($scope, $http, $rootScope ) {
     // browser
      var get_agent = function(){

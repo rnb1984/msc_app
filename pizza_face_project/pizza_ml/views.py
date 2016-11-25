@@ -201,6 +201,10 @@ def results(request):
             context_dict={'reply':'Sorry we did not get an answer from you, please email 2155569b@student.gla.ac.uk'}
         return JsonResponse(context_dict)
 
+# Individual Pizza
+def pizza_page(request, pk):
+    context_dict = { 'title' : pk }
+    return render(request, 'pizza_ml/pizza.html', context_dict)
 
 """
 API Custom
@@ -335,7 +339,6 @@ class IngredientList(generics.ListCreateAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-   
 class UserProfileList(generics.ListCreateAPIView):
     # returns a list of profiles
     queryset = UserProfile.objects.all()
@@ -346,7 +349,6 @@ class UserProfileDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-    
 class PairPrefLists(generics.ListCreateAPIView):
     # returns a list of pairs
     queryset = PairPreferance.objects.all()
@@ -357,4 +359,7 @@ class PairPrefDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = PairPreferance.objects.all()
     serializer_class = PairPreferanceSerializer    
 
-
+class PizzaDetails(generics.RetrieveUpdateDestroyAPIView):
+    # edit a pizza depending on a id/pk
+    queryset = Pizza.objects.all()
+    serializer_class = PizzaSerializer 

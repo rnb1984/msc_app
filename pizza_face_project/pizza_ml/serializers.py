@@ -12,18 +12,15 @@ class PizzaSerializer(serializers.ModelSerializer):
         model = Pizza
         fields = "__all__"
 
-
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = "__all__"
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('id','dob','gender','allergies','diet', 'occupation', 'nationality')
-
 
 class PairPreferanceSerializer(serializers.ModelSerializer):
     class Meta:

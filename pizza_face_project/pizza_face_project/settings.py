@@ -71,14 +71,22 @@ TEMPLATE_DIRS = (
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 # DB settings for Heroku
-DATABASES = {  
-    'default': {      
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',     
-        'NAME': 'pizzaml',                           
-        'USER': 'pizzafac',       
-        'PASSWORD': 'password',       
-        'HOST': 'localhost',        
-        'PORT': '',   
+#DATABASES = {  
+#    'default': {      
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',     
+#        'NAME': 'pizzaml',                           
+#        'USER': 'pizzafac',       
+#        'PASSWORD': 'password',       
+#        'HOST': 'localhost',        
+#        'PORT': '',   
+#    }
+#}
+
+# Django default database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 

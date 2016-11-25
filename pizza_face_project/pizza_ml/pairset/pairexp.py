@@ -12,8 +12,9 @@ are helpers for setting up experimental pairs for view
 - get_pair_dict
 """
 
-#c9Testing:DIR_CSV = 'pizza_ml/'
-DIR_CSV = 'pizza_face_project/pizza_ml/'
+#c9Testing:
+DIR_CSV = 'pizza_ml/'
+#DIR_CSV = 'pizza_face_project/pizza_ml/'
 DIR_EXP = DIR_CSV + '/pairset/experiment/'
 
 def add_pair(pair_index, user, exp, pics, u_index):

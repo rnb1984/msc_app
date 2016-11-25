@@ -1,0 +1,24 @@
+{% extends 'pizza_ml/base.html' %}
+
+{% block content %}
+
+{% verbatim %}
+
+<div ng-app="pizzaApp" ng-controller="pizzaController" class="pizzas">
+
+<!--Pizza -->
+<div class ="pizzas-cont col-xs-6">
+  <article class="meal-cont">
+    <div class="meal-image"><img ng-src='{{ pizzas.pic }}'/></div>
+    <div class="meal-info">
+        <h3 class="meal-name">{{ pizzas.name }}</h3>
+        <a ng-hide="lingd" href="" ng-click="lingd=!lingd"><small>See Toppings</small></a>
+        <ul ng-show="lingd" class="meal-info meal-shadow"><a href="" ng-click="lingd=!lingd"><small>Hide Toppings</small></a>
+        <li ng-repeat="ingredient in pizzas.ingredients"><p>{{ ingredient }}</p></li></ul>
+    </div>
+   </article>
+</div>
+
+{% endverbatim %}
+
+{% endblock %}
