@@ -46,7 +46,7 @@ formApp.controller('formController', function ($scope, $http ) {
     };
 
     // On-Click check if form is vald and send
-    $scope.fill = function(){
+    $scope.fill = function(exp){
         console.log('this is the user: ',$scope.user, '$scope.master', $scope.master );
         console.log( 'user form valid: $scope.userForm.$valid', $scope.userForm.$valid);
         updateCheck();
@@ -65,9 +65,10 @@ formApp.controller('formController', function ($scope, $http ) {
             
              $http.put("/userdetail/"+pk+"/",form_data).success(function(data){
              // got to pizza pair choices
-             if (document.title === 'Details') window.location.href="/train/";
-             else window.location.href="/expone/train/";
+             //if (document.title === 'Details') window.location.href="/train/";
+             if (exp === true) window.location.href="/train/";
 
+             else window.location.href="/expone/train/";
              }); 
             }
      };
